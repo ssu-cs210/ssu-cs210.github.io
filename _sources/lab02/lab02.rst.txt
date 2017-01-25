@@ -1,0 +1,86 @@
+Lab 2: The ``vi`` editor
+========================
+
+
+Most modern operating systems provide users with GUI based editors.
+However, these tools are typically not available when you are working on remote systems.
+Furthermore, these are expensive to run in terms of CPU, memory and network bandwith.
+
+In your career as a CS student, and also as a CS professional, you will find that mastering a screen-oriented text editor is a very valuable skill. 
+Editors such as ``vi`` and ``emacs`` have a steep learning curve, hoewever, once you master these tools, you'll find that you can outperform GUI based editors.
+In this Lab you will learn the basics of the ``vi`` text editor. 
+``vi`` is part of the POSIX standard and it is safe to say that it comes with every linux distribution.
+It is lightweight, which means that it can be easily run on any system (e.g. Linux running as an embedded system) and you will be able to use it even with with a poor network connection.
+
+``vi`` is usually a link to the newer ``vim`` text editor. Some versions of Linux still come with the smaller, feature limited ``vi``.
+
+In this class we will need to use text editors extensively, so it is highly recommended to students to practice on their own.
+Moreover, there are many other courses in the Computer Science curriculum where you will need to use a text based editor. Dexterity with a text based editor is a skill that most likely will help you during your whole career as a Computer Scientist.
+
+A few notes about this Lab:
+
+* All work must be done in your **HOME** directory.
+* Each section builds on the foundation of the previous sections.  Make sure you understand and review the commands learned on each section when you complete them.
+
+
+Part 1: vi essentials
+---------------------
+
+As with the previous Lab, open the `terminal` application and log in to ``SEAWOLF``.
+Once the shell presents you with the prompt, start ``vim`` by typing:
+
+.. parsed-literal::
+
+    [me@tuxbox]$ :command:`vim`
+
+You will be presented with the ``vim`` welcome screen:
+
+.. image:: vim_welcome.png
+
+To exit ``vim``, type:
+
+.. parsed-literal::
+    
+    :command:`:q` :kbd:`Enter`  
+
+
+
+| :command:`git rebase -i master`
+
+
+Now that you know how to exit, open ``vim`` again, but this time type:
+
+
+.. parsed-literal::
+
+    [me\@tuxbox]$ :command:`vi myfile.txt`
+
+Notice how you can start ``vim`` by typing ``vi``, and notice that ``vim`` lets you know that you are editing a new file called ``myfile.txt``:
+
+.. image:: vim_newfile.png
+    
+
+
+
+
+Part 3: Motion Commands
+-----------------------
+
+The following are some common motion commands
+
+.. table:: Common ``vi`` commands
+    :widths: auto
+
+    ============   =========
+     Keystrokes     Command
+    ============   =========
+     ``h,j,k,l``        Left, down, up, right
+     ``0,$``            First and Last characters of current line
+     ``w,b``            Forward, backaward by word
+     ``(,)``            Beginning of previous, next sentence
+     ``{,}``            Beginning of previous, next paragraph
+    ============   =========
+
+
+
+

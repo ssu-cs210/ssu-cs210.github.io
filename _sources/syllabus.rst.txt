@@ -1,0 +1,150 @@
+Syllabus
+========
+
+.. rst-class:: syllabus
+
+Instructor Contact Information:
+-------------------------------
+
+:Name:
+    Jorge Cabrera
+:Email:
+     cabrera@sonoma.edu
+:Office Hours:
+    To be determined
+
+
+General Course Information
+--------------------------
+
+:Class Days/Time:
+    Thursdays 9:00 AM to 11:50 AM @ Stevenson 1034
+:Prerequisites: 
+    GE Math eligibility and previous or concurrent enrollment in CS 215, or consent of instructor.
+
+Course Description
+------------------
+Laboratory, 3 hours. 
+An introduction to the use of Unix as a programming environment.
+Communicating with a Unix host, shells and shell commands, files and directories, editors, scripting, processes, programming utilities.
+
+
+Course Format
+-------------
+The course will be taught following a mixture of demonstration, direct instructions, and self-directed, skill-building exercises.
+Students will work in class through exercises provided by the instructor. 
+Assigned readings will provide context and foundational knowledge for the material covered in class.
+
+
+Course Goals and Student Learning Objectives
+--------------------------------------------
+Students will demonstrate the ability to employ common commands and utilities, to gain independence and be productive in a Unix environment.
+
+Student Learning Outcomes (SLO) 
+
+Upon successful completion of this course, students will be able to: 
+* Use a Unix command line interface.
+* Navigate the Unix filesystem and perform common file operations.
+* Use standard Unix commands and utilities.
+* Write shell scripts.
+* Use regular expressions in Unix commands.
+* Use the Unix development toolset (vi/emacs, gcc, gdb, make).
+* Demonstrate technical fluency in speaking about the Unix environment
+
+Textbook:
+
+Readings from the book *The Linux Command Line* will be assigned as supplement of the material covered in class.
+You can download and electronic copy of this book at no cost from http://linuxcommand.org/tlcl.php.   If you prefer, you can also obtain a hard copy of the book (ISBN-10: 1593273894).
+
+The book "*A practical Guide to Linux Command, Editors, and Shell Programming, 2nd edition*", from Mark Sobell is a recommended optional resource.
+
+Classroom Protocol:
+Moodle will be used to maintain grades, syllabus, schedule, assignments and class resources.  Moodle always holds the most current and authoritative set of due dates, exam dates, assignment instructions and other course material. Course announcements will be done on Moodle, so you should check it frequently and adjust your notification settings as appropriate.
+
+Skill Drills:
+These are in-class quizzes in the form of mini-exercises, and tipically will cover the topics covered during the class.
+The two lowest grades will not count towards the final grade.
+
+Midterm and Final Exams:
+These will be in class, and will have a duration of 60 minutes.
+After the midterm exam, you will be required to complete the lab assigned as you normally do.
+During the test you will have access to the internet on your computer.
+You can also bring books or written notes. 
+Absolutely no cell phone usage will be permitted during tests.
+If you have an emergency or need to make a phone call during a test, let the instructor know before taking or making the call.
+Use of any chat software or utility will also be permitted.
+The faculty reserves the right to monitor network traffic during the exams.
+
+Lab Reports:
+In every lab there will be several activities (the *Lab Worksheets*) that you are required to complete and submit a report.  Electronic submissions in PDF format are preferred.  Alternatively, you can submit a hard copy at the begining of the next lab.
+Your reports will be evaluated in terms of:
+* Correctness: The answer does not contain errors and addresses the problem that you are asked to solve.
+* Efficiency: The problem is solved with the least amount of work, either by the user or the computer.
+
+Late policy
+Labs reports are due at the start of the next lab, and the mini-poject will be due on the last lab. You may deliver the report or project at a later time, but for every 24 hours after the start of the next lab, 20% of the assignment's grade will be deducted.
+
+Grading
+Your overall course grade will be determined by the following:
+
+
+.. cssclass:: table-striped
+
+=============       ==========
+Item                Percentage
+=============       ==========
+Skill Drills        20%
+Lab Reports         40%
+Midterm Exam        15%
+Final Exam          15%
+Mini-Project        10%
+=============       ==========
+
+Your final grade will depend on the percentage attained:
+
+==========      =====
+Percentage      Grade
+==========      =====
+100% – 94%      A
+93% – 90%       A-
+89% – 87%       B+
+86% – 84%       B
+83% – 80%       B-
+79% – 77%       C+
+76% – 74%       C
+73% – 70%       C-
+69% – 67%       D+
+66% – 63%       D
+62% – 60%       D-
+below  60       F
+==========      =====
+
+
+
+Regrade policy
+Regrade requests will be accepted up to 7 days after an assignment is returned.
+The reason for the regrade request must be explained in writing and submitted as a hard copy along with the assignment to be regraded
+
+Collaboration policies:
+During tests (which includes the skill drills) absolutely no collaboration is allowed, unless the instructor explicitly states the contrary. 
+This includes includes shoulder surfing, peeking at other people’s screens, using Unix utilities to communicate with remote users, IRC or any other chat software, etc.
+The lab is not large enough to spread-out much; please be proactive in reducing your neighbor’s temptation by not using an overly-large font and by not pushing written work to the edge of your workspace during these testing situations.
+All normal, real-world materials are available to you (Internet, man pages, etc) during tests.
+
+You are encouraged to work on the mini-project in groups of 2-3 students, however, if you prefer to work individually, you may do so.
+
+During the labs and for your lab reports, you are encouraged to discuss ideas and approaches with other students and the course staff, but you should work out all details and write-up all solutions on your own.
+You are encouraged to check your work through discussion with other students.
+When encountering significant technical problems, you are encouraged to help peers and seek help from your peers during and outside lab. 
+The following actions, however, will be penalized as academic dishonesty:
+
+* Looking at another student’s work, digital files or screen without their permission.
+* Letting someone else ‘drive’ your keyboard or ‘driving’ someone else’s keyboard, i.e., passing a keyboard over to let someone type it for you. There is always a simple solution: just grab a piece of whiteboard, write it out and talk about it away from the computer.
+* Copying part or all of another person’s solution or any solutions that have not been provided by the instructor.
+
+
+
+
+
+
+

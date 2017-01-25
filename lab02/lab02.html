@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab 2: The vi editor &#8212; CS210 - Introduction to Unix  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Laboratory 1" href="../lab01/lab01.html" />
+<link href="https://fonts.googleapis.com/css?family=Bitter|Source+Code+Pro" rel="stylesheet">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          CS210 - Introduction to Unix</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conv/conv.html">Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab01/lab01.html">Laboratory 1</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab 2: The <code class="docutils literal"><span class="pre">vi</span></code> editor</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Lab 2: The <code class="docutils literal"><span class="pre">vi</span></code> editor</a><ul>
+<li><a class="reference internal" href="#part-1-vi-essentials">Part 1: vi essentials</a></li>
+<li><a class="reference internal" href="#part-3-motion-commands">Part 3: Motion Commands</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="../lab01/lab01.html" title="Previous Chapter: Laboratory 1"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Laboratory 1</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/lab02/lab02.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="lab-2-the-vi-editor">
+<h1>Lab 2: The <code class="docutils literal"><span class="pre">vi</span></code> editor<a class="headerlink" href="#lab-2-the-vi-editor" title="Permalink to this headline">¶</a></h1>
+<p>Most modern operating systems provide users with GUI based editors.
+However, these tools are typically not available when you are working on remote systems.
+Furthermore, these are expensive to run in terms of CPU, memory and network bandwith.</p>
+<p>In your career as a CS student, and also as a CS professional, you will find that mastering a screen-oriented text editor is a very valuable skill.
+Editors such as <code class="docutils literal"><span class="pre">vi</span></code> and <code class="docutils literal"><span class="pre">emacs</span></code> have a steep learning curve, hoewever, once you master these tools, you&#8217;ll find that you can outperform GUI based editors.
+In this Lab you will learn the basics of the <code class="docutils literal"><span class="pre">vi</span></code> text editor.
+<code class="docutils literal"><span class="pre">vi</span></code> is part of the POSIX standard and it is safe to say that it comes with every linux distribution.
+It is lightweight, which means that it can be easily run on any system (e.g. Linux running as an embedded system) and you will be able to use it even with with a poor network connection.</p>
+<p><code class="docutils literal"><span class="pre">vi</span></code> is usually a link to the newer <code class="docutils literal"><span class="pre">vim</span></code> text editor. Some versions of Linux still come with the smaller, feature limited <code class="docutils literal"><span class="pre">vi</span></code>.</p>
+<p>In this class we will need to use text editors extensively, so it is highly recommended to students to practice on their own.
+Moreover, there are many other courses in the Computer Science curriculum where you will need to use a text based editor. Dexterity with a text based editor is a skill that most likely will help you during your whole career as a Computer Scientist.</p>
+<p>A few notes about this Lab:</p>
+<ul class="simple">
+<li>All work must be done in your <strong>HOME</strong> directory.</li>
+<li>Each section builds on the foundation of the previous sections.  Make sure you understand and review the commands learned on each section when you complete them.</li>
+</ul>
+<div class="section" id="part-1-vi-essentials">
+<h2>Part 1: vi essentials<a class="headerlink" href="#part-1-vi-essentials" title="Permalink to this headline">¶</a></h2>
+<p>As with the previous Lab, open the <cite>terminal</cite> application and log in to <code class="docutils literal"><span class="pre">SEAWOLF</span></code>.
+Once the shell presents you with the prompt, start <code class="docutils literal"><span class="pre">vim</span></code> by typing:</p>
+<pre class="literal-block">
+[<a class="reference external" href="mailto:me&#37;&#52;&#48;tuxbox">me<span>&#64;</span>tuxbox</a>]$ <strong class="command">vim</strong>
+</pre>
+<p>You will be presented with the <code class="docutils literal"><span class="pre">vim</span></code> welcome screen:</p>
+<img alt="../_images/vim_welcome.png" src="../_images/vim_welcome.png" />
+<p>To exit <code class="docutils literal"><span class="pre">vim</span></code>, type:</p>
+<pre class="literal-block">
+<strong class="command">:q</strong> <code class="kbd docutils literal"><span class="pre">Enter</span></code>
+</pre>
+<div class="line-block">
+<div class="line"><strong class="command">git rebase -i master</strong></div>
+</div>
+<p>Now that you know how to exit, open <code class="docutils literal"><span class="pre">vim</span></code> again, but this time type:</p>
+<pre class="literal-block">
+[me&#64;tuxbox]$ <strong class="command">vi myfile.txt</strong>
+</pre>
+<p>Notice how you can start <code class="docutils literal"><span class="pre">vim</span></code> by typing <code class="docutils literal"><span class="pre">vi</span></code>, and notice that <code class="docutils literal"><span class="pre">vim</span></code> lets you know that you are editing a new file called <code class="docutils literal"><span class="pre">myfile.txt</span></code>:</p>
+<img alt="../_images/vim_newfile.png" src="../_images/vim_newfile.png" />
+</div>
+<div class="section" id="part-3-motion-commands">
+<h2>Part 3: Motion Commands<a class="headerlink" href="#part-3-motion-commands" title="Permalink to this headline">¶</a></h2>
+<p>The following are some common motion commands</p>
+<table border="1" class="colwidths-auto docutils" id="id1">
+<caption><span class="caption-text">Common <code class="docutils literal"><span class="pre">vi</span></code> commands</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="21%" />
+<col width="79%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keystrokes</th>
+<th class="head">Command</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">h,j,k,l</span></code></td>
+<td>Left, down, up, right</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">0,$</span></code></td>
+<td>First and Last characters of current line</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">w,b</span></code></td>
+<td>Forward, backaward by word</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">(,)</span></code></td>
+<td>Beginning of previous, next sentence</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">{,}</span></code></td>
+<td>Beginning of previous, next paragraph</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright .<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

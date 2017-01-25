@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Syllabus &#8212; CS210 - Introduction to Unix  documentation</title>
+    <title>CS210 Introduction to Unix - Fall 2017 &#8212; CS210 - Introduction to Unix  documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -33,7 +33,7 @@
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Introduction" href="intro.html" />
+    <link rel="next" title="Conventions" href="conv/conv.html" />
     <link rel="prev" title="Welcome to Introduction to Unix - CS210’s documentation!" href="index.html" />
 <link href="https://fonts.googleapis.com/css?family=Bitter|Source+Code+Pro" rel="stylesheet">
 
@@ -67,11 +67,9 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Syllabus</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CS210 Introduction to Unix - Fall 2017</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conv/conv.html">Conventions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lab01/lab01.html">Laboratory 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lab02/lab02.html">Lab 2: The <code class="docutils literal"><span class="pre">vi</span></code> editor</a></li>
 </ul>
 </ul>
 </li>
@@ -85,12 +83,26 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Syllabus</a><ul>
-<li><a class="reference internal" href="#instructor-contact-information">Instructor Contact Information:</a></li>
+<li><a class="reference internal" href="#">CS210 Introduction to Unix - Fall 2017</a><ul>
+<li><a class="reference internal" href="#instructor-contact-information">Instructor Contact Information</a></li>
 <li><a class="reference internal" href="#general-course-information">General Course Information</a></li>
 <li><a class="reference internal" href="#course-description">Course Description</a></li>
 <li><a class="reference internal" href="#course-format">Course Format</a></li>
 <li><a class="reference internal" href="#course-goals-and-student-learning-objectives">Course Goals and Student Learning Objectives</a></li>
+<li><a class="reference internal" href="#textbook">Textbook</a></li>
+<li><a class="reference internal" href="#server-access">Server Access</a></li>
+<li><a class="reference internal" href="#course-schedule">Course Schedule</a></li>
+<li><a class="reference internal" href="#classroom-protocol">Classroom Protocol</a></li>
+<li><a class="reference internal" href="#grading">Grading</a><ul>
+<li><a class="reference internal" href="#skill-drills">Skill Drills</a></li>
+<li><a class="reference internal" href="#midterm-and-final-exams">Midterm and Final Exams</a></li>
+<li><a class="reference internal" href="#lab-reports">Lab Reports</a></li>
+<li><a class="reference internal" href="#mini-project">Mini-Project</a></li>
+<li><a class="reference internal" href="#regrade-policy">Regrade policy</a></li>
+<li><a class="reference internal" href="#late-policy">Late policy</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#collaboration-policy">Collaboration policy</a></li>
 </ul>
 </li>
 </ul>
@@ -106,7 +118,7 @@
     </a>
   </li>
   <li>
-    <a href="intro.html" title="Next Chapter: Introduction"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Introduction &raquo;</span>
+    <a href="conv/conv.html" title="Next Chapter: Conventions"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Conventions &raquo;</span>
     </a>
   </li>
               
@@ -140,19 +152,21 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="syllabus">
-<h1>Syllabus<a class="headerlink" href="#syllabus" title="Permalink to this headline">¶</a></h1>
-<div class="syllabus section" id="instructor-contact-information">
-<h2>Instructor Contact Information:<a class="headerlink" href="#instructor-contact-information" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="cs210-introduction-to-unix-fall-2017">
+<h1>CS210 Introduction to Unix - Fall 2017<a class="headerlink" href="#cs210-introduction-to-unix-fall-2017" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="instructor-contact-information">
+<h2>Instructor Contact Information<a class="headerlink" href="#instructor-contact-information" title="Permalink to this headline">¶</a></h2>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Name:</th><td class="field-body">Jorge Cabrera</td>
+<tr class="field-odd field"><th class="field-name">Section:</th><td class="field-body">3262</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Email:</th><td class="field-body"><a class="reference external" href="mailto:cabrera&#37;&#52;&#48;sonoma&#46;edu">cabrera<span>&#64;</span>sonoma<span>&#46;</span>edu</a></td>
+<tr class="field-even field"><th class="field-name">Name:</th><td class="field-body">Jorge Cabrera</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Office Hours:</th><td class="field-body">To be determined</td>
+<tr class="field-odd field"><th class="field-name">Email:</th><td class="field-body"><a class="reference external" href="mailto:cabrera&#37;&#52;&#48;sonoma&#46;edu">cabrera<span>&#64;</span>sonoma<span>&#46;</span>edu</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Office Hours:</th><td class="field-body">To be determined.</td>
 </tr>
 </tbody>
 </table>
@@ -163,8 +177,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">Class Days/Time:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Thursdays 9:00 AM to 11:50 AM &#64; Stevenson 1034</td>
+<tr class="field-odd field"><th class="field-name">Schedule:</th><td class="field-body">Thu 9:00 AM to 11:50 AM &#64; Stevenson 1034</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Prerequisites:</th><td class="field-body">GE Math eligibility and previous or concurrent enrollment in CS 215, or consent of instructor.</td>
 </tr>
@@ -181,48 +194,56 @@ Communicating with a Unix host, shells and shell commands, files and directories
 <h2>Course Format<a class="headerlink" href="#course-format" title="Permalink to this headline">¶</a></h2>
 <p>The course will be taught following a mixture of demonstration, direct instructions, and self-directed, skill-building exercises.
 Students will work in class through exercises provided by the instructor.
-Assigned readings will provide context and foundational knowledge for the material covered in class.</p>
+Assigned short readings and exercises will provide context and foundational knowledge for the class.</p>
 </div>
 <div class="section" id="course-goals-and-student-learning-objectives">
 <h2>Course Goals and Student Learning Objectives<a class="headerlink" href="#course-goals-and-student-learning-objectives" title="Permalink to this headline">¶</a></h2>
 <p>Students will demonstrate the ability to employ common commands and utilities, to gain independence and be productive in a Unix environment.</p>
-<p>Student Learning Outcomes (SLO)</p>
-<p>Upon successful completion of this course, students will be able to:
-* Use a Unix command line interface.
-* Navigate the Unix filesystem and perform common file operations.
-* Use standard Unix commands and utilities.
-* Write shell scripts.
-* Use regular expressions in Unix commands.
-* Use the Unix development toolset (vi/emacs, gcc, gdb, make).
-* Demonstrate technical fluency in speaking about the Unix environment</p>
-<p>Textbook:</p>
-<p>Readings from the book <em>The Linux Command Line</em> will be assigned as supplement of the material covered in class.
-You can download and electronic copy of this book at no cost from <a class="reference external" href="http://linuxcommand.org/tlcl.php">http://linuxcommand.org/tlcl.php</a>.   If you prefer, you can also obtain a hard copy of the book (ISBN-10: 1593273894).</p>
+<p>Upon successful completion of this course, students will be able to:</p>
+<ul class="simple">
+<li>Use a Unix command line interface.</li>
+<li>Navigate the Unix filesystem and perform common file operations.</li>
+<li>Use standard Unix commands and utilities.</li>
+<li>Write shell scripts.</li>
+<li>Use regular expressions in Unix commands.</li>
+<li>Use the Unix development toolset (vi/emacs, gcc, gdb, make).</li>
+<li>Demonstrate technical fluency in speaking about the Unix environment</li>
+</ul>
+</div>
+<div class="section" id="textbook">
+<h2>Textbook<a class="headerlink" href="#textbook" title="Permalink to this headline">¶</a></h2>
+<p>Readings from the book <em>The Linux Command Line</em> will be assigned as a supplement of the material covered in class.
+You can download and electronic copy of this book at no cost from <a class="reference external" href="http://linuxcommand.org/tlcl.php">http://linuxcommand.org/tlcl.php</a>.
+If you prefer, you can also obtain a hard copy of the book (ISBN-10: 1593273894).</p>
 <p>The book &#8220;<em>A practical Guide to Linux Command, Editors, and Shell Programming, 2nd edition</em>&#8221;, from Mark Sobell is a recommended optional resource.</p>
-<p>Classroom Protocol:
-Moodle will be used to maintain grades, syllabus, schedule, assignments and class resources.  Moodle always holds the most current and authoritative set of due dates, exam dates, assignment instructions and other course material. Course announcements will be done on Moodle, so you should check it frequently and adjust your notification settings as appropriate.</p>
-<p>Skill Drills:
-These are in-class quizzes in the form of mini-exercises, and tipically will cover the topics covered during the class.
-The two lowest grades will not count towards the final grade.</p>
-<p>Midterm and Final Exams:
-These will be in class, and will have a duration of 60 minutes.
-After the midterm exam, you will be required to complete the lab assigned as you normally do.
-During the test you will have access to the internet on your computer.
-You can also bring books or written notes.
-Absolutely no cell phone usage will be permitted during tests.
-If you have an emergency or need to make a phone call during a test, let the instructor know before taking or making the call.
-Use of any chat software or utility will also be permitted.
-The faculty reserves the right to monitor network traffic during the exams.</p>
-<p>Lab Reports:
-In every lab there will be several activities (the <em>Lab Worksheets</em>) that you are required to complete and submit a report.  Electronic submissions in PDF format are preferred.  Alternatively, you can submit a hard copy at the begining of the next lab.
-Your reports will be evaluated in terms of:
-* Correctness: The answer does not contain errors and addresses the problem that you are asked to solve.
-* Efficiency: The problem is solved with the least amount of work, either by the user or the computer.</p>
-<p>Late policy
-Labs reports are due at the start of the next lab, and the mini-poject will be due on the last lab. You may deliver the report or project at a later time, but for every 24 hours after the start of the next lab, 20% of the assignment&#8217;s grade will be deducted.</p>
-<p>Grading
-Your overall course grade will be determined by the following:</p>
-<table border="1" class="table-striped docutils">
+</div>
+<div class="section" id="server-access">
+<h2>Server Access<a class="headerlink" href="#server-access" title="Permalink to this headline">¶</a></h2>
+<p>You will need an account to log into <code class="docutils literal"><span class="pre">blue.cs.sonoma.edu</span></code>. If you have not obtained this access, please make sure you reach out to Roger Mamer (<a class="reference external" href="mailto:roger&#46;mamer&#37;&#52;&#48;sonoma&#46;edu">roger<span>&#46;</span>mamer<span>&#64;</span>sonoma<span>&#46;</span>edu</a> -  Office next to Darwin 25) to have your account set up.</p>
+</div>
+<div class="section" id="course-schedule">
+<h2>Course Schedule<a class="headerlink" href="#course-schedule" title="Permalink to this headline">¶</a></h2>
+<p>A detailed description of readings, assignments and weekly course topics will be posted to the schedule on Moodle.
+The schedule is subject to change, with fair notice via Moodle.</p>
+</div>
+<div class="section" id="classroom-protocol">
+<h2>Classroom Protocol<a class="headerlink" href="#classroom-protocol" title="Permalink to this headline">¶</a></h2>
+<p>Moodle will be used to maintain grades, syllabus, schedule, assignments and class resources.
+Moodle always holds the most current and authoritative set of due dates, exam dates, assignment instructions and other course material.
+Course announcements will be done on Moodle, so you should check it frequently and adjust your notification settings as appropriate.</p>
+<p>Moodle is SSU&#8217;s Learning Management System (LMS).
+Moodle is the place where you will find the course syllabus, read posted announcements in the news forum, participate in online class discussions with classmates, submit your assignments online and view the materials for this course.
+To access the Moodle course use your SSU Seawolf ID and password to log into SSU&#8217;s Online Services Portal <a class="reference external" href="https://login.sonoma.edu">https://login.sonoma.edu</a>.
+Click on the Moodle link.
+When you get to the Moodle site home, click on the “My Courses” menu located on the top navigation.
+Click on the link for this course (classes are listed by course name and number).
+Note: The Login link is also conveniently located at the top of the Sonoma State University homepage <a class="reference external" href="http://www.sonoma.edu">http://www.sonoma.edu</a> and many other university pages.</p>
+<p>Visit Learning with Moodle <a class="reference external" href="http://www.sonoma.edu/it/students/moodle.html">http://www.sonoma.edu/it/students/moodle.html</a> to review frequently asked questions about using Moodle and also to view a list of technical recommendations.</p>
+</div>
+<div class="section" id="grading">
+<h2>Grading<a class="headerlink" href="#grading" title="Permalink to this headline">¶</a></h2>
+<p>Your overall course grade will be determined by the following:</p>
+<table border="1" class="minitable docutils">
 <colgroup>
 <col width="57%" />
 <col width="43%" />
@@ -250,8 +271,8 @@ Your overall course grade will be determined by the following:</p>
 </tr>
 </tbody>
 </table>
-<p>Your final grade will depend on the percentage attained:</p>
-<table border="1" class="docutils">
+<p>Your final grade will be determined as follows:</p>
+<table border="1" class="minitable docutils">
 <colgroup>
 <col width="67%" />
 <col width="33%" />
@@ -300,12 +321,52 @@ Your overall course grade will be determined by the following:</p>
 </tr>
 </tbody>
 </table>
-<p>Regrade policy
-Regrade requests will be accepted up to 7 days after an assignment is returned.
+<div class="section" id="skill-drills">
+<h3>Skill Drills<a class="headerlink" href="#skill-drills" title="Permalink to this headline">¶</a></h3>
+<p>These are in-class quizzes in the form of mini-exercises, and tipically will evaluate the topics discussed during the class or assigned reading/exercises in the previous class.
+The two lowest grades will not count towards the final grade.</p>
+</div>
+<div class="section" id="midterm-and-final-exams">
+<h3>Midterm and Final Exams<a class="headerlink" href="#midterm-and-final-exams" title="Permalink to this headline">¶</a></h3>
+<p>These will be in class, and will have a duration of 60 minutes.
+After the midterm exam, you will be required to complete the lab assigned on that date.</p>
+<p>During the test you will have access to a computer and you will be allowed to use the internet; however, you should not use this resource to ask others for help (Refer to the collaboration section below).
+You can also bring books or written notes.</p>
+<p>Absolutely no cell phone usage will be permitted during tests.</p>
+<p>If you have an emergency or need to make a phone call during a test, let the instructor know before taking or making the call.
+Use of any chat software/application will be strictly forbidden during tests.</p>
+</div>
+<div class="section" id="lab-reports">
+<h3>Lab Reports<a class="headerlink" href="#lab-reports" title="Permalink to this headline">¶</a></h3>
+<p>In every lab there will be several activities (the <em>Lab Worksheets</em>) that you are required to complete and submit a report.
+Electronic submissions in PDF format are preferred.
+Alternatively, you can submit a hard copy at the begining of the next lab.</p>
+<p>Your reports will be evaluated in terms of:</p>
+<ul class="simple">
+<li><strong>Correctness</strong>: The answer does not contain errors and addresses the problem or question that you are asked to solve.</li>
+<li><strong>Efficiency</strong>: The problem is solved with the least amount of work, either by the user or the computer.</li>
+</ul>
+</div>
+<div class="section" id="mini-project">
+<h3>Mini-Project<a class="headerlink" href="#mini-project" title="Permalink to this headline">¶</a></h3>
+<p>The idea of the mini-project is to put the class materials into practice.
+The details of the project will be given to you after the mid-term, so you will have plenty of time to work on your project.</p>
+</div>
+<div class="section" id="regrade-policy">
+<h3>Regrade policy<a class="headerlink" href="#regrade-policy" title="Permalink to this headline">¶</a></h3>
+<p>Regrade requests will be accepted up to 7 days after an assignment is returned.
 The reason for the regrade request must be explained in writing and submitted as a hard copy along with the assignment to be regraded</p>
-<p>Collaboration policies:
-During tests (which includes the skill drills) absolutely no collaboration is allowed, unless the instructor explicitly states the contrary.
-This includes includes shoulder surfing, peeking at other people’s screens, using Unix utilities to communicate with remote users, IRC or any other chat software, etc.
+</div>
+<div class="section" id="late-policy">
+<h3>Late policy<a class="headerlink" href="#late-policy" title="Permalink to this headline">¶</a></h3>
+<p>Labs reports are due at the start of the next lab, and the mini-poject will be due the date of the last session.
+You may deliver a lab report or project at a later time, but for every 24 hours after the start of the next lab, 20% of the assignment&#8217;s grade will be deducted.</p>
+</div>
+</div>
+<div class="section" id="collaboration-policy">
+<h2>Collaboration policy<a class="headerlink" href="#collaboration-policy" title="Permalink to this headline">¶</a></h2>
+<p>During tests (which includes the skill drills) absolutely no collaboration is allowed, unless the instructor explicitly states the contrary.
+This includes shoulder surfing, peeking at other people’s screens, using Unix utilities to communicate with remote users, IRC or any other chat software, etc.
 The lab is not large enough to spread-out much; please be proactive in reducing your neighbor’s temptation by not using an overly-large font and by not pushing written work to the edge of your workspace during these testing situations.
 All normal, real-world materials are available to you (Internet, man pages, etc) during tests.</p>
 <p>You are encouraged to work on the mini-project in groups of 2-3 students, however, if you prefer to work individually, you may do so.</p>
@@ -318,6 +379,10 @@ The following actions, however, will be penalized as academic dishonesty:</p>
 <li>Letting someone else ‘drive’ your keyboard or ‘driving’ someone else’s keyboard, i.e., passing a keyboard over to let someone type it for you. There is always a simple solution: just grab a piece of whiteboard, write it out and talk about it away from the computer.</li>
 <li>Copying part or all of another person’s solution or any solutions that have not been provided by the instructor.</li>
 </ul>
+<p>Students should be familiar with the University’s Cheating and Plagiarism policy <a class="reference external" href="http://www.sonoma.edu/UAffairs/policies/cheating_plagiarism.htm">http://www.sonoma.edu/UAffairs/policies/cheating_plagiarism.htm</a>.
+Your own commitment to learning, as evidenced by your enrollment at Sonoma State University and the University’s policy, require you to be honest in all your academic course work.
+Instances of academic dishonesty will not be tolerated.
+Cheating on exams or plagiarism (presenting the work of another as your own, or the use of another person’s ideas without giving proper credit) will result in a failing grade and sanctions by the University.</p>
 </div>
 </div>
 
@@ -333,8 +398,6 @@ The following actions, however, will be penalized as academic dishonesty:</p>
       
     </p>
     <p>
-        &copy; Copyright .<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.<br/>
     </p>
   </div>
 </footer>

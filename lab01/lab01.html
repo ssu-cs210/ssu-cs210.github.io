@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Laboratory 1 &#8212; CS210 - Introduction to Unix  documentation</title>
+    <title>Lab No. 1 &#8212; CS210 - Introduction to Unix  documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -33,7 +33,6 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Lab 2: The vi editor" href="../lab02/lab02.html" />
     <link rel="prev" title="Conventions" href="../conv/conv.html" />
 <link href="https://fonts.googleapis.com/css?family=Bitter|Source+Code+Pro" rel="stylesheet">
 
@@ -67,11 +66,9 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">Syllabus</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">CS210 Introduction to Unix - Fall 2017</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../conv/conv.html">Conventions</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Laboratory 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../lab02/lab02.html">Lab 2: The <code class="docutils literal"><span class="pre">vi</span></code> editor</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab No. 1</a></li>
 </ul>
 </ul>
 </li>
@@ -85,16 +82,14 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Laboratory 1</a><ul>
-<li><a class="reference internal" href="#part-1-the-shell">Part 1: The Shell</a><ul>
+<li><a class="reference internal" href="#">Lab No. 1</a><ul>
+<li><a class="reference internal" href="#the-shell">The Shell</a><ul>
 <li><a class="reference internal" href="#logging-into-a-shell">Logging into a shell</a></li>
 <li><a class="reference internal" href="#the-shell-prompt">The shell prompt</a></li>
 <li><a class="reference internal" href="#executing-commands">Executing commands</a></li>
 <li><a class="reference internal" href="#getting-help">Getting Help</a></li>
 <li><a class="reference internal" href="#editing-efficiently">Editing Efficiently</a></li>
 <li><a class="reference internal" href="#exiting-the-shell">Exiting the shell</a></li>
-<li><a class="reference internal" href="#part-2-the-file-system">Part 2: The File System</a></li>
-<li><a class="reference internal" href="#part-3-users-groups-and-permissions">Part 3: Users, Groups and Permissions</a></li>
 </ul>
 </li>
 </ul>
@@ -109,10 +104,6 @@
                 
   <li>
     <a href="../conv/conv.html" title="Previous Chapter: Conventions"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Conventions</span>
-    </a>
-  </li>
-  <li>
-    <a href="../lab02/lab02.html" title="Next Chapter: Lab 2: The vi editor"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Lab 2: The vi editor &raquo;</span>
     </a>
   </li>
               
@@ -146,25 +137,17 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="laboratory-1">
-<h1>Laboratory 1<a class="headerlink" href="#laboratory-1" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference internal" href="work01.html"><span class="doc">Lab 1 Worksheet</span></a></p>
+  <div class="section" id="lab-no-1">
+<h1>Lab No. 1<a class="headerlink" href="#lab-no-1" title="Permalink to this headline">¶</a></h1>
 <p>After completing this lab, students will be able to:</p>
 <ul class="simple">
 <li>Describe what a shell is.</li>
 <li>Login and end a shell session (<code class="docutils literal"><span class="pre">ssh</span></code>, <code class="docutils literal"><span class="pre">logout</span></code> and <code class="docutils literal"><span class="pre">exit</span></code>)</li>
 <li>Execute and edit commands on a shell.</li>
 <li>Distinguish between commands, command options and arguments when providing input to the shell</li>
-<li>Describe what a hierarchical file system is</li>
-<li>Navigate in directories (<code class="docutils literal"><span class="pre">cd</span></code>, <code class="docutils literal"><span class="pre">pwd</span></code>)</li>
-<li>Explain what a home directory</li>
-<li>List files in directories (<code class="docutils literal"><span class="pre">ls</span></code>)</li>
-<li>Find files (<code class="docutils literal"><span class="pre">find</span></code>)</li>
-<li>Display the contents of a file (<code class="docutils literal"><span class="pre">less</span></code> and <code class="docutils literal"><span class="pre">cat</span></code>)</li>
-<li>Perform basic content search in files (<code class="docutils literal"><span class="pre">grep</span></code>)</li>
 </ul>
-<div class="section" id="part-1-the-shell">
-<h2>Part 1: The Shell<a class="headerlink" href="#part-1-the-shell" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-shell">
+<h2>The Shell<a class="headerlink" href="#the-shell" title="Permalink to this headline">¶</a></h2>
 <p>A shell is interactive command interpreter: a  program that takes text input from the user in the form of commands and arguments, instructs the operating system to execute the tasks specified by the user input, and provides output that results from the execution of the commands by the operating system.</p>
 <p>Access to a shell is typically obtained though software known as a <em>terminal emulator</em>, which in this day an age is simply referred to as a <em>terminal</em>.
 Examples of terminal emulators are:</p>
@@ -361,13 +344,6 @@ However, having to type all that is not fun and it takes a lot of time.  Luckily
 </ol>
 </div>
 </div>
-<div class="section" id="part-2-the-file-system">
-<h3>Part 2: The File System<a class="headerlink" href="#part-2-the-file-system" title="Permalink to this headline">¶</a></h3>
-<p>Files are organized in Linux in a <em>hierarchichal directory structure</em>, which means that they are organized in a tree-like structure.  To do this</p>
-</div>
-<div class="section" id="part-3-users-groups-and-permissions">
-<h3>Part 3: Users, Groups and Permissions<a class="headerlink" href="#part-3-users-groups-and-permissions" title="Permalink to this headline">¶</a></h3>
-</div>
 </div>
 </div>
 
@@ -383,8 +359,6 @@ However, having to type all that is not fun and it takes a lot of time.  Luckily
       
     </p>
     <p>
-        &copy; Copyright .<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.<br/>
     </p>
   </div>
 </footer>

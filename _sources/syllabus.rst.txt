@@ -1,48 +1,48 @@
-Syllabus
-========
+**************************************
+CS210 Introduction to Unix - Fall 2017
+**************************************
 
-.. rst-class:: syllabus
-
-Instructor Contact Information:
--------------------------------
-
+Instructor Contact Information
+==============================
+:Section:
+    3262
 :Name:
     Jorge Cabrera
 :Email:
-     cabrera@sonoma.edu
+    cabrera@sonoma.edu
 :Office Hours:
-    To be determined
+    To be determined.
 
 
 General Course Information
---------------------------
+==========================
 
-:Class Days/Time:
-    Thursdays 9:00 AM to 11:50 AM @ Stevenson 1034
+:Schedule:
+    Thu 9\:00 AM to 11\:50 AM @ Stevenson 1034
 :Prerequisites: 
     GE Math eligibility and previous or concurrent enrollment in CS 215, or consent of instructor.
 
+
 Course Description
-------------------
-Laboratory, 3 hours. 
+==================
+Laboratory, 3 hours.
 An introduction to the use of Unix as a programming environment.
 Communicating with a Unix host, shells and shell commands, files and directories, editors, scripting, processes, programming utilities.
 
 
 Course Format
--------------
+=============
 The course will be taught following a mixture of demonstration, direct instructions, and self-directed, skill-building exercises.
 Students will work in class through exercises provided by the instructor. 
-Assigned readings will provide context and foundational knowledge for the material covered in class.
+Assigned short readings and exercises will provide context and foundational knowledge for the class.
 
 
 Course Goals and Student Learning Objectives
---------------------------------------------
+============================================
 Students will demonstrate the ability to employ common commands and utilities, to gain independence and be productive in a Unix environment.
 
-Student Learning Outcomes (SLO) 
-
 Upon successful completion of this course, students will be able to: 
+
 * Use a Unix command line interface.
 * Navigate the Unix filesystem and perform common file operations.
 * Use standard Unix commands and utilities.
@@ -51,44 +51,53 @@ Upon successful completion of this course, students will be able to:
 * Use the Unix development toolset (vi/emacs, gcc, gdb, make).
 * Demonstrate technical fluency in speaking about the Unix environment
 
-Textbook:
 
-Readings from the book *The Linux Command Line* will be assigned as supplement of the material covered in class.
-You can download and electronic copy of this book at no cost from http://linuxcommand.org/tlcl.php.   If you prefer, you can also obtain a hard copy of the book (ISBN-10: 1593273894).
+Textbook
+========
+
+Readings from the book *The Linux Command Line* will be assigned as a supplement of the material covered in class.
+You can download and electronic copy of this book at no cost from http://linuxcommand.org/tlcl.php.
+If you prefer, you can also obtain a hard copy of the book (ISBN-10: 1593273894).
 
 The book "*A practical Guide to Linux Command, Editors, and Shell Programming, 2nd edition*", from Mark Sobell is a recommended optional resource.
 
-Classroom Protocol:
-Moodle will be used to maintain grades, syllabus, schedule, assignments and class resources.  Moodle always holds the most current and authoritative set of due dates, exam dates, assignment instructions and other course material. Course announcements will be done on Moodle, so you should check it frequently and adjust your notification settings as appropriate.
 
-Skill Drills:
-These are in-class quizzes in the form of mini-exercises, and tipically will cover the topics covered during the class.
-The two lowest grades will not count towards the final grade.
+Server Access
+=============
 
-Midterm and Final Exams:
-These will be in class, and will have a duration of 60 minutes.
-After the midterm exam, you will be required to complete the lab assigned as you normally do.
-During the test you will have access to the internet on your computer.
-You can also bring books or written notes. 
-Absolutely no cell phone usage will be permitted during tests.
-If you have an emergency or need to make a phone call during a test, let the instructor know before taking or making the call.
-Use of any chat software or utility will also be permitted.
-The faculty reserves the right to monitor network traffic during the exams.
+You will need an account to log into ``blue.cs.sonoma.edu``. If you have not obtained this access, please make sure you reach out to Roger Mamer (roger.mamer@sonoma.edu -  Office next to Darwin 25) to have your account set up.
 
-Lab Reports:
-In every lab there will be several activities (the *Lab Worksheets*) that you are required to complete and submit a report.  Electronic submissions in PDF format are preferred.  Alternatively, you can submit a hard copy at the begining of the next lab.
-Your reports will be evaluated in terms of:
-* Correctness: The answer does not contain errors and addresses the problem that you are asked to solve.
-* Efficiency: The problem is solved with the least amount of work, either by the user or the computer.
 
-Late policy
-Labs reports are due at the start of the next lab, and the mini-poject will be due on the last lab. You may deliver the report or project at a later time, but for every 24 hours after the start of the next lab, 20% of the assignment's grade will be deducted.
+Course Schedule
+===============
+
+A detailed description of readings, assignments and weekly course topics will be posted to the schedule on Moodle.
+The schedule is subject to change, with fair notice via Moodle.
+
+
+Classroom Protocol
+==================
+Moodle will be used to maintain grades, syllabus, schedule, assignments and class resources.
+Moodle always holds the most current and authoritative set of due dates, exam dates, assignment instructions and other course material.
+Course announcements will be done on Moodle, so you should check it frequently and adjust your notification settings as appropriate.
+
+Moodle is SSU's Learning Management System (LMS).
+Moodle is the place where you will find the course syllabus, read posted announcements in the news forum, participate in online class discussions with classmates, submit your assignments online and view the materials for this course. 
+To access the Moodle course use your SSU Seawolf ID and password to log into SSU's Online Services Portal https://login.sonoma.edu. 
+Click on the Moodle link. 
+When you get to the Moodle site home, click on the “My Courses” menu located on the top navigation. 
+Click on the link for this course (classes are listed by course name and number). 
+Note: The Login link is also conveniently located at the top of the Sonoma State University homepage http://www.sonoma.edu and many other university pages.
+
+Visit Learning with Moodle http://www.sonoma.edu/it/students/moodle.html to review frequently asked questions about using Moodle and also to view a list of technical recommendations.
+
 
 Grading
+=======
 Your overall course grade will be determined by the following:
 
 
-.. cssclass:: table-striped
+.. cssclass:: minitable
 
 =============       ==========
 Item                Percentage
@@ -100,7 +109,9 @@ Final Exam          15%
 Mini-Project        10%
 =============       ==========
 
-Your final grade will depend on the percentage attained:
+Your final grade will be determined as follows:
+
+.. cssclass:: minitable
 
 ==========      =====
 Percentage      Grade
@@ -119,15 +130,58 @@ Percentage      Grade
 below  60       F
 ==========      =====
 
+Skill Drills
+------------
+These are in-class quizzes in the form of mini-exercises, and tipically will evaluate the topics discussed during the class or assigned reading/exercises in the previous class.
+The two lowest grades will not count towards the final grade.
 
+
+Midterm and Final Exams
+-----------------------
+These will be in class, and will have a duration of 60 minutes.
+After the midterm exam, you will be required to complete the lab assigned on that date.
+
+During the test you will have access to a computer and you will be allowed to use the internet; however, you should not use this resource to ask others for help (Refer to the collaboration section below).
+You can also bring books or written notes. 
+
+Absolutely no cell phone usage will be permitted during tests.
+
+If you have an emergency or need to make a phone call during a test, let the instructor know before taking or making the call.
+Use of any chat software/application will be strictly forbidden during tests.
+
+Lab Reports
+-----------
+In every lab there will be several activities (the *Lab Worksheets*) that you are required to complete and submit a report.
+Electronic submissions in PDF format are preferred.
+Alternatively, you can submit a hard copy at the begining of the next lab.
+
+Your reports will be evaluated in terms of:
+
+* **Correctness**: The answer does not contain errors and addresses the problem or question that you are asked to solve.
+* **Efficiency**: The problem is solved with the least amount of work, either by the user or the computer.
+
+
+Mini-Project
+------------
+
+The idea of the mini-project is to put the class materials into practice. 
+The details of the project will be given to you after the mid-term, so you will have plenty of time to work on your project. 
 
 Regrade policy
+--------------
 Regrade requests will be accepted up to 7 days after an assignment is returned.
 The reason for the regrade request must be explained in writing and submitted as a hard copy along with the assignment to be regraded
 
-Collaboration policies:
+Late policy
+-----------
+Labs reports are due at the start of the next lab, and the mini-poject will be due the date of the last session.
+You may deliver a lab report or project at a later time, but for every 24 hours after the start of the next lab, 20% of the assignment's grade will be deducted.
+
+
+Collaboration policy
+====================
 During tests (which includes the skill drills) absolutely no collaboration is allowed, unless the instructor explicitly states the contrary. 
-This includes includes shoulder surfing, peeking at other people’s screens, using Unix utilities to communicate with remote users, IRC or any other chat software, etc.
+This includes shoulder surfing, peeking at other people’s screens, using Unix utilities to communicate with remote users, IRC or any other chat software, etc.
 The lab is not large enough to spread-out much; please be proactive in reducing your neighbor’s temptation by not using an overly-large font and by not pushing written work to the edge of your workspace during these testing situations.
 All normal, real-world materials are available to you (Internet, man pages, etc) during tests.
 
@@ -142,9 +196,9 @@ The following actions, however, will be penalized as academic dishonesty:
 * Letting someone else ‘drive’ your keyboard or ‘driving’ someone else’s keyboard, i.e., passing a keyboard over to let someone type it for you. There is always a simple solution: just grab a piece of whiteboard, write it out and talk about it away from the computer.
 * Copying part or all of another person’s solution or any solutions that have not been provided by the instructor.
 
-
-
-
-
+Students should be familiar with the University’s Cheating and Plagiarism policy http://www.sonoma.edu/UAffairs/policies/cheating_plagiarism.htm. 
+Your own commitment to learning, as evidenced by your enrollment at Sonoma State University and the University’s policy, require you to be honest in all your academic course work. 
+Instances of academic dishonesty will not be tolerated. 
+Cheating on exams or plagiarism (presenting the work of another as your own, or the use of another person’s ideas without giving proper credit) will result in a failing grade and sanctions by the University. 
 
 

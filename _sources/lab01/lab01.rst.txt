@@ -1,8 +1,6 @@
-************
-Laboratory 1
-************
-
-:doc:`work01`
+*********
+Lab No. 1
+*********
 
 After completing this lab, students will be able to:
 
@@ -10,17 +8,10 @@ After completing this lab, students will be able to:
 * Login and end a shell session (``ssh``, ``logout`` and ``exit``)
 * Execute and edit commands on a shell.
 * Distinguish between commands, command options and arguments when providing input to the shell
-* Describe what a hierarchical file system is
-* Navigate in directories (``cd``, ``pwd``)
-* Explain what a home directory
-* List files in directories (``ls``)
-* Find files (``find``)
-* Display the contents of a file (``less`` and ``cat``)
-* Perform basic content search in files (``grep``)
 
 
-Part 1: The Shell
-=================
+The Shell
+=========
 
 A shell is interactive command interpreter: a  program that takes text input from the user in the form of commands and arguments, instructs the operating system to execute the tasks specified by the user input, and provides output that results from the execution of the commands by the operating system.
 
@@ -216,16 +207,6 @@ To exit a shell session, type :command:``exit``. Note that if you are connected 
     #. What command can be used to print the system date in the *UTC* timezone?
     #. What is the purpose of the :command:`hostname` command?  What is the output when you execute this in ``blue``?  Compare this with the output when you are not connected to ``blue``.  What is effect of using the ``-i`` option with this command?  Again, compare the output of running this command when executed in ``blue`` and when run locally.
     #. Execute the command :command:`echo Hello\\nLinux`. This prints the text ``HellonLinux` in a single line.  Provide a sequence of keystrokes that will cause the shell to print the word ``Hello`` in one line, and the word ``Linux`` on the next line. 
-
-
-Part 2: The File System
------------------------
-Files are organized in Linux in a *hierarchichal directory structure*, which means that they are organized in a tree-like structure.  To do this 
-
-
-Part 3: Users, Groups and Permissions
--------------------------------------
-
 
 
 

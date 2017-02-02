@@ -12,6 +12,8 @@ Welcome to Introduction to Unix - CS210's documentation!
    syllabus
    conv/conv
    lab01/lab01
+   lab02/lab02
+  
 
 Indices and tables
 ==================

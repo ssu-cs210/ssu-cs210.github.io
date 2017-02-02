@@ -1,86 +1,190 @@
-Lab 2: The ``vi`` editor
-========================
+*********
+Lab No. 2
+*********
+
+After completing this lab, students will be able to:
+
+* Inspect and navigate the linux filesystem
+* Create, remove and alter files and directories
 
 
-Most modern operating systems provide users with GUI based editors.
-However, these tools are typically not available when you are working on remote systems.
-Furthermore, these are expensive to run in terms of CPU, memory and network bandwith.
+Go over the man page of ls. Explain why the syntax days FILE instead of directory
 
-In your career as a CS student, and also as a CS professional, you will find that mastering a screen-oriented text editor is a very valuable skill. 
-Editors such as ``vi`` and ``emacs`` have a steep learning curve, hoewever, once you master these tools, you'll find that you can outperform GUI based editors.
-In this Lab you will learn the basics of the ``vi`` text editor. 
-``vi`` is part of the POSIX standard and it is safe to say that it comes with every linux distribution.
-It is lightweight, which means that it can be easily run on any system (e.g. Linux running as an embedded system) and you will be able to use it even with with a poor network connection.
-
-``vi`` is usually a link to the newer ``vim`` text editor. Some versions of Linux still come with the smaller, feature limited ``vi``.
-
-In this class we will need to use text editors extensively, so it is highly recommended to students to practice on their own.
-Moreover, there are many other courses in the Computer Science curriculum where you will need to use a text based editor. Dexterity with a text based editor is a skill that most likely will help you during your whole career as a Computer Scientist.
-
-A few notes about this Lab:
-
-* All work must be done in your **HOME** directory.
-* Each section builds on the foundation of the previous sections.  Make sure you understand and review the commands learned on each section when you complete them.
+Explain what a stack is
+Explain what recursion is
 
 
-Part 1: vi essentials
----------------------
+The File System
+===============
 
-As with the previous Lab, open the `terminal` application and log in to ``SEAWOLF``.
-Once the shell presents you with the prompt, start ``vim`` by typing:
+In Unix, files are organized in a hierarchical structure that resembles a tree, typically represented upside down (in the same fashion as a *family tree*):
+
+.. image:: fhs.svg
+
+You can see that in this structure, all the elements are "connected" by a path.
+
+A *directory* is a "branch" within the file system tree.  As such it can contain other branches (subdirectories) or leaves (*files*).
+
+The top directory in a Linux file system is known as the *root directory*, and it is represented by ``/``.
+Notice how the *root directory* contains other directories and files and how some of these directories contain either directories or files.
+
+.. note:: 
+
+    If you have not logged into ``blue.cs.sonoma.edu`` you need do so in order to start the Lab exercises.
+
+
+File system navigation
+----------------------
+
+There are several commands that help you to navigate the file system.
+Unix systems have the concept of the *working directory* (also referred as *current directory*), which determines the directory within the tree that your session is currently associated with.
+The ``pwd`` command prints your *current directory*. 
+
+
+.. admonition:: **pwd**: print current/working directory
+    :class: worksheet
+
+    #. Execute the :command:`pwd` command.  What is the output of this command?
+
+When you login into Unix systems, your *current directory* is set to your *home directory* by default.
+Home directories for most users are typically located in ``/home`` (However, on Mac OS, home directories are located in ``/Users``.)
+
+The ``ls`` command list the contents of directories.  Without any arguments, it lists the contents of the *current directory*.  You can also list the contents of any other directory if you provide it as an argument (and if you have read access to that directory):
+
+
+.. admonition:: **ls**: list directory contents
+    :class: worksheet
+
+    #. Execute the :command:`ls` command.  What is the output of this command? If the output is too long, ask the lab instructor for help.
+    #. Execute the command :command:`touch fileone`.  Execute the command :command:`ls -l`.  Notice how the ``-l`` option causes ``ls`` to display the output in long format (several fields about each file are presented in the form of columns). Who is the owner of the file ``fileone``? (hint: The textbook has an explanation of the meaning of the columns in page 16). Attach the output of the ``ls -l`` command to your report.
+    #. Execute the :command:`ls -la` command.  Compare with the output of the previous command. What is the effect of adding the ``-a`` option?
+    #. Execute the :command:`ls -l /usr/bin`.  This will produce a long list of files contained in the ``/usr/bin`` directory.  Execute :command:`ls -lt /usr/bin`.  What is the effect of adding the ``-t`` option?  Execute :command:`ls -ltr /usr/bin`.  What is the purpose of the ``-r`` option? 
+    #. What is the oldest file in the ``/usr/bin`` directory? 
+    #. What is the newest file in the ``/home/faculty/jmora/lab02/planets`` directory?
+
+
+
+A *pathname* is the trail through the directory hierarchy to a file or directory.  
+A *pathname* can be *absolute* when it traces a path from the *root directory* (``/``), or it can be *relative* when it traces a path from the *working directory*. 
+*Relative pathnames* utilize a special notation: ``.`` which refers to the working directory, and ``..`` which refers to a parent directory.
+There tilde character (``~``) is a special character that the shell can use to expand to home user directories.  The ``-`` character is another handy special character that you can use to "jump back" to the previous working directory.
+
+
+You can change your current directory with the ``cd`` command, which takes as an argument the *pathname* of the desired directory.  
+If no argument is provided, then ``cd`` will change the working directory to the user's *home directory*.
+
+.. admonition:: **cd**: change current directory
+    :class: worksheet
+
+    #. Execute the command :command:`cd /var/log`.  What is your current working directory?
+    #. There is a directory named ``mail`` inside the ``/var/log`` directory. What is the absolute path to that directory? Given your working directory, what is the relative path to that directory? What is the relative path to the ``/var`` directory?  Make sure you test your answers by running the ``cd`` command.   
+    #. Execute :command:`cd ~`.  What is your working directory? 
+    #. Execute "command:`cd ~jmora`. What is your working directory?
+    #. Execute "command:`cd -`.  How does the ``-`` charater modify the behavior of the cd command?
+    #. Absolute and relative pathnames can be mixed.  Consider the following path:``/usr/include/curl/./././///../boost/random/../math``.  Simplify that path so it does not use relative references (hint: try it with the ``cd`` command).
+    #. The following diagram corresponds to a portion of the filesystem in ``blue``.  Fill out the empty elements. To find the correct answers, you will need to navigate through the ``blue.cs.sonoma.edu`` file system using the ``cd`` command and use the ``ls`` directory to list files.
+
+    .. image:: navfill.svg
+
+
+
+Creating directories and files
+------------------------------
+
+The ``mkdir`` utility creates new directories. It requires as arguments the pathnames of the directories to be created.  The following example shows the commands required to generate the directory structure shown below:
+
+.. image:: cars.svg
+
 
 .. parsed-literal::
 
-    [me@tuxbox]$ :command:`vim`
+    [jmora\@blue log]$ :command:`cd`
+    [jmora\@blue ~]$ :command:`ls`
+    lab02  public_html
+    [jmora\@blue ~]$ :command:`mkdir vehicles`
+    [jmora\@blue ~]$ :command:`ls`
+    lab02  public_html  vehicles
+    [jmora\@blue ~]$ :command:`mkdir -p vehicles/cars/sedan`
+    [jmora\@blue ~]$ :command:`ls vehicles/cars`
+    sedan
+    [jmora\@blue ~]$ :command:`mkdir -p vehicles/cars/pickup vehicles/cars/suv`
+    [jmora\@blue ~]$ :command:`ls vehicles/cars`
+    pickup  sedan  suv
 
-You will be presented with the ``vim`` welcome screen:
 
-.. image:: vim_welcome.png
 
-To exit ``vim``, type:
+.. admonition:: **mkdir**: make directories
+    :class: worksheet
+
+    #. What is the purpose of the ``-p`` option?  Suppose you just created the directory structure from the previous image, and that your working directory is your home directory.  Will the command :command:`mkdir vehicles/planes/jet` succeed?
+    #. Provide a series of ``mkdir`` commands to complete the following structure (remember that ``vehicles`` is a subdirectory of your home directory):
+
+    .. parsed-literal::
+
+        vehicles
+        ├── bicycles
+        │   └── mountain
+        ├── cars
+        │   ├── pickup
+        │   ├── sedan
+        │   │   └── compact
+        │   └── suv
+        └── jet
+            ├── cargo
+            └── fighter
+
+
+To remove directories you can use the ``rmdir`` command. 
+Just as ``mkdir``, it requires the pathnames of the directories to be removed.
+However, ``rmdir`` has the limitation that it only works with empty directories.
+To remove directories that are not emptu, you can use the ``rm -r`` command.
+
+.. admonition:: **rmdir and rm -r**: remove directories
+    :class: worksheet
+
+    #. Provide a list of commands to remove the ``vehicles/cars/sedan`` directory.
+
+
+
+Moving and copying files
+------------------------
+
+The ``mv`` command can be used for two purposes: rename a file/directory, or move the file/directory to another path.
+
+
+.. admonition:: **mv**: move or rename files 
+    :class: worksheet
+
+    #. Make your *home* the working directory.  Run the following command: :command:`tar -xf ~jmora/lab02/vehicles.tar`.  This will create three files with names of vehicles in your working directory.
+    #. Provide a list of commands that will result in moving the files to the corresponding directory within the ``vehicles`` directory.
+    #. The three files should contain the *Wikipedia* link that corresponds to the name of the file.  However, the file named ``prius`` is incorrect.  Provide a single command that will make the file name reflect the content of the file (e.g. the filename should be ``fseries``) and will place the file under the correct directory (``~/vehicles/cars/pickup``)
+
+
+The ``cp`` command is used to copy files or directories. In the following example, a file is created by redirecting the output of the ``echo`` command into a file called ``original``.
+The ``cat`` command reads that file and prints that on the screen, this is done as a verification step. 
+``original`` is then copied into a file called ``clone``.  Notice how the contents of ``clone`` are the same as the contents of ``original``.
 
 .. parsed-literal::
-    
-    :command:`:q` :kbd:`Enter`  
+
+    [jmora\@blue ~]$ :command:`echo "This text is the content" > original`
+    [jmora\@blue ~]$ :command:`ls`
+    lab02  original  public_html
+    [jmora\@blue ~]$ :command:`cat original`
+    This text is the content
+    [jmora\@blue ~]$ :command:`cp original clone`
+    [jmora\@blue ~]$ :command:`ls`
+    clone  lab02  original  public_html 
+    [jmora\@blue ~]$ :command:`cat clone`
+    This text is the content
 
 
-
-| :command:`git rebase -i master`
-
-
-Now that you know how to exit, open ``vim`` again, but this time type:
+In order to copy directories, you need to provide the ``-r`` option to the ``cp`` command.  This option stands for *recursive*, and basically it means that it will traverse the whole tree under the directory that you want to copy. 
 
 
-.. parsed-literal::
+.. admonition:: **cp**: copy files or directories
+    :class: worksheet
 
-    [me\@tuxbox]$ :command:`vi myfile.txt`
-
-Notice how you can start ``vim`` by typing ``vi``, and notice that ``vim`` lets you know that you are editing a new file called ``myfile.txt``:
-
-.. image:: vim_newfile.png
-    
-
-
-
-
-Part 3: Motion Commands
------------------------
-
-The following are some common motion commands
-
-.. table:: Common ``vi`` commands
-    :widths: auto
-
-    ============   =========
-     Keystrokes     Command
-    ============   =========
-     ``h,j,k,l``        Left, down, up, right
-     ``0,$``            First and Last characters of current line
-     ``w,b``            Forward, backaward by word
-     ``(,)``            Beginning of previous, next sentence
-     ``{,}``            Beginning of previous, next paragraph
-    ============   =========
-
-
-
+    #. What command would you use to copy the file ~/jmora/lab02/airbus into the appropriate subdirectory within ``vehicles``?
+    #. We want to make a backup of the ``vehicles`` directory into a directory called ``vehicles_backup``.  What command will serve this purpose?
+    #. Using a text editor, create two files in your home directory named ``file_1`` and ``file_2``.  Make sure that the content of these files is not the same.  Execute the command :command:`cp -n file_1 file_2` and after this inspect the contents of the two files. Execute the command again but this time use the ``-i`` option.  Based on your observations (you can always look at the man pages, of course), what is the purpose of these two flags?
 

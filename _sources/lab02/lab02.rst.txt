@@ -60,7 +60,7 @@ The ``ls`` command list the contents of directories.  Without any arguments, it 
     #. Execute the :command:`ls -la` command.  Compare with the output of the previous command. What is the effect of adding the ``-a`` option?
     #. Execute the :command:`ls -l /usr/bin`.  This will produce a long list of files contained in the ``/usr/bin`` directory.  Execute :command:`ls -lt /usr/bin`.  What is the effect of adding the ``-t`` option?  Execute :command:`ls -ltr /usr/bin`.  What is the purpose of the ``-r`` option? 
     #. What is the oldest file in the ``/usr/bin`` directory? 
-    #. What is the newest file in the ``/home/faculty/jmora/lab02/planets`` directory?
+    #. What is the newest file in the ``/tmp/planets`` directory?
 
 
 
@@ -155,7 +155,7 @@ The ``mv`` command can be used for two purposes: rename a file/directory, or mov
 .. admonition:: **mv**: move or rename files 
     :class: worksheet
 
-    #. Make your *home* the working directory.  Run the following command: :command:`tar -xf ~jmora/lab02/vehicles.tar`.  This will create three files with names of vehicles in your working directory.
+    #. Make your *home* the working directory.  Run the following command: :command:`tar -xf /tmp/vehicles.tar`.  This will create three files with names of vehicles in your working directory.
     #. Provide a list of commands that will result in moving the files to the corresponding directory within the ``vehicles`` directory.
     #. The three files should contain the *Wikipedia* link that corresponds to the name of the file.  However, the file named ``prius`` is incorrect.  Provide a single command that will make the file name reflect the content of the file (e.g. the filename should be ``fseries``) and will place the file under the correct directory (``~/vehicles/cars/pickup``)
 
@@ -184,7 +184,7 @@ In order to copy directories, you need to provide the ``-r`` option to the ``cp`
 .. admonition:: **cp**: copy files or directories
     :class: worksheet
 
-    #. What command would you use to copy the file ~/jmora/lab02/airbus into the appropriate subdirectory within ``vehicles``?
+    #. What command would you use to copy the file /tmp/airbus into the appropriate subdirectory within ``vehicles``?
     #. We want to make a backup of the ``vehicles`` directory into a directory called ``vehicles_backup``.  What command will serve this purpose?
     #. Using a text editor, create two files in your home directory named ``file_1`` and ``file_2``.  Make sure that the content of these files is not the same.  Execute the command :command:`cp -n file_1 file_2` and after this inspect the contents of the two files. Execute the command again but this time use the ``-i`` option.  Based on your observations (you can always look at the man pages, of course), what is the purpose of these two flags?
 

@@ -178,7 +178,7 @@ Home directories for most users are typically located in <code class="docutils l
 <li>Execute the <strong class="command">ls -la</strong> command.  Compare with the output of the previous command. What is the effect of adding the <code class="docutils literal"><span class="pre">-a</span></code> option?</li>
 <li>Execute the <strong class="command">ls -l /usr/bin</strong>.  This will produce a long list of files contained in the <code class="docutils literal"><span class="pre">/usr/bin</span></code> directory.  Execute <strong class="command">ls -lt /usr/bin</strong>.  What is the effect of adding the <code class="docutils literal"><span class="pre">-t</span></code> option?  Execute <strong class="command">ls -ltr /usr/bin</strong>.  What is the purpose of the <code class="docutils literal"><span class="pre">-r</span></code> option?</li>
 <li>What is the oldest file in the <code class="docutils literal"><span class="pre">/usr/bin</span></code> directory?</li>
-<li>What is the newest file in the <code class="docutils literal"><span class="pre">/home/faculty/jmora/lab02/planets</span></code> directory?</li>
+<li>What is the newest file in the <code class="docutils literal"><span class="pre">/tmp/planets</span></code> directory?</li>
 </ol>
 </div>
 <p>A <em>pathname</em> is the trail through the directory hierarchy to a file or directory.
@@ -254,7 +254,7 @@ To remove directories that are not emptu, you can use the <code class="docutils 
 <div class="worksheet admonition">
 <p class="first admonition-title"><strong>mv</strong>: move or rename files</p>
 <ol class="last arabic simple">
-<li>Make your <em>home</em> the working directory.  Run the following command: <strong class="command">tar -xf ~jmora/lab02/vehicles.tar</strong>.  This will create three files with names of vehicles in your working directory.</li>
+<li>Make your <em>home</em> the working directory.  Run the following command: <strong class="command">tar -xf /tmp/vehicles.tar</strong>.  This will create three files with names of vehicles in your working directory.</li>
 <li>Provide a list of commands that will result in moving the files to the corresponding directory within the <code class="docutils literal"><span class="pre">vehicles</span></code> directory.</li>
 <li>The three files should contain the <em>Wikipedia</em> link that corresponds to the name of the file.  However, the file named <code class="docutils literal"><span class="pre">prius</span></code> is incorrect.  Provide a single command that will make the file name reflect the content of the file (e.g. the filename should be <code class="docutils literal"><span class="pre">fseries</span></code>) and will place the file under the correct directory (<code class="docutils literal"><span class="pre">~/vehicles/cars/pickup</span></code>)</li>
 </ol>
@@ -278,7 +278,7 @@ This text is the content
 <div class="worksheet admonition">
 <p class="first admonition-title"><strong>cp</strong>: copy files or directories</p>
 <ol class="last arabic simple">
-<li>What command would you use to copy the file ~/jmora/lab02/airbus into the appropriate subdirectory within <code class="docutils literal"><span class="pre">vehicles</span></code>?</li>
+<li>What command would you use to copy the file /tmp/airbus into the appropriate subdirectory within <code class="docutils literal"><span class="pre">vehicles</span></code>?</li>
 <li>We want to make a backup of the <code class="docutils literal"><span class="pre">vehicles</span></code> directory into a directory called <code class="docutils literal"><span class="pre">vehicles_backup</span></code>.  What command will serve this purpose?</li>
 <li>Using a text editor, create two files in your home directory named <code class="docutils literal"><span class="pre">file_1</span></code> and <code class="docutils literal"><span class="pre">file_2</span></code>.  Make sure that the content of these files is not the same.  Execute the command <strong class="command">cp -n file_1 file_2</strong> and after this inspect the contents of the two files. Execute the command again but this time use the <code class="docutils literal"><span class="pre">-i</span></code> option.  Based on your observations (you can always look at the man pages, of course), what is the purpose of these two flags?</li>
 </ol>

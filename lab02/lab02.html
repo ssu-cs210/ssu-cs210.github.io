@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab No. 2 &#8212; CS210 - Introduction to Unix  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Lab No. 1" href="../lab01/lab01.html" />
+<link href="https://fonts.googleapis.com/css?family=Bitter|Source+Code+Pro" rel="stylesheet">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          CS210 - Introduction to Unix</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">CS210 Introduction to Unix - Spring 2017</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conv/conv.html">Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab01/lab01.html">Lab No. 1</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab No. 2</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Lab No. 2</a><ul>
+<li><a class="reference internal" href="#the-file-system">The File System</a><ul>
+<li><a class="reference internal" href="#file-system-navigation">File system navigation</a></li>
+<li><a class="reference internal" href="#creating-directories-and-files">Creating directories and files</a></li>
+<li><a class="reference internal" href="#moving-and-copying-files">Moving and copying files</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="../lab01/lab01.html" title="Previous Chapter: Lab No. 1"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Lab No. 1</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/lab02/lab02.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="lab-no-2">
+<h1>Lab No. 2<a class="headerlink" href="#lab-no-2" title="Permalink to this headline">¶</a></h1>
+<p>After completing this lab, students will be able to:</p>
+<ul class="simple">
+<li>Inspect and navigate the linux filesystem</li>
+<li>Create, remove and alter files and directories</li>
+</ul>
+<p>Go over the man page of ls. Explain why the syntax days FILE instead of directory</p>
+<p>Explain what a stack is
+Explain what recursion is</p>
+<div class="section" id="the-file-system">
+<h2>The File System<a class="headerlink" href="#the-file-system" title="Permalink to this headline">¶</a></h2>
+<p>In Unix, files are organized in a hierarchical structure that resembles a tree, typically represented upside down (in the same fashion as a <em>family tree</em>):</p>
+<img alt="../_images/fhs.svg" src="../_images/fhs.svg" /><p>You can see that in this structure, all the elements are &#8220;connected&#8221; by a path.</p>
+<p>A <em>directory</em> is a &#8220;branch&#8221; within the file system tree.  As such it can contain other branches (subdirectories) or leaves (<em>files</em>).</p>
+<p>The top directory in a Linux file system is known as the <em>root directory</em>, and it is represented by <code class="docutils literal"><span class="pre">/</span></code>.
+Notice how the <em>root directory</em> contains other directories and files and how some of these directories contain either directories or files.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you have not logged into <code class="docutils literal"><span class="pre">blue.cs.sonoma.edu</span></code> you need do so in order to start the Lab exercises.</p>
+</div>
+<div class="section" id="file-system-navigation">
+<h3>File system navigation<a class="headerlink" href="#file-system-navigation" title="Permalink to this headline">¶</a></h3>
+<p>There are several commands that help you to navigate the file system.
+Unix systems have the concept of the <em>working directory</em> (also referred as <em>current directory</em>), which determines the directory within the tree that your session is currently associated with.
+The <code class="docutils literal"><span class="pre">pwd</span></code> command prints your <em>current directory</em>.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title"><strong>pwd</strong>: print current/working directory</p>
+<ol class="last arabic simple">
+<li>Execute the <strong class="command">pwd</strong> command.  What is the output of this command?</li>
+</ol>
+</div>
+<p>When you login into Unix systems, your <em>current directory</em> is set to your <em>home directory</em> by default.
+Home directories for most users are typically located in <code class="docutils literal"><span class="pre">/home</span></code> (However, on Mac OS, home directories are located in <code class="docutils literal"><span class="pre">/Users</span></code>.)</p>
+<p>The <code class="docutils literal"><span class="pre">ls</span></code> command list the contents of directories.  Without any arguments, it lists the contents of the <em>current directory</em>.  You can also list the contents of any other directory if you provide it as an argument (and if you have read access to that directory):</p>
+<div class="worksheet admonition">
+<p class="first admonition-title"><strong>ls</strong>: list directory contents</p>
+<ol class="last arabic simple">
+<li>Execute the <strong class="command">ls</strong> command.  What is the output of this command? If the output is too long, ask the lab instructor for help.</li>
+<li>Execute the command <strong class="command">touch fileone</strong>.  Execute the command <strong class="command">ls -l</strong>.  Notice how the <code class="docutils literal"><span class="pre">-l</span></code> option causes <code class="docutils literal"><span class="pre">ls</span></code> to display the output in long format (several fields about each file are presented in the form of columns). Who is the owner of the file <code class="docutils literal"><span class="pre">fileone</span></code>? (hint: The textbook has an explanation of the meaning of the columns in page 16). Attach the output of the <code class="docutils literal"><span class="pre">ls</span> <span class="pre">-l</span></code> command to your report.</li>
+<li>Execute the <strong class="command">ls -la</strong> command.  Compare with the output of the previous command. What is the effect of adding the <code class="docutils literal"><span class="pre">-a</span></code> option?</li>
+<li>Execute the <strong class="command">ls -l /usr/bin</strong>.  This will produce a long list of files contained in the <code class="docutils literal"><span class="pre">/usr/bin</span></code> directory.  Execute <strong class="command">ls -lt /usr/bin</strong>.  What is the effect of adding the <code class="docutils literal"><span class="pre">-t</span></code> option?  Execute <strong class="command">ls -ltr /usr/bin</strong>.  What is the purpose of the <code class="docutils literal"><span class="pre">-r</span></code> option?</li>
+<li>What is the oldest file in the <code class="docutils literal"><span class="pre">/usr/bin</span></code> directory?</li>
+<li>What is the newest file in the <code class="docutils literal"><span class="pre">/home/faculty/jmora/lab02/planets</span></code> directory?</li>
+</ol>
+</div>
+<p>A <em>pathname</em> is the trail through the directory hierarchy to a file or directory.
+A <em>pathname</em> can be <em>absolute</em> when it traces a path from the <em>root directory</em> (<code class="docutils literal"><span class="pre">/</span></code>), or it can be <em>relative</em> when it traces a path from the <em>working directory</em>.
+<em>Relative pathnames</em> utilize a special notation: <code class="docutils literal"><span class="pre">.</span></code> which refers to the working directory, and <code class="docutils literal"><span class="pre">..</span></code> which refers to a parent directory.
+There tilde character (<code class="docutils literal"><span class="pre">~</span></code>) is a special character that the shell can use to expand to home user directories.  The <code class="docutils literal"><span class="pre">-</span></code> character is another handy special character that you can use to &#8220;jump back&#8221; to the previous working directory.</p>
+<p>You can change your current directory with the <code class="docutils literal"><span class="pre">cd</span></code> command, which takes as an argument the <em>pathname</em> of the desired directory.
+If no argument is provided, then <code class="docutils literal"><span class="pre">cd</span></code> will change the working directory to the user&#8217;s <em>home directory</em>.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title"><strong>cd</strong>: change current directory</p>
+<ol class="arabic simple">
+<li>Execute the command <strong class="command">cd /var/log</strong>.  What is your current working directory?</li>
+<li>There is a directory named <code class="docutils literal"><span class="pre">mail</span></code> inside the <code class="docutils literal"><span class="pre">/var/log</span></code> directory. What is the absolute path to that directory? Given your working directory, what is the relative path to that directory? What is the relative path to the <code class="docutils literal"><span class="pre">/var</span></code> directory?  Make sure you test your answers by running the <code class="docutils literal"><span class="pre">cd</span></code> command.</li>
+<li>Execute <strong class="command">cd ~</strong>.  What is your working directory?</li>
+<li>Execute &#8220;command:<cite>cd ~jmora</cite>. What is your working directory?</li>
+<li>Execute &#8220;command:<cite>cd -</cite>.  How does the <code class="docutils literal"><span class="pre">-</span></code> charater modify the behavior of the cd command?</li>
+<li>Absolute and relative pathnames can be mixed.  Consider the following path:<code class="docutils literal"><span class="pre">/usr/include/curl/./././///../boost/random/../math</span></code>.  Simplify that path so it does not use relative references (hint: try it with the <code class="docutils literal"><span class="pre">cd</span></code> command).</li>
+<li>The following diagram corresponds to a portion of the filesystem in <code class="docutils literal"><span class="pre">blue</span></code>.  Fill out the empty elements. To find the correct answers, you will need to navigate through the <code class="docutils literal"><span class="pre">blue.cs.sonoma.edu</span></code> file system using the <code class="docutils literal"><span class="pre">cd</span></code> command and use the <code class="docutils literal"><span class="pre">ls</span></code> directory to list files.</li>
+</ol>
+<img alt="../_images/navfill.svg" class="last" src="../_images/navfill.svg" /></div>
+</div>
+<div class="section" id="creating-directories-and-files">
+<h3>Creating directories and files<a class="headerlink" href="#creating-directories-and-files" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">mkdir</span></code> utility creates new directories. It requires as arguments the pathnames of the directories to be created.  The following example shows the commands required to generate the directory structure shown below:</p>
+<img alt="../_images/cars.svg" src="../_images/cars.svg" /><pre class="literal-block">
+[jmora&#64;blue log]$ <strong class="command">cd</strong>
+[jmora&#64;blue ~]$ <strong class="command">ls</strong>
+lab02  public_html
+[jmora&#64;blue ~]$ <strong class="command">mkdir vehicles</strong>
+[jmora&#64;blue ~]$ <strong class="command">ls</strong>
+lab02  public_html  vehicles
+[jmora&#64;blue ~]$ <strong class="command">mkdir -p vehicles/cars/sedan</strong>
+[jmora&#64;blue ~]$ <strong class="command">ls vehicles/cars</strong>
+sedan
+[jmora&#64;blue ~]$ <strong class="command">mkdir -p vehicles/cars/pickup vehicles/cars/suv</strong>
+[jmora&#64;blue ~]$ <strong class="command">ls vehicles/cars</strong>
+pickup  sedan  suv
+</pre>
+<div class="worksheet admonition">
+<p class="first admonition-title"><strong>mkdir</strong>: make directories</p>
+<ol class="arabic simple">
+<li>What is the purpose of the <code class="docutils literal"><span class="pre">-p</span></code> option?  Suppose you just created the directory structure from the previous image, and that your working directory is your home directory.  Will the command <strong class="command">mkdir vehicles/planes/jet</strong> succeed?</li>
+<li>Provide a series of <code class="docutils literal"><span class="pre">mkdir</span></code> commands to complete the following structure (remember that <code class="docutils literal"><span class="pre">vehicles</span></code> is a subdirectory of your home directory):</li>
+</ol>
+<div class="last highlight-default"><div class="highlight"><pre><span></span>vehicles
+├── bicycles
+│   └── mountain
+├── cars
+│   ├── pickup
+│   ├── sedan
+│   │   └── compact
+│   └── suv
+└── jet
+    ├── cargo
+    └── fighter
+</pre></div>
+</div>
+</div>
+<p>To remove directories you can use the <code class="docutils literal"><span class="pre">rmdir</span></code> command.
+Just as <code class="docutils literal"><span class="pre">mkdir</span></code>, it requires the pathnames of the directories to be removed.
+However, <code class="docutils literal"><span class="pre">rmdir</span></code> has the limitation that it only works with empty directories.
+To remove directories that are not emptu, you can use the <code class="docutils literal"><span class="pre">rm</span> <span class="pre">-r</span></code> command.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title"><strong>rmdir and rm -r</strong>: remove directories</p>
+<ol class="last arabic simple">
+<li>Provide a list of commands to remove the <code class="docutils literal"><span class="pre">vehicles/cars/sedan</span></code> directory.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="moving-and-copying-files">
+<h3>Moving and copying files<a class="headerlink" href="#moving-and-copying-files" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">mv</span></code> command can be used for two purposes: rename a file/directory, or move the file/directory to another path.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title"><strong>mv</strong>: move or rename files</p>
+<ol class="last arabic simple">
+<li>Make your <em>home</em> the working directory.  Run the following command: <strong class="command">tar -xf ~jmora/lab02/vehicles.tar</strong>.  This will create three files with names of vehicles in your working directory.</li>
+<li>Provide a list of commands that will result in moving the files to the corresponding directory within the <code class="docutils literal"><span class="pre">vehicles</span></code> directory.</li>
+<li>The three files should contain the <em>Wikipedia</em> link that corresponds to the name of the file.  However, the file named <code class="docutils literal"><span class="pre">prius</span></code> is incorrect.  Provide a single command that will make the file name reflect the content of the file (e.g. the filename should be <code class="docutils literal"><span class="pre">fseries</span></code>) and will place the file under the correct directory (<code class="docutils literal"><span class="pre">~/vehicles/cars/pickup</span></code>)</li>
+</ol>
+</div>
+<p>The <code class="docutils literal"><span class="pre">cp</span></code> command is used to copy files or directories. In the following example, a file is created by redirecting the output of the <code class="docutils literal"><span class="pre">echo</span></code> command into a file called <code class="docutils literal"><span class="pre">original</span></code>.
+The <code class="docutils literal"><span class="pre">cat</span></code> command reads that file and prints that on the screen, this is done as a verification step.
+<code class="docutils literal"><span class="pre">original</span></code> is then copied into a file called <code class="docutils literal"><span class="pre">clone</span></code>.  Notice how the contents of <code class="docutils literal"><span class="pre">clone</span></code> are the same as the contents of <code class="docutils literal"><span class="pre">original</span></code>.</p>
+<pre class="literal-block">
+[jmora&#64;blue ~]$ <strong class="command">echo &quot;This text is the content&quot; &gt; original</strong>
+[jmora&#64;blue ~]$ <strong class="command">ls</strong>
+lab02  original  public_html
+[jmora&#64;blue ~]$ <strong class="command">cat original</strong>
+This text is the content
+[jmora&#64;blue ~]$ <strong class="command">cp original clone</strong>
+[jmora&#64;blue ~]$ <strong class="command">ls</strong>
+clone  lab02  original  public_html
+[jmora&#64;blue ~]$ <strong class="command">cat clone</strong>
+This text is the content
+</pre>
+<p>In order to copy directories, you need to provide the <code class="docutils literal"><span class="pre">-r</span></code> option to the <code class="docutils literal"><span class="pre">cp</span></code> command.  This option stands for <em>recursive</em>, and basically it means that it will traverse the whole tree under the directory that you want to copy.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title"><strong>cp</strong>: copy files or directories</p>
+<ol class="last arabic simple">
+<li>What command would you use to copy the file ~/jmora/lab02/airbus into the appropriate subdirectory within <code class="docutils literal"><span class="pre">vehicles</span></code>?</li>
+<li>We want to make a backup of the <code class="docutils literal"><span class="pre">vehicles</span></code> directory into a directory called <code class="docutils literal"><span class="pre">vehicles_backup</span></code>.  What command will serve this purpose?</li>
+<li>Using a text editor, create two files in your home directory named <code class="docutils literal"><span class="pre">file_1</span></code> and <code class="docutils literal"><span class="pre">file_2</span></code>.  Make sure that the content of these files is not the same.  Execute the command <strong class="command">cp -n file_1 file_2</strong> and after this inspect the contents of the two files. Execute the command again but this time use the <code class="docutils literal"><span class="pre">-i</span></code> option.  Based on your observations (you can always look at the man pages, of course), what is the purpose of these two flags?</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

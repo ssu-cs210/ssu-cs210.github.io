@@ -79,8 +79,8 @@ If no argument is provided, then ``cd`` will change the working directory to the
     #. Execute the command :command:`cd /var/log`.  What is your current working directory?
     #. There is a directory named ``mail`` inside the ``/var/log`` directory. What is the absolute path to that directory? Given your working directory, what is the relative path to that directory? What is the relative path to the ``/var`` directory?  Make sure you test your answers by running the ``cd`` command.   
     #. Execute :command:`cd ~`.  What is your working directory? 
-    #. Execute "command:`cd ~jmora`. What is your working directory?
-    #. Execute "command:`cd -`.  How does the ``-`` charater modify the behavior of the cd command?
+    #. Execute :command:`cd ~jmora`. What is your working directory?
+    #. Execute :command:`cd -`.  How does the ``-`` charater modify the behavior of the cd command?
     #. Absolute and relative pathnames can be mixed.  Consider the following path:``/usr/include/curl/./././///../boost/random/../math``.  Simplify that path so it does not use relative references (hint: try it with the ``cd`` command).
     #. The following diagram corresponds to a portion of the filesystem in ``blue``.  Fill out the empty elements. To find the correct answers, you will need to navigate through the ``blue.cs.sonoma.edu`` file system using the ``cd`` command and use the ``ls`` directory to list files.
 

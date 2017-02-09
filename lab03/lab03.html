@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab 03 File Permissions &#8212; CS210 - Introduction to Unix  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Lab No. 2" href="../lab02/lab02.html" />
+<link href="https://fonts.googleapis.com/css?family=Bitter|Source+Code+Pro" rel="stylesheet">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          CS210 - Introduction to Unix</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">CS210 Introduction to Unix - Spring 2017</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conv/conv.html">Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab01/lab01.html">Lab No. 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab02/lab02.html">Lab No. 2</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab 03 File Permissions</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Lab 03 File Permissions</a><ul>
+<li><a class="reference internal" href="#users-and-groups">Users and Groups</a></li>
+<li><a class="reference internal" href="#file-ownership-and-permissions">File Ownership and Permissions</a></li>
+<li><a class="reference internal" href="#symbolic-links">Symbolic Links</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="../lab02/lab02.html" title="Previous Chapter: Lab No. 2"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Lab No. 2</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/lab03/lab03.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="lab-03-file-permissions">
+<h1>Lab 03 File Permissions<a class="headerlink" href="#lab-03-file-permissions" title="Permalink to this headline">¶</a></h1>
+<p>In this lab we will:</p>
+<ul class="simple">
+<li>learn about file permissions</li>
+<li>learn to create symbolic links and hard links</li>
+</ul>
+<p>Utilities that will be utilized in this Lab:</p>
+<p><code class="docutils literal"><span class="pre">ls</span></code>, <code class="docutils literal"><span class="pre">cd</span></code>, <code class="docutils literal"><span class="pre">less</span></code>, <code class="docutils literal"><span class="pre">cat</span></code>, <code class="docutils literal"><span class="pre">touch</span></code>, <code class="docutils literal"><span class="pre">chmod</span></code>, <code class="docutils literal"><span class="pre">id</span></code>, <code class="docutils literal"><span class="pre">umask</span></code>, <code class="docutils literal"><span class="pre">mkdir</span></code>, <code class="docutils literal"><span class="pre">ln</span></code>, <code class="docutils literal"><span class="pre">echo</span></code> and redirection.</p>
+<div class="section" id="users-and-groups">
+<h2>Users and Groups<a class="headerlink" href="#users-and-groups" title="Permalink to this headline">¶</a></h2>
+<p>Linux supports several methods of controlling access to files an directories.
+In this lab we are going to learn the traditional access control model that is based on the concepts of <strong>file ownership</strong> and <strong>permissions</strong>.
+In this model, access is granted based on the concepts of <em>users</em> and <em>groups</em>.
+A <em>user</em> is an individual access account, and they can belong to one or more <em>groups</em>, and they can own files.
+When user accounts are created, they are assigned a <em>username</em> and a <em>user id</em> (or <em>uid</em>), and also a primary group which defaults to the same as the user id.</p>
+<p>To find out your <em>uid</em> and the groups that your account is associated with, use the <code class="docutils literal"><span class="pre">id</span></code> command:</p>
+<pre class="literal-block">
+[jmora&#64;blue ~]$ <strong class="command">id</strong>
+uid=1234(jmora) gid=1234(jmora) groups=1234(jmora)
+</pre>
+<p>User account information is stored in the <code class="docutils literal"><span class="pre">/etc/passwd</span></code> file. Each line on this file corresponds to a user record, which contains 7 fields separated by a colon (<code class="docutils literal"><span class="pre">:</span></code>):</p>
+<ul class="simple">
+<li><strong>username</strong>: the name used to login into the system. It should be between 1 to 32 charcters long.</li>
+<li><strong>password</strong>: a value of x indicates the account has an encrypted password stored in <code class="docutils literal"><span class="pre">/etc/shadow</span></code>.</li>
+<li><strong>user ID (UID)</strong>: user identification number. By default UID 0 is reserved for root user and UID’s ranging from 1-99 are reserved for other predefined accounts. Further UID’s ranging from 100-999 are reserved for system accounts and groups.</li>
+<li><strong>group ID (GID)</strong>: primary group ID.</li>
+<li><strong>user info</strong>: This field is optional and allow you to define extra information about the user. Tipically contains the account&#8217;s full name.</li>
+<li><strong>home directory</strong>: The absolute path of the user&#8217;s home directory.</li>
+<li><strong>shell</strong>: The absolute path of the user’s default shell.</li>
+</ul>
+<div class="worksheet admonition">
+<p class="first admonition-title">Users and Groups</p>
+<ol class="last arabic simple">
+<li>What is your user id?  To which groups is your account associated?</li>
+<li>Open the <code class="docutils literal"><span class="pre">/etc/passwd</span></code> file with the command <strong class="command">less /etc/password</strong>, and locate the <em>apache</em> account (Hint: use the search feature of <code class="docutils literal"><span class="pre">less</span></code> to find your account). What are the <em>apache</em> account&#8217;s <em>uid</em> and <em>home directory</em>?</li>
+<li>Open the <code class="docutils literal"><span class="pre">/etc/group</span></code> file.  How many users are associated with the <em>apache</em> group?</li>
+</ol>
+</div>
+</div>
+<div class="section" id="file-ownership-and-permissions">
+<h2>File Ownership and Permissions<a class="headerlink" href="#file-ownership-and-permissions" title="Permalink to this headline">¶</a></h2>
+<p>Every file in a Unix system is <em>owned</em> by a user and it is also associated with a group.
+Access to files can be specified based on:</p>
+<ul class="simple">
+<li>the file&#8217;s <strong>Owner</strong>: The user account that owns the file.  By default, the owner of a file is set as the user that created the file.  Ownership and permisions of a file can only be changed by the file owner or by the <em>root</em> account.</li>
+<li>the file&#8217;s <strong>Group</strong>: Each file has a group associated, and group permissions apply to all the users that are members of the file&#8217;s group.</li>
+<li>the rest of the world (<strong>Other</strong>): Any other account that is not the owner or part of the file&#8217;s group.</li>
+</ul>
+<p>There are three types of permissions that can be granted or revoked for a file:  <strong>Read</strong>, <strong>Write</strong> and <strong>Execute</strong>.
+These permission types have a different meaning depending of the file type:</p>
+<table border="1" class="table-striped docutils">
+<colgroup>
+<col width="8%" />
+<col width="32%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Access Type</th>
+<th class="head">Regular Files</th>
+<th class="head">Directories</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>read</strong></td>
+<td>Read the contents of the file</td>
+<td>List the contents of a directory</td>
+</tr>
+<tr class="row-odd"><td><strong>write</strong></td>
+<td>Modify the contents of a file</td>
+<td>Create or remove files in the directory</td>
+</tr>
+<tr class="row-even"><td><strong>execute</strong></td>
+<td>Run a file as a program</td>
+<td>Set the directory as working directory / copy files from the directory (sticky bit restrictions apply)</td>
+</tr>
+</tbody>
+</table>
+<p>The easiest way to inspect a file&#8217;s ownership and permission attributes is by running the <code class="docutils literal"><span class="pre">ls</span></code> command with the long listing option that you learned in the previous Lab (<code class="docutils literal"><span class="pre">ls</span> <span class="pre">-l</span></code>):</p>
+<pre class="literal-block">
+[jmora&#64;blue ~]$ <strong class="command">ls -l /etc/apt</strong>
+total 12
+-rw-r--r--. 1 root root 541 Mar 13  2015 apt.conf
+drwxr-xr-x. 2 root root  63 Oct 21  2015 apt.conf.d
+-rw-r--r--. 1 root root   0 Mar 13  2015 preferences
+-rw-r--r--. 1 root root 233 Mar 13  2015 rpmpriorities
+-rw-r--r--. 1 root root  48 Mar 13  2015 sources.list
+drwxr-xr-x. 2 root root  74 Mar 13  2015 sources.list.d
+-rw-r--r--. 1 root root   0 Mar 13  2015 vendors.list
+drwxr-xr-x. 2 root root  24 Mar 13  2015 vendors.list.d
+</pre>
+<p>The leftmost field of each line contains the following file attributes:</p>
+<img alt="../_images/permissions.png" src="../_images/permissions.png" />
+<dl class="docutils">
+<dt>File Type:</dt>
+<dd>The type of file according to this table:</dd>
+</dl>
+<table border="1" class="minitable docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Attribute</th>
+<th class="head">File Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>-</td>
+<td>Regular File</td>
+</tr>
+<tr class="row-odd"><td>d</td>
+<td>Directory</td>
+</tr>
+<tr class="row-even"><td>l</td>
+<td>Symbolic link</td>
+</tr>
+<tr class="row-odd"><td>s</td>
+<td>Socket</td>
+</tr>
+<tr class="row-even"><td>p</td>
+<td>Pipe</td>
+</tr>
+<tr class="row-odd"><td>c</td>
+<td>Character device file</td>
+</tr>
+<tr class="row-even"><td>b</td>
+<td>Block file</td>
+</tr>
+</tbody>
+</table>
+<p>File permission attributes are granted through the <code class="docutils literal"><span class="pre">chmod</span></code>  (&#8220;change file mode&#8221;) command. There are two ways of specifying file permissions: <em>octal</em> and <em>symbolic</em> representation.</p>
+<p>The following table shows the octal representation of the different permission modes:</p>
+<table border="1" class="minitable docutils">
+<colgroup>
+<col width="31%" />
+<col width="38%" />
+<col width="31%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Octal</th>
+<th class="head">Binary</th>
+<th class="head">Mode</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>000</td>
+<td>&#8212;</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>001</td>
+<td>&#8211;x</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>010</td>
+<td>-w-</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>011</td>
+<td>-wx</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>100</td>
+<td>r&#8211;</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>101</td>
+<td>r-x</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>110</td>
+<td>rw-</td>
+</tr>
+<tr class="row-odd"><td>7</td>
+<td>111</td>
+<td>rwx</td>
+</tr>
+</tbody>
+</table>
+<p>When setting the mode for a file using the octal notation, we need to specify the mode for the owner, group and others; we can not just specify a value for only one of those permission classes.
+Try creating a file called <code class="docutils literal"><span class="pre">file_one</span></code> and observe how the permission attributes change with the <code class="docutils literal"><span class="pre">chmod</span></code> command</p>
+<pre class="literal-block">
+[jmora&#64;blue ~]$ <strong class="command">touch file_one</strong>
+[jmora&#64;blue ~]$ <strong class="command">ls -l</strong>
+total 8
+-rw------- 1 jmora jmora    0 Feb  2 23:02 file_one
+drwxr--r-- 5 jmora jmora 4096 Feb  2 10:58 lab02
+drwx--x--x 2 jmora jmora 4096 Jan 27  2016 public_html
+[jmora&#64;blue ~]$ <strong class="command">chmod 755 file_one</strong>
+[jmora&#64;blue ~]$ <strong class="command">ls -l</strong>
+total 8
+-rwxr-xr-x 1 jmora jmora    0 Feb  2 23:02 file_one
+drwxr--r-- 5 jmora jmora 4096 Feb  2 10:58 lab02
+drwx--x--x 2 jmora jmora 4096 Jan 27  2016 public_html
+</pre>
+<p>With the symbolic notation we do not have to specify all the permission classes.
+Instead, we used the symbols <strong>u</strong> for owner(user), <strong>g</strong> for owner, <strong>o</strong> for others and <strong>a</strong> for all (that is, to apply the same change to all <strong>u</strong>, <strong>g</strong> and <strong>o</strong> at the same time), and then the <strong>+</strong> character to indicate the grant of one or more of the permissions (r,w or x), the <strong>-</strong> character to revoke a permission, or the <strong>=</strong> character to set the permissions as stated (adds the passed permissions and removes the ommitted ones).
+The following example creates a file called <code class="docutils literal"><span class="pre">file_two</span></code> and uses symbolic notation to apply the same changes we made earlier using octal notation:</p>
+<pre class="literal-block">
+[jmora&#64;blue ~]$ <strong class="command">touch file_two</strong>
+[jmora&#64;blue ~]$ <strong class="command">ls -l</strong>
+total 8
+-rwxr-xr-x 1 jmora jmora    0 Feb  2 23:02 file_one
+-rw------- 1 jmora jmora    0 Feb  2 00:40 file_two
+drwxr--r-- 5 jmora jmora 4096 Feb  2 10:58 lab02
+drwx--x--x 2 jmora jmora 4096 Jan 27  2016 public_html
+[jmora&#64;blue ~]$ <strong class="command">chmod u+x,g+rx,o+rx file_two</strong>
+[jmora&#64;blue ~]$ <strong class="command">ls -l</strong>
+total 8
+-rwxr-xr-x 1 jmora jmora    0 Feb  2 23:02 file_one
+-rwxr-xr-x 1 jmora jmora    0 Feb  2 00:40 file_two
+drwxr--r-- 5 jmora jmora 4096 Feb  2 10:58 lab02
+drwx--x--x 2 jmora jmora 4096 Jan 27  2016 public_html
+</pre>
+<p>Here&#8217;s the same operation but using the <strong>=</strong> operation</p>
+<pre class="literal-block">
+[jmora&#64;blue ~]$ <strong class="command">touch file_three</strong>
+[jmora&#64;blue ~]$ <strong class="command">ls -l</strong>
+total 8
+-rwxr-xr-x 1 jmora jmora    0 Feb  2 23:02 file_one
+-rw------- 1 jmora jmora    0 Feb  2 00:56 file_three
+-rwxr-xr-x 1 jmora jmora    0 Feb  2 00:40 file_two
+drwxr--r-- 5 jmora jmora 4096 Feb  2 10:58 lab02
+drwx--x--x 2 jmora jmora 4096 Jan 27  2016 public_html
+[jmora&#64;blue ~]$ <strong class="command">chmod u=rwx,go=rx file_three</strong>
+[jmora&#64;blue ~]$ <strong class="command">ls -l</strong>
+total 8
+-rwxr-xr-x 1 jmora jmora    0 Feb  2 23:02 file_one
+-rwxr-xr-x 1 jmora jmora    0 Feb  2 00:56 file_three
+-rwxr-xr-x 1 jmora jmora    0 Feb  2 00:40 file_two
+drwxr--r-- 5 jmora jmora 4096 Feb  2 10:58 lab02
+drwx--x--x 2 jmora jmora 4096 Jan 27  2016 public_html
+</pre>
+<div class="worksheet admonition">
+<p class="first admonition-title">chmod</p>
+<ol class="arabic simple">
+<li>Change directory to your home. Run the command <strong class="command">umask 077</strong>.  Create an empty file called <code class="docutils literal"><span class="pre">newfile</span></code>.  What are the permissions of this file?</li>
+<li>Complete the following table by providing the <code class="docutils literal"><span class="pre">chmod</span></code> command that will make the file <em>transition through</em> the permissions indicated in the column <em>Attributes</em>, or by providing the <em>Attributes</em> that would result from running the <code class="docutils literal"><span class="pre">chmod</span></code> command if specified. This means that the comands are run sequentially (i.e. for row <em>n</em> you need to call <code class="docutils literal"><span class="pre">chmod</span></code> so the file transtions from the attributes in row <em>n-1</em> to the attributes in row <em>n</em>).</li>
+</ol>
+<table border="1" class="worksheettable last docutils">
+<colgroup>
+<col width="28%" />
+<col width="15%" />
+<col width="57%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Attributes</th>
+<th class="head">Notation</th>
+<th class="head">chmod command</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">-rwx------</span></code></td>
+<td>symbolic</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">-r-x------</span></code></td>
+<td>octal</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">-rwxr--r--</span></code></td>
+<td>symbolic</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>octal</td>
+<td><strong class="command">chmod 755 newfile</strong></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">-rwxrw----</span></code></td>
+<td>symbolic</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">-r-xr--r-x</span></code></td>
+<td>octal</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>symbolic</td>
+<td><strong class="command">chmod ug+w,o=r newfile</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In the next section of lab we are going to be modifying file permissions, and the best way to verify if these work is by having another user that can help you validate your settings. It is highly recommended to work with the person beside you.</p>
+</div>
+<div class="worksheet admonition">
+<p class="first admonition-title">permissions in practice</p>
+<p>Run the command <strong class="command">umask 077</strong></p>
+<p>Make sure your home directory has execute access enabled for <strong>group</strong> and <strong>other</strong>.  You can verify this by running the <strong class="command">ls -ld ~</strong> command:</p>
+<blockquote>
+<div><pre class="literal-block">
+[you&#64;blue yourhome]$ <strong class="command">ls -ld ~</strong>
+drwx--x--x 7 you you 4096 Feb  2 09:04 /home/student/you
+</pre>
+</div></blockquote>
+<p>Change to your home directory, and create a directory called <code class="docutils literal"><span class="pre">lab03</span></code>.</p>
+<ol class="arabic simple">
+<li>Make sure <code class="docutils literal"><span class="pre">lab03</span></code> has execute access enabled for <strong>group</strong> and <strong>other</strong>. What command do you need to run to enable that access (without enable read and write to <strong>group</strong> and <strong>other</strong>)?</li>
+</ol>
+<p>Change into <code class="docutils literal"><span class="pre">lab03</span></code> and run the following commands:</p>
+<p><strong class="command">mkdir dir1 dir2 dir3 dir4</strong></p>
+<p><strong class="command">echo -e '#!/bin/bash\necho &quot;Hello Linux&quot;' &gt; torvalds.sh</strong></p>
+<p><strong class="command">echo -e '#!/bin/bash\necho &quot;Hello Ruby&quot;' &gt; dir1/matz.sh</strong></p>
+<p><strong class="command">echo -e '#!/bin/bash\necho &quot;Hello Python&quot;' &gt; dir2/vanrossum.sh</strong></p>
+<p><strong class="command">echo -e '#!/bin/bash\necho &quot;Hello Java&quot;' &gt; dir3/gosling.sh</strong></p>
+<p><strong class="command">echo -e '#!/bin/bash\necho &quot;Hello C++&quot;' &gt; dir3/stroustrup.sh</strong></p>
+<p><strong class="command">echo -e '#!/bin/bash\necho &quot;Hello GNU&quot;' &gt; dir4/stallman.sh</strong></p>
+<p>(Congratulations, you just created your first shell scripts!)</p>
+<ol class="last arabic simple">
+<li>What command(s) do you need to execute so you and no one else can run the <code class="docutils literal"><span class="pre">torvalds.sh</span></code> script</li>
+<li>What command(s) do you need to execute so you can run the <code class="docutils literal"><span class="pre">dir1/matz.sh</span></code> script</li>
+<li>What command(s) do you need to execute so other users can run the <code class="docutils literal"><span class="pre">dir2/vanrossum.sh</span></code> script</li>
+<li>What command(s) do you need to execute so other users can execute but not modify the script within <code class="docutils literal"><span class="pre">dir4</span></code></li>
+<li>What command(s) do you need to execute so you can execute the scripts within <code class="docutils literal"><span class="pre">dir3</span></code>, and other users cannot list the contents of <code class="docutils literal"><span class="pre">dir3</span></code> and can read the contents of the files contained within without being able to modify those files, and only the file called <code class="docutils literal"><span class="pre">gosling.sh</span></code> can be executed by others?</li>
+</ol>
+</div>
+</div>
+<div class="section" id="symbolic-links">
+<h2>Symbolic Links<a class="headerlink" href="#symbolic-links" title="Permalink to this headline">¶</a></h2>
+<p>Symbolic links (also known as symlinks) are pointers to other files.  As we saw earlier, they can be identified by showing a file type of <strong>l</strong> in the long format output of the <code class="docutils literal"><span class="pre">ls</span></code> command.
+In the following example a file called <code class="docutils literal"><span class="pre">file_a</span></code> is created, and then a symbolic link <code class="docutils literal"><span class="pre">file_b</span></code> that points to <code class="docutils literal"><span class="pre">file_a</span></code> is created as well:</p>
+<pre class="literal-block">
+[jmora&#64;blue ~]$ <strong class="command">ls -l</strong>
+total 12
+drwxr--r-- 5 jmora jmora 4096 Feb  2 10:58 lab02
+drwx--x--x 2 jmora jmora 4096 Jan 27  2016 public_html
+-rw------- 1 jmora jmora    7 Feb  2 01:21 tst.txt
+[jmora&#64;blue ~]$ <strong class="command">touch file_a</strong>
+[jmora&#64;blue ~]$ <strong class="command">ln -s file_a file_b</strong>
+[jmora&#64;blue ~]$ <strong class="command">ls -l</strong>
+total 12
+-rw------- 1 jmora jmora    0 Feb  2 02:30 file_a
+lrwxrwxrwx 1 jmora jmora    6 Feb  2 02:30 file_b -&gt; file_a
+drwxr--r-- 5 jmora jmora 4096 Feb  2 10:58 lab02
+drwx--x--x 2 jmora jmora 4096 Jan 27  2016 public_html
+-rw------- 1 jmora jmora    7 Feb  2 01:21 tst.txt
+</pre>
+<div class="worksheet admonition">
+<p class="first admonition-title">symlinks</p>
+<ol class="last arabic simple">
+<li>Run the command <strong class="command">echo &quot;Lorem ipsum dolor sit amet consectetur&quot; &gt; lorem.txt</strong> to create a file with some text. Open this file with your text editor to make sure it contains the provided text. Close the file without making any changes. Create a symlink called <code class="docutils literal"><span class="pre">symlorem.txt</span></code> that points to <code class="docutils literal"><span class="pre">lorem.txt</span></code> by running the command <strong class="command">ln -s lorem.txt symlorem.txt</strong>. What are the permission attributes for this file?</li>
+<li>Run the command <strong class="command">chmod u-rwxx symlorem.txt</strong>.  What changed in the permission attributes of <code class="docutils literal"><span class="pre">symlorem.txt</span></code> and <code class="docutils literal"><span class="pre">lorem.txt</span></code>? Research on the web about changing permissions on symlinks and explain what just happened.</li>
+<li>Open the <code class="docutils literal"><span class="pre">symlorem.txt</span></code> file with your favorite text editor, and remove the word <strong>consectetur</strong>.  Save and exit the editor.  Now, inspect the contents of the file <code class="docutils literal"><span class="pre">lorem.txt</span></code>. Did this file change?</li>
+<li>Create a directory called <code class="docutils literal"><span class="pre">quotes</span></code> and move the file <code class="docutils literal"><span class="pre">lorem.txt</span></code> into it.  After doing this, can you still read <code class="docutils literal"><span class="pre">symlorem.txt</span></code>?</li>
+<li>Move <code class="docutils literal"><span class="pre">lorem.txt</span></code> back to your home directory.  Now move <code class="docutils literal"><span class="pre">symlorem.txt</span></code> into <code class="docutils literal"><span class="pre">quotes</span></code>.  Can you read <code class="docutils literal"><span class="pre">symlorem.txt?</span></code>.</li>
+<li>Change directory back to your home if you are not there.  Create another symlink, but this time, use an absolute path: <strong class="command">ln -s ~/lorem.txt absolutelorem.txt</strong>.   Move <code class="docutils literal"><span class="pre">absolutelorem.txt</span></code> into <code class="docutils literal"><span class="pre">quotes</span></code>. Can you read <code class="docutils literal"><span class="pre">absolutelorem.txt</span></code>?</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

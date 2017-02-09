@@ -8,12 +8,6 @@ After completing this lab, students will be able to:
 * Create, remove and alter files and directories
 
 
-Go over the man page of ls. Explain why the syntax days FILE instead of directory
-
-Explain what a stack is
-Explain what recursion is
-
-
 The File System
 ===============
 

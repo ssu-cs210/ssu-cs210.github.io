@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab No. 4: Finding Files &#8212; CS210 - Introduction to Unix  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Lab 03 File Permissions" href="../lab03/lab03.html" />
+<link href="https://fonts.googleapis.com/css?family=Bitter|Source+Code+Pro" rel="stylesheet">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          CS210 - Introduction to Unix</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">CS210 Introduction to Unix - Spring 2017</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conv/conv.html">Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab01/lab01.html">Lab No. 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab02/lab02.html">Lab No. 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab03/lab03.html">Lab 03 File Permissions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab No. 4: Finding Files</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Lab No. 4: Finding Files</a><ul>
+<li><a class="reference internal" href="#file-wildcards">File Wildcards</a></li>
+<li><a class="reference internal" href="#finding-files">Finding Files</a></li>
+<li><a class="reference internal" href="#finding-content-in-files">Finding Content in Files</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="../lab03/lab03.html" title="Previous Chapter: Lab 03 File Permissions"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Lab 03 File P...</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/lab04/lab04.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="lab-no-4-finding-files">
+<h1>Lab No. 4: Finding Files<a class="headerlink" href="#lab-no-4-finding-files" title="Permalink to this headline">¶</a></h1>
+<p>After completing this lab, students will be able to:</p>
+<ul class="simple">
+<li>find files using wildcards</li>
+<li>use wildcards to perform bulk file operations</li>
+<li>perform simple searches in files by occurrence of character strings</li>
+</ul>
+<div class="section" id="file-wildcards">
+<h2>File Wildcards<a class="headerlink" href="#file-wildcards" title="Permalink to this headline">¶</a></h2>
+<p>In Lab No.2 we learned how to list (<code class="docutils literal"><span class="pre">ls</span></code>), move(<code class="docutils literal"><span class="pre">mv</span></code>), copy (<code class="docutils literal"><span class="pre">cp</span></code>) and remove (<code class="docutils literal"><span class="pre">rm</span></code> and <code class="docutils literal"><span class="pre">rmdir</span></code>) files and directories.
+Wildcard characters (also known as <em>globbing characters</em>) allow these commands (and many others) to operate on patterns.</p>
+<p>The following list contains the standard <code class="docutils literal"><span class="pre">bash</span></code> wildcards:</p>
+<table border="1" class="table-striped docutils">
+<colgroup>
+<col width="22%" />
+<col width="78%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Character</th>
+<th class="head">Meaning</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">*</span></code></td>
+<td>A sequence of zero or more characters</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">?</span></code></td>
+<td>A single character</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">[]</span></code></td>
+<td>List of characters</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">[!]</span></code></td>
+<td>Exclude list of characters</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">{}</span></code></td>
+<td>List of wildcard expressions</td>
+</tr>
+</tbody>
+</table>
+<p>Let&#8217;s create some files so we can see <em>globbing</em> in action:</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ <strong class="command">mkdir wildcards</strong>
+[you&#64;blue ~]$ <strong class="command">cd wildcards</strong>
+[you&#64;blue wildcards]$ <strong class="command">touch dnf.sys.log-20170212 dnf.rpm.log-20170205 dnf.lib.log-20170112 mail.err mail.log mail.com.log-20170116 messages.rpm.log-20170116 secure.ssh.log-20170116 spooler.sys.log-20170130 dnf.log dnf.err dnf.lib.log</strong>
+[you&#64;blue wildcards]$ <strong class="command">ls -ltrh</strong>
+total 0
+-rw------- 1 you you 0 Feb 15 22:14 spooler.sys.log-20170130
+-rw------- 1 you you 0 Feb 15 22:14 secure.ssh.log-20170116
+-rw------- 1 you you 0 Feb 15 22:14 messages.rpm.log-20170116
+-rw------- 1 you you 0 Feb 15 22:14 mail.log
+-rw------- 1 you you 0 Feb 15 22:14 mail.err
+-rw------- 1 you you 0 Feb 15 22:14 mail.com.log-20170116
+-rw------- 1 you you 0 Feb 15 22:14 dnf.sys.log-20170212
+-rw------- 1 you you 0 Feb 15 22:14 dnf.rpm.log-20170205
+-rw------- 1 you you 0 Feb 15 22:14 dnf.log
+-rw------- 1 you you 0 Feb 15 22:14 dnf.lib.log-20170112
+-rw------- 1 you you 0 Feb 15 22:14 dnf.lib.log
+-rw------- 1 you you 0 Feb 15 22:14 dnf.err
+</pre>
+<p>In this example, assume that the portion of the filename composed by digits is a timestamp in the format YYYYMMDD (YYYY=4 digit year, MM=2 digit month, DD=2 digit day of the month).
+The following are some example operations using <em>globbing characters</em> (all refer to operations in the current directory)</p>
+<p>List all the files:</p>
+<pre class="literal-block">
+[you&#64;blue wildcards]$ <strong class="command">ls *</strong>
+dnf.err               dnf.log               mail.com.log-20170116  messages.rpm.log-20170116
+dnf.lib.log           dnf.rpm.log-20170205  mail.err               secure.ssh.log-20170116
+dnf.lib.log-20170112  dnf.sys.log-20170212  mail.log               spooler.sys.log-20170130
+</pre>
+<p>List files that start with &#8220;dnf&#8221;:</p>
+<pre class="literal-block">
+[you&#64;blue wildcards]$ <strong class="command">ls dnf*</strong>
+dnf.err  dnf.lib.log  dnf.lib.log-20170112  dnf.log  dnf.rpm.log-20170205  dnf.sys.log-20170212
+</pre>
+<p>List files that have a timestamp on 2017-02-12:</p>
+<pre class="literal-block">
+[you&#64;blue wildcards]$ <strong class="command">ls *20170212</strong>
+dnf.sys.log-20170212
+</pre>
+<p>List files that have a timestamp in January 2017:</p>
+<pre class="literal-block">
+[you&#64;blue wildcards]$ <strong class="command">ls *01??</strong>
+dnf.lib.log-20170112  mail.com.log-20170116  messages.rpm.log-20170116  secure.ssh.log-20170116  spooler.sys.log-20170130
+</pre>
+<p>List files that have a timestamp between 2017-01-12 and 2017-01-16</p>
+<pre class="literal-block">
+[you&#64;blue wildcards]$ <strong class="command">ls *011[2-6]</strong>
+dnf.lib.log-20170112  mail.com.log-20170116  messages.rpm.log-20170116  secure.ssh.log-20170116
+</pre>
+<p>List files that have a timestamp in January 2017, except those timestamped on 2017-01-12</p>
+<pre class="literal-block">
+[you&#64;blue wildcards]$ <strong class="command">ls *01?[!2]</strong>
+mail.com.log-20170116  messages.rpm.log-20170116  secure.ssh.log-20170116  spooler.sys.log-20170130
+</pre>
+<p>List files that end in <code class="docutils literal"><span class="pre">.log</span></code> or <code class="docutils literal"><span class="pre">.err</span></code>:</p>
+<pre class="literal-block">
+[you&#64;blue wildcards]$ <strong class="command">ls {*.err,*.log}</strong>
+dnf.err  dnf.lib.log  dnf.log  mail.err  mail.log
+</pre>
+<p>Wildcards work with all commands that accept a filename as input (e.g. <code class="docutils literal"><span class="pre">rm</span></code>, <code class="docutils literal"><span class="pre">mv</span></code>, <code class="docutils literal"><span class="pre">cp</span></code>, <code class="docutils literal"><span class="pre">chmod</span></code>, etc).
+It is always a good idea to test your pattern with <code class="docutils literal"><span class="pre">ls</span></code> before applying it to a command that will make modifications.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title">Wildcards Part 1</p>
+<p>For this section, all items need to use wildcards.  Commands that list the files one by one will be considered incorrect.</p>
+<ol class="last arabic simple">
+<li>Which command will list all the files that have a timestamp?</li>
+<li>Which command will list all the &#8220;dnf&#8221; and &#8220;mail&#8221; files that have a timestamp?</li>
+<li>Which command will list all the &#8220;dnf&#8221; files that <em>do not</em> have a timestamp?</li>
+<li>Execute a command that will ensure that all files in the <code class="docutils literal"><span class="pre">wildcards</span></code> directory can be only be read and written by the owner.  Include this command in your report.</li>
+<li>Change permissions to allow all users to read all the log files (including the timestamped log files), except mail.log, which should remain readable and writeable only by the owner. Include this command in your report.</li>
+<li>What command will remove all the files that have a timestamp in February 2017?</li>
+</ol>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><code class="docutils literal"><span class="pre">wc</span></code> and the pipe <code class="docutils literal"><span class="pre">|</span></code> operator</p>
+<p class="last">In the following section you will need to use the <code class="docutils literal"><span class="pre">wc</span></code> command and the pipe operator (<code class="docutils literal"><span class="pre">|</span></code>) to be able to complete the exercises.</p>
+</div>
+<div class="worksheet admonition">
+<p class="first admonition-title">Wildcards Part 2</p>
+<p>In this section you will need to extract files from an archive.  Run the following commands:</p>
+<ul class="simple">
+<li><strong class="command">mkdir ~/lab04</strong></li>
+<li><strong class="command">cd ~/lab04</strong></li>
+<li><strong class="command">tar -xvzf ~jmora/lab04/lab04files.tar.gz</strong>.</li>
+</ul>
+<p>This will create two directories <code class="docutils literal"><span class="pre">weblogs</span></code> and <code class="docutils literal"><span class="pre">dataset</span></code> within the <code class="docutils literal"><span class="pre">~/lab04`</span> <span class="pre">directory.</span>&#160; <span class="pre">For</span> <span class="pre">this</span> <span class="pre">part</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">lab</span> <span class="pre">you</span> <span class="pre">will</span> <span class="pre">work</span> <span class="pre">with</span> <span class="pre">the</span> <span class="pre">files</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">``~/lab04/dataset</span></code> directory.</p>
+<p>The files contained in this directory simulate a dataset where each file corresponds to the execution of a benchmark.
+The data files have the extension <code class="docutils literal"><span class="pre">.dat</span></code>.
+A benchmark run could have also generated a log file (<code class="docutils literal"><span class="pre">.log</span></code>) or an error file (<code class="docutils literal"><span class="pre">.err</span></code>).</p>
+<p>The file names in this directory follow certain semantics.
+A typical file in the <code class="docutils literal"><span class="pre">dataset</span></code> directory will look like this: <code class="docutils literal"><span class="pre">andromeda_8cores_min-20170125.err</span></code>.
+The file name is comprised of several elements:</p>
+<ul class="simple">
+<li>The first part of the file (before the first underscore, &#8220;andromeda&#8221; in the example), corresponds to the machine where the benchmark was run. Other values are &#8220;chronos&#8221;, &#8220;leo&#8221;, &#8220;ursaminor&#8221;, &#8220;ursamajor&#8221;.</li>
+<li>The second part (before the second underscore) indicates the number of cores used during the benchmark execution. Options are &#8220;8cores&#8221;,&#8221;4cores&#8221;,&#8221;2cores&#8221; and &#8220;1core&#8221;</li>
+<li>The part between the second underscore and the hyphen, corresponds to the benchmark code.  The available options are &#8220;fft1d&#8221;,&#8221;fft2d&#8221;,&#8221;max&#8221; and &#8220;min&#8221;</li>
+<li>The element after the hyphen and before the file extension, correspond to the timestamp of the file in the format YYYYMMDD.</li>
+<li>The last element (The one after the period) corresponds to the extension.</li>
+</ul>
+<p>Answer the following questions (include the commands that you used to generate the answer):</p>
+<ol class="last arabic simple">
+<li>How many executions include the dataset?</li>
+<li>How many executions generated errors?</li>
+<li>How many executions used less than 8 cores?</li>
+<li>How many executions of the <em>fft1</em> and <em>fft2</em> benchmarks were completed in a February?</li>
+<li>How many times was the <em>min</em> benchmark executed?</li>
+<li>How many log files were generated in <em>leo</em> or <em>chonos</em> in 2017 in the first half of the month (before the fifteen day of the month)?</li>
+</ol>
+</div>
+<div class="worksheet admonition">
+<p class="first admonition-title">Wildcards Part 3</p>
+<p class="last">In the previous section you extracted several files into two directories <code class="docutils literal"><span class="pre">~/lab04/dataset</span></code> and <code class="docutils literal"><span class="pre">~/lab04/weblogs</span></code>.
+This last directory contains web log files from an http service.
+Those files are compressed and end with the extension <code class="docutils literal"><span class="pre">.gz</span></code>.
+However, that directory also contains other files that are not weblogs, which have a file name that does not contain the <code class="docutils literal"><span class="pre">.gz</span></code> extension.
+Create a directory under <code class="docutils literal"><span class="pre">~/lab04</span></code> called <code class="docutils literal"><span class="pre">systemlogs</span></code> and provide a single command that will move all the files that are not web logs into that directory.</p>
+</div>
+</div>
+<div class="section" id="finding-files">
+<h2>Finding Files<a class="headerlink" href="#finding-files" title="Permalink to this headline">¶</a></h2>
+<p>We just saw how we can use wildcards to produce lists of files that can be used as inputs for other commands.
+One of the limitations with wildcards is that they only allow you to create patterns based on the file name. You can&#8217;t find files using <code class="docutils literal"><span class="pre">ls</span></code> using wildcards if you need to filter based on properties such as size, permissions, type, etc.
+The <code class="docutils literal"><span class="pre">find</span></code> command has some very powerful options that help to overcome the shortcomings of <code class="docutils literal"><span class="pre">ls</span></code>.
+<code class="docutils literal"><span class="pre">find</span></code> requires as input a <em>starting point</em>, and the default behavior of <code class="docutils literal"><span class="pre">find</span></code> is to recursively navigate the directory tree contained within the starting point.</p>
+<pre class="literal-block">
+[you&#64;blue opt]$ <strong class="command">find /opt</strong>
+/opt
+/opt/hp
+/opt/hp/hpssacli
+/opt/hp/hpssacli/bld
+/opt/hp/hpssacli/bld/hpssacli
+/opt/hp/hpssacli/bld/hpssacli-1.50-4.0.x86_64.txt
+/opt/hp/hpssacli/bld/hpssacli.license
+/opt/hp/hpssacli/bld/hpssascripting
+/opt/hp/hpssacli/bld/mklocks.sh
+</pre>
+<p>You can use wildcards to filter file names with <code class="docutils literal"><span class="pre">find</span></code>.
+However, when you need this feature, filename patterns need to be enclosed in single or double quotes.
+Notice how in the following example we have filtered the list so only files whose name starts with &#8220;hp&#8221; are returned.</p>
+<pre class="literal-block">
+[you&#64;blue etc]$ <strong class="command">find /opt -name &quot;hp*&quot;</strong>
+/opt/hp
+/opt/hp/hpssacli
+/opt/hp/hpssacli/bld/hpssacli
+/opt/hp/hpssacli/bld/hpssacli-1.50-4.0.x86_64.txt
+/opt/hp/hpssacli/bld/hpssacli.license
+/opt/hp/hpssacli/bld/hpssascripting
+</pre>
+<p>In this section you will practice several options available with the <code class="docutils literal"><span class="pre">find</span></code> command.
+Begin by opening the <em>man page</em> of <code class="docutils literal"><span class="pre">find</span></code> and verify the purpose of the following options:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">-type</span></code></li>
+<li><code class="docutils literal"><span class="pre">-name</span></code></li>
+<li><code class="docutils literal"><span class="pre">-group</span></code> and <code class="docutils literal"><span class="pre">-user</span></code></li>
+<li><code class="docutils literal"><span class="pre">-perm</span></code></li>
+<li><code class="docutils literal"><span class="pre">-size</span></code></li>
+<li><code class="docutils literal"><span class="pre">newerXY</span></code></li>
+<li><code class="docutils literal"><span class="pre">-maxdepth</span></code></li>
+</ul>
+<p>Also, make sure you read and understand the &#8220;OPERATORS&#8221; section in the man pages.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title">Find Part 1</p>
+<p>For the next set of questions, base your answers on the contents of your <code class="docutils literal"><span class="pre">~/lab04/weblogs</span></code> directory.
+This directory contains log files, among them are sample <em>access logs</em> and <em>error logs</em> from an http service (<a class="reference external" href="http://www.secrepo.com/self.logs/">http://www.secrepo.com/self.logs/</a>).
+These files also have a timestamp (YYYY-MM-DD) on their name that indicates the start of the events that they contain (be aware that this does not match the last modification date attribute of the file). It is also important to mention that these are compressed files (indicated by the gz)
+Use the <code class="docutils literal"><span class="pre">find</span></code>, <code class="docutils literal"><span class="pre">wc</span></code> and <code class="docutils literal"><span class="pre">|</span></code> operator in a single line command to answer the following questions (include the command in your answers):</p>
+<ol class="last arabic simple">
+<li>how many files are 22 kilobytes in size?</li>
+<li>how many files <em>access log</em> files exist that are greater than 40k but less than 50k in size?</li>
+<li>how many files have a modification date in December of 2016?</li>
+</ol>
+</div>
+<div class="worksheet admonition">
+<p class="first admonition-title">Find Part 2</p>
+<p>For the next set of items you need to base your answers on the directory that you are asked on each question (include the command in your answers):</p>
+<ol class="last arabic simple">
+<li>List all the directories under <code class="docutils literal"><span class="pre">/var/www</span></code></li>
+<li>List all the regular files under <code class="docutils literal"><span class="pre">/var/www</span></code></li>
+<li>List all the files in <code class="docutils literal"><span class="pre">/etc</span></code> (but not under any subdirectory of <code class="docutils literal"><span class="pre">/etc</span></code>) that are not assigned to the &#8220;root&#8221; group.</li>
+<li>List all the files in <code class="docutils literal"><span class="pre">/etc</span></code> that have a name that starts with &#8220;auto&#8221;  and that are readable and writable only by the owner of the file.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="finding-content-in-files">
+<h2>Finding Content in Files<a class="headerlink" href="#finding-content-in-files" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">grep</span></code> command is probably one of the most heavily utilized commands in Unix systems.  It allows you to search files that containe character strings that match a pattern.
+<code class="docutils literal"><span class="pre">grep</span></code> allows you to define very complex search patterns, known as <em>regular expressions</em>.  In this lab section we&#8217;ll introduce the most basic patterns to use to search inside files.</p>
+<p>Let&#8217;s download <em>Alice in Wonderland</em> and perform some searches on it:</p>
+<pre class="literal-block">
+[you&#64;blue lab04]$ wget -q <a class="reference external" href="http://www.gutenberg.org/files/11/11-0.txt">http://www.gutenberg.org/files/11/11-0.txt</a>
+[you&#64;&#64;blue lab04]$ ls
+11-0.txt  dataset  systemlogs  weblogs  wildcards
+[you&#64;&#64;blue lab04]$ ls
+</pre>
+<div class="worksheet admonition">
+<p class="first admonition-title">Basic Grep Usage</p>
+<ol class="last arabic simple">
+<li>Run the command <strong class="command">grep Alice 11-0.txt</strong>.  Describe the output.</li>
+<li>The <em>rabbit-hole</em> reference on the book is pretty famous.  Are there any reference to a <em>rat-hole</em> in the book? (kudos to you if you can answer this question without using a computerized search).</li>
+<li>In which line of the text occurs the first reference to the Cheshire Cat?</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

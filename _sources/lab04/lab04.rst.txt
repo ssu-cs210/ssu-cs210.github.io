@@ -1,0 +1,274 @@
+************************
+Lab No. 4: Finding Files 
+************************
+
+After completing this lab, students will be able to:
+
+* find files using wildcards
+* use wildcards to perform bulk file operations
+* perform simple searches in files by occurrence of character strings
+
+
+File Wildcards
+==============
+
+In Lab No.2 we learned how to list (``ls``), move(``mv``), copy (``cp``) and remove (``rm`` and ``rmdir``) files and directories.
+Wildcard characters (also known as *globbing characters*) allow these commands (and many others) to operate on patterns.
+
+The following list contains the standard ``bash`` wildcards:
+
+
+.. cssclass:: table-striped
+
+=============== ======================================================
+Character       Meaning                                               
+=============== ======================================================
+``*``           A sequence of zero or more characters
+``?``           A single character
+``[]``          List of characters
+``[!]``         Exclude list of characters 
+``{}``          List of wildcard expressions
+=============== ======================================================
+
+Let's create some files so we can see *globbing* in action:
+
+.. parsed-literal::
+
+    [you\@blue ~]$ :command:`mkdir wildcards`
+    [you\@blue ~]$ :command:`cd wildcards`
+    [you\@blue wildcards]$ :command:`touch dnf.sys.log-20170212 dnf.rpm.log-20170205 dnf.lib.log-20170112 mail.err mail.log mail.com.log-20170116 messages.rpm.log-20170116 secure.ssh.log-20170116 spooler.sys.log-20170130 dnf.log dnf.err dnf.lib.log`
+    [you\@blue wildcards]$ :command:`ls -ltrh`
+    total 0
+    -rw------- 1 you you 0 Feb 15 22:14 spooler.sys.log-20170130
+    -rw------- 1 you you 0 Feb 15 22:14 secure.ssh.log-20170116
+    -rw------- 1 you you 0 Feb 15 22:14 messages.rpm.log-20170116
+    -rw------- 1 you you 0 Feb 15 22:14 mail.log
+    -rw------- 1 you you 0 Feb 15 22:14 mail.err
+    -rw------- 1 you you 0 Feb 15 22:14 mail.com.log-20170116
+    -rw------- 1 you you 0 Feb 15 22:14 dnf.sys.log-20170212
+    -rw------- 1 you you 0 Feb 15 22:14 dnf.rpm.log-20170205
+    -rw------- 1 you you 0 Feb 15 22:14 dnf.log
+    -rw------- 1 you you 0 Feb 15 22:14 dnf.lib.log-20170112
+    -rw------- 1 you you 0 Feb 15 22:14 dnf.lib.log
+    -rw------- 1 you you 0 Feb 15 22:14 dnf.err
+
+
+In this example, assume that the portion of the filename composed by digits is a timestamp in the format YYYYMMDD (YYYY=4 digit year, MM=2 digit month, DD=2 digit day of the month).
+The following are some example operations using *globbing characters* (all refer to operations in the current directory)
+
+List all the files:
+
+.. parsed-literal::
+
+    [you\@blue wildcards]$ :command:`ls \*`
+    dnf.err               dnf.log               mail.com.log-20170116  messages.rpm.log-20170116
+    dnf.lib.log           dnf.rpm.log-20170205  mail.err               secure.ssh.log-20170116
+    dnf.lib.log-20170112  dnf.sys.log-20170212  mail.log               spooler.sys.log-20170130
+
+List files that start with "dnf":
+
+.. parsed-literal::
+
+    [you\@blue wildcards]$ :command:`ls dnf\*`
+    dnf.err  dnf.lib.log  dnf.lib.log-20170112  dnf.log  dnf.rpm.log-20170205  dnf.sys.log-20170212
+
+List files that have a timestamp on 2017-02-12:
+
+.. parsed-literal::
+
+    [you\@blue wildcards]$ :command:`ls \*20170212`
+    dnf.sys.log-20170212
+
+List files that have a timestamp in January 2017:
+
+.. parsed-literal::
+
+    [you\@blue wildcards]$ :command:`ls \*01??`
+    dnf.lib.log-20170112  mail.com.log-20170116  messages.rpm.log-20170116  secure.ssh.log-20170116  spooler.sys.log-20170130
+
+List files that have a timestamp between 2017-01-12 and 2017-01-16 
+
+.. parsed-literal::
+
+    [you\@blue wildcards]$ :command:`ls \*011[2-6]`
+    dnf.lib.log-20170112  mail.com.log-20170116  messages.rpm.log-20170116  secure.ssh.log-20170116
+
+List files that have a timestamp in January 2017, except those timestamped on 2017-01-12
+
+.. parsed-literal::
+
+    [you\@blue wildcards]$ :command:`ls \*01?[!2]`
+    mail.com.log-20170116  messages.rpm.log-20170116  secure.ssh.log-20170116  spooler.sys.log-20170130
+
+
+List files that end in ``.log`` or ``.err``:
+
+.. parsed-literal::
+
+    [you\@blue wildcards]$ :command:`ls {\*.err,\*.log}`
+    dnf.err  dnf.lib.log  dnf.log  mail.err  mail.log
+
+Wildcards work with all commands that accept a filename as input (e.g. ``rm``, ``mv``, ``cp``, ``chmod``, etc).
+It is always a good idea to test your pattern with ``ls`` before applying it to a command that will make modifications.
+
+
+.. admonition:: Wildcards Part 1
+    :class: worksheet
+    
+    For this section, all items need to use wildcards.  Commands that list the files one by one will be considered incorrect.
+
+    #. Which command will list all the files that have a timestamp?
+    #. Which command will list all the "dnf" and "mail" files that have a timestamp?
+    #. Which command will list all the "dnf" files that *do not* have a timestamp?
+    #. Execute a command that will ensure that all files in the ``wildcards`` directory can be only be read and written by the owner.  Include this command in your report.
+    #. Change permissions to allow all users to read all the log files (including the timestamped log files), except mail.log, which should remain readable and writeable only by the owner. Include this command in your report.
+    #. What command will remove all the files that have a timestamp in February 2017?  
+
+
+.. note:: ``wc`` and the pipe ``|`` operator
+
+    In the following section you will need to use the ``wc`` command and the pipe operator (``|``) to be able to complete the exercises.
+
+.. admonition:: Wildcards Part 2
+    :class: worksheet
+
+    In this section you will need to extract files from an archive.  Run the following commands:
+    
+    * :command:`mkdir ~/lab04`
+    * :command:`cd ~/lab04`
+    * :command:`tar -xvzf ~jmora/lab04/lab04files.tar.gz`.
+    
+    This will create two directories ``weblogs`` and ``dataset`` within the ``~/lab04` directory.  For this part of the lab you will work with the files in the ``~/lab04/dataset`` directory.
+    
+    The files contained in this directory simulate a dataset where each file corresponds to the execution of a benchmark.
+    The data files have the extension ``.dat``.
+    A benchmark run could have also generated a log file (``.log``) or an error file (``.err``).  
+
+    The file names in this directory follow certain semantics.
+    A typical file in the ``dataset`` directory will look like this: ``andromeda_8cores_min-20170125.err``.
+    The file name is comprised of several elements: 
+
+    * The first part of the file (before the first underscore, "andromeda" in the example), corresponds to the machine where the benchmark was run. Other values are "chronos", "leo", "ursaminor", "ursamajor".
+    * The second part (before the second underscore) indicates the number of cores used during the benchmark execution. Options are "8cores","4cores","2cores" and "1core"
+    * The part between the second underscore and the hyphen, corresponds to the benchmark code.  The available options are "fft1d","fft2d","max" and "min"
+    * The element after the hyphen and before the file extension, correspond to the timestamp of the file in the format YYYYMMDD.
+    * The last element (The one after the period) corresponds to the extension.
+
+    Answer the following questions (include the commands that you used to generate the answer):
+
+    #. How many executions include the dataset?
+    #. How many executions generated errors?
+    #. How many executions used less than 8 cores?
+    #. How many executions of the *fft1* and *fft2* benchmarks were completed in a February?
+    #. How many times was the *min* benchmark executed?
+    #. How many log files were generated in *leo* or *chonos* in 2017 in the first half of the month (before the fifteen day of the month)?
+
+
+    
+.. admonition:: Wildcards Part 3
+    :class: worksheet
+
+    In the previous section you extracted several files into two directories ``~/lab04/dataset`` and ``~/lab04/weblogs``.  
+    This last directory contains web log files from an http service. 
+    Those files are compressed and end with the extension ``.gz``.  
+    However, that directory also contains other files that are not weblogs, which have a file name that does not contain the ``.gz`` extension.  
+    Create a directory under ``~/lab04`` called ``systemlogs`` and provide a single command that will move all the files that are not web logs into that directory.
+
+
+
+Finding Files
+=============
+
+We just saw how we can use wildcards to produce lists of files that can be used as inputs for other commands.
+One of the limitations with wildcards is that they only allow you to create patterns based on the file name. You can't find files using ``ls`` using wildcards if you need to filter based on properties such as size, permissions, type, etc.
+The ``find`` command has some very powerful options that help to overcome the shortcomings of ``ls``.
+``find`` requires as input a *starting point*, and the default behavior of ``find`` is to recursively navigate the directory tree contained within the starting point.
+
+.. parsed-literal::
+
+    [you\@blue opt]$ :command:`find /opt`
+    /opt
+    /opt/hp
+    /opt/hp/hpssacli
+    /opt/hp/hpssacli/bld
+    /opt/hp/hpssacli/bld/hpssacli
+    /opt/hp/hpssacli/bld/hpssacli-1.50-4.0.x86_64.txt
+    /opt/hp/hpssacli/bld/hpssacli.license
+    /opt/hp/hpssacli/bld/hpssascripting
+    /opt/hp/hpssacli/bld/mklocks.sh
+
+You can use wildcards to filter file names with ``find``.  
+However, when you need this feature, filename patterns need to be enclosed in single or double quotes.
+Notice how in the following example we have filtered the list so only files whose name starts with "hp" are returned.
+
+.. parsed-literal::
+
+    [you\@blue etc]$ :command:`find /opt -name "hp*"`
+    /opt/hp
+    /opt/hp/hpssacli
+    /opt/hp/hpssacli/bld/hpssacli
+    /opt/hp/hpssacli/bld/hpssacli-1.50-4.0.x86_64.txt
+    /opt/hp/hpssacli/bld/hpssacli.license
+    /opt/hp/hpssacli/bld/hpssascripting
+
+
+In this section you will practice several options available with the ``find`` command. 
+Begin by opening the *man page* of ``find`` and verify the purpose of the following options:
+
+* ``-type``
+* ``-name``
+* ``-group`` and ``-user``
+* ``-perm``
+* ``-size``
+* ``newerXY``
+* ``-maxdepth``
+
+Also, make sure you read and understand the "OPERATORS" section in the man pages.
+
+    
+.. admonition:: Find Part 1
+    :class: worksheet
+
+    For the next set of questions, base your answers on the contents of your ``~/lab04/weblogs`` directory.
+    This directory contains log files, among them are sample *access logs* and *error logs* from an http service (http://www.secrepo.com/self.logs/).
+    These files also have a timestamp (YYYY-MM-DD) on their name that indicates the start of the events that they contain (be aware that this does not match the last modification date attribute of the file). It is also important to mention that these are compressed files (indicated by the gz)
+    Use the ``find``, ``wc`` and ``|`` operator in a single line command to answer the following questions (include the command in your answers):
+
+    #. how many files are 22 kilobytes in size?
+    #. how many files *access log* files exist that are greater than 40k but less than 50k in size?
+    #. how many files have a modification date in December of 2016?
+
+.. admonition:: Find Part 2
+    :class: worksheet
+
+    For the next set of items you need to base your answers on the directory that you are asked on each question (include the command in your answers):
+
+    #. List all the directories under ``/var/www``
+    #. List all the regular files under ``/var/www``
+    #. List all the files in ``/etc`` (but not under any subdirectory of ``/etc``) that are not assigned to the "root" group.
+    #. List all the files in ``/etc`` that have a name that starts with "auto"  and that are readable and writable only by the owner of the file.
+
+
+Finding Content in Files
+========================
+
+The ``grep`` command is probably one of the most heavily utilized commands in Unix systems.  It allows you to search files that containe character strings that match a pattern.
+``grep`` allows you to define very complex search patterns, known as *regular expressions*.  In this lab section we'll introduce the most basic patterns to use to search inside files.
+
+Let's download *Alice in Wonderland* and perform some searches on it:
+
+.. parsed-literal::
+
+    [you\@blue lab04]$ wget -q http://www.gutenberg.org/files/11/11-0.txt
+    [you\@@blue lab04]$ ls
+    11-0.txt  dataset  systemlogs  weblogs  wildcards
+    [you\@@blue lab04]$ ls
+
+
+.. admonition:: Basic Grep Usage
+    :class: worksheet
+
+    #. Run the command :command:`grep Alice 11-0.txt`.  Describe the output.
+    #. The *rabbit-hole* reference on the book is pretty famous.  Are there any reference to a *rat-hole* in the book? (kudos to you if you can answer this question without using a computerized search).
+    #. In which line of the text occurs the first reference to the Cheshire Cat?
+

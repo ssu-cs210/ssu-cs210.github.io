@@ -96,7 +96,7 @@ It is recommended that you spend a few minutes reviewing the ``cat`` man pages.
     1. Provide a command that will create a file called ``rootcontents`` with the listing of the root directory
     2. Run the following commands:
 
-    .. parsed-literal:
+    .. parsed-literal::
 
         [you\@blue ~]$ :command:`cat << EOF > part1`
         > :command:`Alabama`
@@ -126,7 +126,7 @@ It is recommended that you spend a few minutes reviewing the ``cat`` man pages.
     Suppose there are two files in your working directory, called ``foo`` and ``bar`` that have the following contents:  
 
 
-    .. parsed-liteeral:
+    .. parsed-literal::
 
         [you\@blue ~]$ cat foo
         one

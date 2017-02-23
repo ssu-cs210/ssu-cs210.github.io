@@ -253,12 +253,43 @@ It is recommended that you spend a few minutes reviewing the <code class="docuti
 <li>Provide a command that will create a file called <code class="docutils literal"><span class="pre">rootcontents</span></code> with the listing of the root directory</li>
 <li>Run the following commands:</li>
 </ol>
+<pre class="literal-block">
+[you&#64;blue ~]$ <strong class="command">cat &lt;&lt; EOF &gt; part1</strong>
+&gt; <strong class="command">Alabama</strong>
+&gt; <strong class="command">Alaska</strong>
+&gt; <strong class="command">Arizona</strong>
+&gt; <strong class="command">Arkansas</strong>
+&gt; <strong class="command">California</strong>
+&gt; <strong class="command">Colorado</strong>
+&gt; <strong class="command">Connecticut</strong>
+&gt; <strong class="command">Delaware</strong>
+&gt; <strong class="command">Florida</strong>
+&gt; <strong class="command">Georgia</strong>
+&gt; <strong class="command">EOF</strong>
+[you&#64;blue ~]$ <strong class="command">cat &lt;&lt; THE_END &gt; part2</strong>
+&gt; <strong class="command">Hawaii</strong>
+&gt; <strong class="command">Idaho</strong>
+&gt; <strong class="command">Illinois</strong>
+&gt; <strong class="command">Indiana</strong>
+&gt; <strong class="command">Iowa</strong>
+&gt; THE_END
+</pre>
 <p>Notice how you can create text files on the fly (i.e. without the need of an editor) with <em>stdin</em> redirection. Explain what is the purpose of the &#8216;EOF&#8217; and &#8216;THE_END&#8217; strings that were included on those commands (hint: experiment with different variations of the previous commands)? (Note: If you run into problems, you can exit the prompt by using <code class="kbd docutils literal"><span class="pre">CTRL+c</span></code>)</p>
 <ol class="arabic simple" start="3">
 <li>Provide a command that will merge the files <code class="docutils literal"><span class="pre">part1</span></code> and <code class="docutils literal"><span class="pre">part2</span></code> in a single file called <code class="docutils literal"><span class="pre">15states</span></code>.</li>
 <li>Suppose there is a file called <code class="docutils literal"><span class="pre">foo</span></code> in your working directory.  The commands <strong class="command">cat foo</strong> and <strong class="command">cat &lt; foo</strong> produce the same result, but they operate differently.  Explain what is the technical difference (in terms of <em>stdout</em> and <em>stdin</em>) between these two commands.</li>
 </ol>
 <p>Suppose there are two files in your working directory, called <code class="docutils literal"><span class="pre">foo</span></code> and <code class="docutils literal"><span class="pre">bar</span></code> that have the following contents:</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ cat foo
+one
+two
+three
+[you&#64;blue ~]$ cat bar
+four
+five
+six
+</pre>
 <ol class="last arabic simple" start="5">
 <li>What command will print on the screen a single list with all the numbers from one to six?</li>
 <li>What command will append thee contents of <code class="docutils literal"><span class="pre">bar</span></code> into <code class="docutils literal"><span class="pre">foo</span></code>?</li>

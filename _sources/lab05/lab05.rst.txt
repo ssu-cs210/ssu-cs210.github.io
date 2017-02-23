@@ -1,0 +1,194 @@
+**********************************************
+Lab No. 5: Text processing and I/O Redirection
+**********************************************
+
+After completing this lab, students will be able to:
+
+* describe *stdout*, *stdin* and *stderr* 
+* run commands that employ I/O redirection   
+* work with the contents of files through the ``cat`` command
+* apply the ``tee``, ``sort`` and ``uniq`` commands
+* apply ``/dev/null`` to discard output or errors
+
+
+Standard Input, Standard Output and Standard Error
+==================================================
+
+So far in this class we have run commands and have seen how their output is typically printed on the screen.
+Also, all the commands that we have run so far have received input from key presses obtained from your keyboard.
+In this section of the lab we are going to learn how to change the way that programs produce output and receive input.  
+This is done through a mechanism known as *I/O redirection*.
+
+When you execute commands, the operating system creates a *process*.  
+Three important file descriptors are assigned to each process:
+
+* 0: *stdin*
+* 1: *stdout*
+* 2: *stderr*    
+
+Standard output, or *stdout*, is the file where the process write its output.
+Processes do not need to "know" where the data that they output will be written, it can go to a device (e.g. printer), an ordinary file, a socket, a screen (which is the default behavior for interactive shell sessions), etc.
+The operating system abstracts the end point where the output is written.
+
+Standard input, or *stdin*, is the file where the program gets information from. 
+In the same fashion as *stdout*, the operating system controls the file that a process uses to gather input. 
+
+Standard error, or *stderr*, is the file where errors are written, and for interactive sessions if defaults to the screen.
+
+The following table has some common operators that help to change how *stdin*, *stdout* and *stderr* are assigned to a process.
+
+.. cssclass:: table-striped
+
+=============== ======================================================
+Operator         Effect
+=============== ======================================================
+``>``           Redirects stdout to a new file. If the file exists, it will be overwritten.
+``>>``          Appends stdout to an existing file. If the file does not exist, it will be created.
+``2>``          Redirects stder to a new file. If the file exists, it will be overwritten.
+``2>>``         Appends stderr to an existing file. If the file does not exist, it will be created. 
+``&>``          Redirects both stdout and stderr to a new file. If the file exists, it will be overwritten.
+``&>>``         Appends both stdout and stderr to an existing file. If the file does not exist, it will be created. 
+``2>&1``        Redirects stderr to the same file that stdout is pointing
+``>&2``         Redirects stdout to the same file that stderr is pointing
+``<``           Redirects stdin to the contents of a file.
+``<<``          Uses text in several lines as stdin (know as a *heredoc*)
+=============== ======================================================
+
+The bit bucket
+--------------
+The file ``/dev/null`` is a special file that discards all data written to it. This file is used very often when no output is desired.  This file is commonly known as the *bit bucket*
+
+
+The ``cat`` command
+-------------------
+
+In this lab we are going to make heavy use of the ``cat`` command. 
+This command is used to concatenate the contents of files and writes it into *stdout*. 
+It has the useful feature that if no files are specified, then it reads text from *stdin*. 
+It is recommended that you spend a few minutes reviewing the ``cat`` man pages.  
+
+
+.. admonition:: Redirection Part 1
+    :class: worksheet
+
+    Begin this lab by creating a directory called ``lab05`` inside your home directory, and make it your working directory.
+
+    For each one of the following items, you need to run a command. Describe what are for each command *stdout*, *stdin* and *stderr*.  Also, answer any questions that might be asked.
+
+    #. Execute the command :command:`cat` (with no options).  Enter some text, and press enter. Repeat that a few times. To exit, type :kbd:`CTRL+d`.  
+    #. Execute the command :command:`cat > file1`.  Enter a few lines of text and exit.
+    #. Execute the command :command:`cat file1`.
+    #. Execute the command :command:`cat file1 > file2`.
+    #. Execute the command :command:`cat >> file1`.  Enter a few lines of text and exit. What happened to file1?
+
+
+
+.. admonition:: Redirection Part 2
+    :class: worksheet
+
+    1. Execute the command :command:`find /var/log -maxdepth 2`. Notice how your terminal screen contains both error messages and also the listing of files within ``/var/log`` up to 2 levels deep.  Modify this command so all the errors get written to a file called ``restricted`` and the normal output gets written to a file called ``unrestricted`.  How many files restricted restricted? (hint: ``wc`` is your friend).
+    2. Modify the previous command so both errors and output are written to a file called ``everything``
+    3. Modify the command from the previous question so output written on the screen without showing any errors or warnings.
+
+.. admonition:: Redirection Part 3
+    :class: worksheet
+
+    1. Provide a command that will create a file called ``rootcontents`` with the listing of the root directory
+    2. Run the following commands:
+
+    .. parsed-literal:
+
+        [you\@blue ~]$ :command:`cat << EOF > part1`
+        > :command:`Alabama`
+        > :command:`Alaska`
+        > :command:`Arizona`
+        > :command:`Arkansas`
+        > :command:`California`
+        > :command:`Colorado`
+        > :command:`Connecticut`
+        > :command:`Delaware`
+        > :command:`Florida`
+        > :command:`Georgia`
+        > :command:`EOF`
+        [you\@blue ~]$ :command:`cat << THE_END > part2`
+        > :command:`Hawaii`
+        > :command:`Idaho`
+        > :command:`Illinois`
+        > :command:`Indiana`
+        > :command:`Iowa`
+        > THE_END
+    
+    Notice how you can create text files on the fly (i.e. without the need of an editor) with *stdin* redirection. Explain what is the purpose of the 'EOF' and 'THE_END' strings that were included on those commands (hint: experiment with different variations of the previous commands)? (Note: If you run into problems, you can exit the prompt by using :kbd:`CTRL+c`)
+
+    3. Provide a command that will merge the files ``part1`` and ``part2`` in a single file called ``15states``.
+    4. Suppose there is a file called ``foo`` in your working directory.  The commands :command:`cat foo` and :command:`cat < foo` produce the same result, but they operate differently.  Explain what is the technical difference (in terms of *stdout* and *stdin*) between these two commands.
+    
+    Suppose there are two files in your working directory, called ``foo`` and ``bar`` that have the following contents:  
+
+
+    .. parsed-liteeral:
+
+        [you\@blue ~]$ cat foo
+        one
+        two
+        three
+        [you\@blue ~]$ cat bar
+        four
+        five
+        six
+
+    5. What command will print on the screen a single list with all the numbers from one to six?
+    6. What command will append thee contents of ``bar`` into ``foo``?
+        
+
+Using Pipes
+===========
+
+We can use pipes to create elaborate command sequences where the output from one command is used as the input of another command.
+This is done using the *pipe operator* ``|``.
+
+As an example, if you run the command :command:`ls -l /usr/bin` you'll get a very long list of files. It will be much nicer to be able to page through those results.  The ``less`` command is a pager, and it will be great if we could pass the output from the ``ls`` command directly without having to write a file on disk.   Pipelines allows us to do just that in a very simple way.  Try running the command :command:`ls -l /usr/bin | less` 
+
+Pipelines do not have to be composed of only two commands; they can chain as many commands as you need.  For example, what if you want to obtain the list of files under ``/usr/bin``  that contain the word "gnome" on them, and then inspect thee output on a pager?  We can use the ``grep`` command to filter the output from ``ls``: :command:`ls /usr/bin/ | grep gnome | less`
+
+
+The ``tee`` command
+-------------------
+The command ``tee`` sends its output in two directions at once: anything attached to ``tee``'s *stdin* goes to both a file and to its *stdout* (its name is given because it acts as a "T" junction in a pipe).  As an example, the command :command:`ls ~ | tee myhome.txt` writes the listing of your home directory to both the terminal and to a file called ``myhome.txt``
+
+The ``uniq`` command
+--------------------
+The unique command takes a list and removes duplicated elements
+
+The ``sort`` command
+--------------------
+The sort command sorts a list.
+
+
+The ``head`` and ``tail`` commands
+----------------------------------
+
+The `head` and `tail` commands allows you to restrict output of a process or the content of a file to a certain number of lines from the top or from the bottom of a file.
+
+.. admonition:: Pipes Part 1
+    :class: worksheet
+
+    In this exercise we will determine how many files of type ``.png`` with unique names exist in the ``/home`` directory.  You will build the command in a series of steps, please make sure that you include the resulting command at each step. Please include in your report all the commands at each step.
+    
+    #. Begin with providing a command that will list all the files recursively :command:`ls -R /home`.You will have a very long output and some error messages due to permissions. The first task is to use redirection so you will not get any error messages in the output.
+
+    #. The next step is to filter so only the files that end with ``.png`` are shown.  Note that the ``.`` is a globing character so you will need to *escape* it (the default escape character is ``\``).  Provide an augmented command so the output only reflects files that end in ``.png`` by calling ``grep`` with the regular expression ``\.png$``.
+
+    #. Enhance the command so the returned list is sorted.
+    #. Enhance the command so the returned list does not have any duplicated items
+    #. Add a pipe to the ``wc`` command so the number of files is printed (use the ``-l`` option to only print the number of lines)
+    #. Modify the previous command so the list of files is written to a file called ```png_list`` but it still prints the number of files to the screen.
+
+
+.. admonition:: Pipes Part 2
+    :class: worksheet
+
+    #. Provide a command that will create a file called "newest_files" that will contain the 5 files with the newest modification date in the ``/usr/bin`` directory.
+ 
+
+

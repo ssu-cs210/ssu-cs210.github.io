@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab No. 5: Text processing and I/O Redirection &#8212; CS210 - Introduction to Unix  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Lab No. 4: Finding Files" href="../lab04/lab04.html" />
+<link href="https://fonts.googleapis.com/css?family=Bitter|Source+Code+Pro" rel="stylesheet">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          CS210 - Introduction to Unix</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">CS210 Introduction to Unix - Spring 2017</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conv/conv.html">Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab01/lab01.html">Lab No. 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab02/lab02.html">Lab No. 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab03/lab03.html">Lab 03 File Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab04/lab04.html">Lab No. 4: Finding Files</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab No. 5: Text processing and I/O Redirection</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Lab No. 5: Text processing and I/O Redirection</a><ul>
+<li><a class="reference internal" href="#standard-input-standard-output-and-standard-error">Standard Input, Standard Output and Standard Error</a><ul>
+<li><a class="reference internal" href="#the-bit-bucket">The bit bucket</a></li>
+<li><a class="reference internal" href="#the-cat-command">The <code class="docutils literal"><span class="pre">cat</span></code> command</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-pipes">Using Pipes</a><ul>
+<li><a class="reference internal" href="#the-tee-command">The <code class="docutils literal"><span class="pre">tee</span></code> command</a></li>
+<li><a class="reference internal" href="#the-uniq-command">The <code class="docutils literal"><span class="pre">uniq</span></code> command</a></li>
+<li><a class="reference internal" href="#the-sort-command">The <code class="docutils literal"><span class="pre">sort</span></code> command</a></li>
+<li><a class="reference internal" href="#the-head-and-tail-commands">The <code class="docutils literal"><span class="pre">head</span></code> and <code class="docutils literal"><span class="pre">tail</span></code> commands</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="../lab04/lab04.html" title="Previous Chapter: Lab No. 4: Finding Files"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Lab No. 4: Fi...</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/lab05/lab05.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="lab-no-5-text-processing-and-i-o-redirection">
+<h1>Lab No. 5: Text processing and I/O Redirection<a class="headerlink" href="#lab-no-5-text-processing-and-i-o-redirection" title="Permalink to this headline">¶</a></h1>
+<p>After completing this lab, students will be able to:</p>
+<ul class="simple">
+<li>describe <em>stdout</em>, <em>stdin</em> and <em>stderr</em></li>
+<li>run commands that employ I/O redirection</li>
+<li>work with the contents of files through the <code class="docutils literal"><span class="pre">cat</span></code> command</li>
+<li>apply the <code class="docutils literal"><span class="pre">tee</span></code>, <code class="docutils literal"><span class="pre">sort</span></code> and <code class="docutils literal"><span class="pre">uniq</span></code> commands</li>
+<li>apply <code class="docutils literal"><span class="pre">/dev/null</span></code> to discard output or errors</li>
+</ul>
+<div class="section" id="standard-input-standard-output-and-standard-error">
+<h2>Standard Input, Standard Output and Standard Error<a class="headerlink" href="#standard-input-standard-output-and-standard-error" title="Permalink to this headline">¶</a></h2>
+<p>So far in this class we have run commands and have seen how their output is typically printed on the screen.
+Also, all the commands that we have run so far have received input from key presses obtained from your keyboard.
+In this section of the lab we are going to learn how to change the way that programs produce output and receive input.
+This is done through a mechanism known as <em>I/O redirection</em>.</p>
+<p>When you execute commands, the operating system creates a <em>process</em>.
+Three important file descriptors are assigned to each process:</p>
+<ul class="simple">
+<li>0: <em>stdin</em></li>
+<li>1: <em>stdout</em></li>
+<li>2: <em>stderr</em></li>
+</ul>
+<p>Standard output, or <em>stdout</em>, is the file where the process write its output.
+Processes do not need to &#8220;know&#8221; where the data that they output will be written, it can go to a device (e.g. printer), an ordinary file, a socket, a screen (which is the default behavior for interactive shell sessions), etc.
+The operating system abstracts the end point where the output is written.</p>
+<p>Standard input, or <em>stdin</em>, is the file where the program gets information from.
+In the same fashion as <em>stdout</em>, the operating system controls the file that a process uses to gather input.</p>
+<p>Standard error, or <em>stderr</em>, is the file where errors are written, and for interactive sessions if defaults to the screen.</p>
+<p>The following table has some common operators that help to change how <em>stdin</em>, <em>stdout</em> and <em>stderr</em> are assigned to a process.</p>
+<table border="1" class="table-striped docutils">
+<colgroup>
+<col width="13%" />
+<col width="87%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operator</th>
+<th class="head">Effect</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">&gt;</span></code></td>
+<td>Redirects stdout to a new file. If the file exists, it will be overwritten.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&gt;&gt;</span></code></td>
+<td>Appends stdout to an existing file. If the file does not exist, it will be created.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">2&gt;</span></code></td>
+<td>Redirects stder to a new file. If the file exists, it will be overwritten.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">2&gt;&gt;</span></code></td>
+<td>Appends stderr to an existing file. If the file does not exist, it will be created.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">&amp;&gt;</span></code></td>
+<td>Redirects both stdout and stderr to a new file. If the file exists, it will be overwritten.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&amp;&gt;&gt;</span></code></td>
+<td>Appends both stdout and stderr to an existing file. If the file does not exist, it will be created.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">2&gt;&amp;1</span></code></td>
+<td>Redirects stderr to the same file that stdout is pointing</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&gt;&amp;2</span></code></td>
+<td>Redirects stdout to the same file that stderr is pointing</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">&lt;</span></code></td>
+<td>Redirects stdin to the contents of a file.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&lt;&lt;</span></code></td>
+<td>Uses text in several lines as stdin (know as a <em>heredoc</em>)</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="the-bit-bucket">
+<h3>The bit bucket<a class="headerlink" href="#the-bit-bucket" title="Permalink to this headline">¶</a></h3>
+<p>The file <code class="docutils literal"><span class="pre">/dev/null</span></code> is a special file that discards all data written to it. This file is used very often when no output is desired.  This file is commonly known as the <em>bit bucket</em></p>
+</div>
+<div class="section" id="the-cat-command">
+<h3>The <code class="docutils literal"><span class="pre">cat</span></code> command<a class="headerlink" href="#the-cat-command" title="Permalink to this headline">¶</a></h3>
+<p>In this lab we are going to make heavy use of the <code class="docutils literal"><span class="pre">cat</span></code> command.
+This command is used to concatenate the contents of files and writes it into <em>stdout</em>.
+It has the useful feature that if no files are specified, then it reads text from <em>stdin</em>.
+It is recommended that you spend a few minutes reviewing the <code class="docutils literal"><span class="pre">cat</span></code> man pages.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title">Redirection Part 1</p>
+<p>Begin this lab by creating a directory called <code class="docutils literal"><span class="pre">lab05</span></code> inside your home directory, and make it your working directory.</p>
+<p>For each one of the following items, you need to run a command. Describe what are for each command <em>stdout</em>, <em>stdin</em> and <em>stderr</em>.  Also, answer any questions that might be asked.</p>
+<ol class="last arabic simple">
+<li>Execute the command <strong class="command">cat</strong> (with no options).  Enter some text, and press enter. Repeat that a few times. To exit, type <code class="kbd docutils literal"><span class="pre">CTRL+d</span></code>.</li>
+<li>Execute the command <strong class="command">cat &gt; file1</strong>.  Enter a few lines of text and exit.</li>
+<li>Execute the command <strong class="command">cat file1</strong>.</li>
+<li>Execute the command <strong class="command">cat file1 &gt; file2</strong>.</li>
+<li>Execute the command <strong class="command">cat &gt;&gt; file1</strong>.  Enter a few lines of text and exit. What happened to file1?</li>
+</ol>
+</div>
+<div class="worksheet admonition">
+<p class="first admonition-title">Redirection Part 2</p>
+<ol class="last arabic simple">
+<li>Execute the command <strong class="command">find /var/log -maxdepth 2</strong>. Notice how your terminal screen contains both error messages and also the listing of files within <code class="docutils literal"><span class="pre">/var/log</span></code> up to 2 levels deep.  Modify this command so all the errors get written to a file called <code class="docutils literal"><span class="pre">restricted</span></code> and the normal output gets written to a file called <code class="docutils literal"><span class="pre">unrestricted`.</span>&#160; <span class="pre">How</span> <span class="pre">many</span> <span class="pre">files</span> <span class="pre">restricted</span> <span class="pre">restricted?</span> <span class="pre">(hint:</span> <span class="pre">``wc</span></code> is your friend).</li>
+<li>Modify the previous command so both errors and output are written to a file called <code class="docutils literal"><span class="pre">everything</span></code></li>
+<li>Modify the command from the previous question so output written on the screen without showing any errors or warnings.</li>
+</ol>
+</div>
+<div class="worksheet admonition">
+<p class="first admonition-title">Redirection Part 3</p>
+<ol class="arabic simple">
+<li>Provide a command that will create a file called <code class="docutils literal"><span class="pre">rootcontents</span></code> with the listing of the root directory</li>
+<li>Run the following commands:</li>
+</ol>
+<p>Notice how you can create text files on the fly (i.e. without the need of an editor) with <em>stdin</em> redirection. Explain what is the purpose of the &#8216;EOF&#8217; and &#8216;THE_END&#8217; strings that were included on those commands (hint: experiment with different variations of the previous commands)? (Note: If you run into problems, you can exit the prompt by using <code class="kbd docutils literal"><span class="pre">CTRL+c</span></code>)</p>
+<ol class="arabic simple" start="3">
+<li>Provide a command that will merge the files <code class="docutils literal"><span class="pre">part1</span></code> and <code class="docutils literal"><span class="pre">part2</span></code> in a single file called <code class="docutils literal"><span class="pre">15states</span></code>.</li>
+<li>Suppose there is a file called <code class="docutils literal"><span class="pre">foo</span></code> in your working directory.  The commands <strong class="command">cat foo</strong> and <strong class="command">cat &lt; foo</strong> produce the same result, but they operate differently.  Explain what is the technical difference (in terms of <em>stdout</em> and <em>stdin</em>) between these two commands.</li>
+</ol>
+<p>Suppose there are two files in your working directory, called <code class="docutils literal"><span class="pre">foo</span></code> and <code class="docutils literal"><span class="pre">bar</span></code> that have the following contents:</p>
+<ol class="last arabic simple" start="5">
+<li>What command will print on the screen a single list with all the numbers from one to six?</li>
+<li>What command will append thee contents of <code class="docutils literal"><span class="pre">bar</span></code> into <code class="docutils literal"><span class="pre">foo</span></code>?</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="section" id="using-pipes">
+<h2>Using Pipes<a class="headerlink" href="#using-pipes" title="Permalink to this headline">¶</a></h2>
+<p>We can use pipes to create elaborate command sequences where the output from one command is used as the input of another command.
+This is done using the <em>pipe operator</em> <code class="docutils literal"><span class="pre">|</span></code>.</p>
+<p>As an example, if you run the command <strong class="command">ls -l /usr/bin</strong> you&#8217;ll get a very long list of files. It will be much nicer to be able to page through those results.  The <code class="docutils literal"><span class="pre">less</span></code> command is a pager, and it will be great if we could pass the output from the <code class="docutils literal"><span class="pre">ls</span></code> command directly without having to write a file on disk.   Pipelines allows us to do just that in a very simple way.  Try running the command <strong class="command">ls -l /usr/bin | less</strong></p>
+<p>Pipelines do not have to be composed of only two commands; they can chain as many commands as you need.  For example, what if you want to obtain the list of files under <code class="docutils literal"><span class="pre">/usr/bin</span></code>  that contain the word &#8220;gnome&#8221; on them, and then inspect thee output on a pager?  We can use the <code class="docutils literal"><span class="pre">grep</span></code> command to filter the output from <code class="docutils literal"><span class="pre">ls</span></code>: <strong class="command">ls /usr/bin/ | grep gnome | less</strong></p>
+<div class="section" id="the-tee-command">
+<h3>The <code class="docutils literal"><span class="pre">tee</span></code> command<a class="headerlink" href="#the-tee-command" title="Permalink to this headline">¶</a></h3>
+<p>The command <code class="docutils literal"><span class="pre">tee</span></code> sends its output in two directions at once: anything attached to <code class="docutils literal"><span class="pre">tee</span></code>&#8216;s <em>stdin</em> goes to both a file and to its <em>stdout</em> (its name is given because it acts as a &#8220;T&#8221; junction in a pipe).  As an example, the command <strong class="command">ls ~ | tee myhome.txt</strong> writes the listing of your home directory to both the terminal and to a file called <code class="docutils literal"><span class="pre">myhome.txt</span></code></p>
+</div>
+<div class="section" id="the-uniq-command">
+<h3>The <code class="docutils literal"><span class="pre">uniq</span></code> command<a class="headerlink" href="#the-uniq-command" title="Permalink to this headline">¶</a></h3>
+<p>The unique command takes a list and removes duplicated elements</p>
+</div>
+<div class="section" id="the-sort-command">
+<h3>The <code class="docutils literal"><span class="pre">sort</span></code> command<a class="headerlink" href="#the-sort-command" title="Permalink to this headline">¶</a></h3>
+<p>The sort command sorts a list.</p>
+</div>
+<div class="section" id="the-head-and-tail-commands">
+<h3>The <code class="docutils literal"><span class="pre">head</span></code> and <code class="docutils literal"><span class="pre">tail</span></code> commands<a class="headerlink" href="#the-head-and-tail-commands" title="Permalink to this headline">¶</a></h3>
+<p>The <cite>head</cite> and <cite>tail</cite> commands allows you to restrict output of a process or the content of a file to a certain number of lines from the top or from the bottom of a file.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title">Pipes Part 1</p>
+<p>In this exercise we will determine how many files of type <code class="docutils literal"><span class="pre">.png</span></code> with unique names exist in the <code class="docutils literal"><span class="pre">/home</span></code> directory.  You will build the command in a series of steps, please make sure that you include the resulting command at each step. Please include in your report all the commands at each step.</p>
+<ol class="last arabic simple">
+<li>Begin with providing a command that will list all the files recursively <strong class="command">ls -R /home</strong>.You will have a very long output and some error messages due to permissions. The first task is to use redirection so you will not get any error messages in the output.</li>
+<li>The next step is to filter so only the files that end with <code class="docutils literal"><span class="pre">.png</span></code> are shown.  Note that the <code class="docutils literal"><span class="pre">.</span></code> is a globing character so you will need to <em>escape</em> it (the default escape character is <code class="docutils literal"><span class="pre">\</span></code>).  Provide an augmented command so the output only reflects files that end in <code class="docutils literal"><span class="pre">.png</span></code> by calling <code class="docutils literal"><span class="pre">grep</span></code> with the regular expression <code class="docutils literal"><span class="pre">\.png$</span></code>.</li>
+<li>Enhance the command so the returned list is sorted.</li>
+<li>Enhance the command so the returned list does not have any duplicated items</li>
+<li>Add a pipe to the <code class="docutils literal"><span class="pre">wc</span></code> command so the number of files is printed (use the <code class="docutils literal"><span class="pre">-l</span></code> option to only print the number of lines)</li>
+<li>Modify the previous command so the list of files is written to a file called <code class="docutils literal"><span class="pre">`png_list</span></code> but it still prints the number of files to the screen.</li>
+</ol>
+</div>
+<div class="worksheet admonition">
+<p class="first admonition-title">Pipes Part 2</p>
+<ol class="last arabic simple">
+<li>Provide a command that will create a file called &#8220;newest_files&#8221; that will contain the 5 files with the newest modification date in the <code class="docutils literal"><span class="pre">/usr/bin</span></code> directory.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,115 @@
+******************************
+Lab No. 6: Shell Script Basics
+******************************
+
+After completing this lab, students will be able to:
+
+* create simple shell scripts
+
+
+Creating Scripts
+================
+
+A shell script is basically a file that contains a serie of commands. 
+Shell scripts are plain text files, so they can be created with any text editor.
+As you saw on some previous labs, they can be even conveniently created from the command line if they are simple enough.
+
+Open a text editor and enter the following text
+
+
+.. parsed-literal::
+
+    # This is my first shell script
+    echo "Hello World!"
+
+
+The line that begins with the *#* symbol is called a comment.  This line is ignored by the shell.  The next line is an ``echo`` command (which you should be familiar by now).
+Save that as a file called ``myscript.sh``. 
+We can now run the script by using the following command:
+
+.. parsed-literal::
+
+    [you\@blue ~]$ :command:`bash myscript.sh`
+    Hello World!
+
+Typically, scripts use a special directive called a **shebang** or a **hashbang** that allows users to run the script directly.  Modify the file so it looks like this:
+
+.. parsed-literal::
+
+    #!/bin/bash
+
+    # This is my first shell script
+    echo "Hello World!"
+
+The **shebang** tells the shell that this is a script and it should use ``/bin/bash`` as its interpreter.  
+Lets try to run our script:
+
+.. parsed-literal::
+
+    [you\@blue ~]$ ./myscript.sh
+    -bash: ./myscript.sh: Permission denied
+
+The problem is that a script needs to have execute access granted in order for a given user to be able to run the script directly. Change the file permissions to give access to the owner and try again, the script will execute this time.
+Also note how you need to prepend the ``./``.  The shell has a list of places where it finds executables, which is defined by the ``PATH`` environment variable. Since the script we just created is not on one of those places, we need to provide a pathname (either relative or absolute) so the shell can find it.
+
+.. admonition:: basic scripts
+    :class: worksheet
+
+    In this sections you will create basic scripts at each step.  You *need to include* each one of these in your lab submission.
+
+    1. Consider the following directory tree:
+
+    .. parsed-literal::
+
+        vehicles
+        │
+        ├── public_bicycles
+        ├── public_cars
+        ├── public_planes
+        ├── bicycles
+        ├── cars
+        └── planes
+    
+    Create a shell script that will generate that directory structure. Name this script ``makedirs.sh`` and include this script in your submission.
+
+    2. Create a new script called ``securedirs.sh`` that will modify permissions in the previous tree structure so:
+        
+    * any user can write files into *public*  directories
+    * no user other than the owner can create files, or list the contents of the *non public* directories
+    * any user can execute the files in the *non public* directories 
+
+
+    3. Create a new script called ``movefiles.sh`` that will list any file added into the  *public* directories and will move them to their corresponding *non public* directory. If a file already exists on the *non public* directory, your script needs to overwrite the file without asking for confirmation.  Also, your script should not produce any error messages in case there are no files that need to be moved (hint: ``/dev/null`` is your friend when you want to get rid of error messages).
+
+Script Arguments
+================
+
+Shell scripts can use variables in many forms.  
+A variable is a "placeholder" for a value that can change (hence the name).
+Shell scripts accept postional parameters, and they are accessible within the script using the a dollar sign (``$``) and a number that corresponds to the argument position. 
+
+Create a script called ``args.sh`` with the following contents (and dont forget to ass the execute permissions)
+
+.. parsed-literal::
+
+    #!/bin/bash
+
+    # This is my first shell script with arguments
+    echo "The first argument you entered is: " $1
+
+Now try running the script:
+
+.. parsed-literal::
+
+    [you\@blue ~]$ ./args.sh Linux
+    The first argument you entered is: Linux
+
+If you need to pass an argument that contains whitespace, you need to use quotes around the text.  Explore running that script with different types of arguments.
+
+.. admonition:: Script arguments
+    :class: worksheet
+    
+    In this exercise, you will create a script on each step. You will need to submit your script in your submission.
+    Start this section by copying and extracting the archive ``~jmora/lab06/texts.tar.gz`` into your current directory.
+    
+    #. Create a new script called ``findwords.sh`` that will take the first argument passed to the script and will perform a search on the files that were downloaded, and will print the number of lines were the input word appears.

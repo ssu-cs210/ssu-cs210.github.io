@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab No. 6: Shell Script Basics &#8212; CS210 - Introduction to Unix  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Lab No. 5: Text processing and I/O Redirection" href="../lab05/lab05.html" />
+<link href="https://fonts.googleapis.com/css?family=Bitter|Source+Code+Pro" rel="stylesheet">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          CS210 - Introduction to Unix</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">CS210 Introduction to Unix - Spring 2017</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conv/conv.html">Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab01/lab01.html">Lab No. 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab02/lab02.html">Lab No. 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab03/lab03.html">Lab 03 File Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab04/lab04.html">Lab No. 4: Finding Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab05/lab05.html">Lab No. 5: Text processing and I/O Redirection</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab No. 6: Shell Script Basics</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Lab No. 6: Shell Script Basics</a><ul>
+<li><a class="reference internal" href="#creating-scripts">Creating Scripts</a></li>
+<li><a class="reference internal" href="#script-arguments">Script Arguments</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="../lab05/lab05.html" title="Previous Chapter: Lab No. 5: Text processing and I/O Redirection"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Lab No. 5: Te...</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/lab06/lab06.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="lab-no-6-shell-script-basics">
+<h1>Lab No. 6: Shell Script Basics<a class="headerlink" href="#lab-no-6-shell-script-basics" title="Permalink to this headline">¶</a></h1>
+<p>After completing this lab, students will be able to:</p>
+<ul class="simple">
+<li>create simple shell scripts</li>
+</ul>
+<div class="section" id="creating-scripts">
+<h2>Creating Scripts<a class="headerlink" href="#creating-scripts" title="Permalink to this headline">¶</a></h2>
+<p>A shell script is basically a file that contains a serie of commands.
+Shell scripts are plain text files, so they can be created with any text editor.
+As you saw on some previous labs, they can be even conveniently created from the command line if they are simple enough.</p>
+<p>Open a text editor and enter the following text</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># This is my first shell script</span>
+<span class="n">echo</span> <span class="s2">&quot;Hello World!&quot;</span>
+</pre></div>
+</div>
+<p>The line that begins with the <em>#</em> symbol is called a comment.  This line is ignored by the shell.  The next line is an <code class="docutils literal"><span class="pre">echo</span></code> command (which you should be familiar by now).
+Save that as a file called <code class="docutils literal"><span class="pre">myscript.sh</span></code>.
+We can now run the script by using the following command:</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ <strong class="command">bash myscript.sh</strong>
+Hello World!
+</pre>
+<p>Typically, scripts use a special directive called a <strong>shebang</strong> or a <strong>hashbang</strong> that allows users to run the script directly.  Modify the file so it looks like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># This is my first shell script</span>
+<span class="n">echo</span> <span class="s2">&quot;Hello World!&quot;</span>
+</pre></div>
+</div>
+<p>The <strong>shebang</strong> tells the shell that this is a script and it should use <code class="docutils literal"><span class="pre">/bin/bash</span></code> as its interpreter.
+Lets try to run our script:</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ ./myscript.sh
+-bash: ./myscript.sh: Permission denied
+</pre>
+<p>The problem is that a script needs to have execute access granted in order for a given user to be able to run the script directly. Change the file permissions to give access to the owner and try again, the script will execute this time.
+Also note how you need to prepend the <code class="docutils literal"><span class="pre">./</span></code>.  The shell has a list of places where it finds executables, which is defined by the <code class="docutils literal"><span class="pre">PATH</span></code> environment variable. Since the script we just created is not on one of those places, we need to provide a pathname (either relative or absolute) so the shell can find it.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title">basic scripts</p>
+<p>In this sections you will create basic scripts at each step.  You <em>need to include</em> each one of these in your lab submission.</p>
+<ol class="arabic simple">
+<li>Consider the following directory tree:</li>
+</ol>
+<div class="highlight-default"><div class="highlight"><pre><span></span>vehicles
+│
+├── public_bicycles
+├── public_cars
+├── public_planes
+├── bicycles
+├── cars
+└── planes
+</pre></div>
+</div>
+<p>Create a shell script that will generate that directory structure. Name this script <code class="docutils literal"><span class="pre">makedirs.sh</span></code> and include this script in your submission.</p>
+<ol class="arabic simple" start="2">
+<li>Create a new script called <code class="docutils literal"><span class="pre">securedirs.sh</span></code> that will modify permissions in the previous tree structure so:</li>
+</ol>
+<ul class="simple">
+<li>any user can write files into <em>public</em>  directories</li>
+<li>no user other than the owner can create files, or list the contents of the <em>non public</em> directories</li>
+<li>any user can execute the files in the <em>non public</em> directories</li>
+</ul>
+<ol class="last arabic simple" start="3">
+<li>Create a new script called <code class="docutils literal"><span class="pre">movefiles.sh</span></code> that will list any file added into the  <em>public</em> directories and will move them to their corresponding <em>non public</em> directory. If a file already exists on the <em>non public</em> directory, your script needs to overwrite the file without asking for confirmation.  Also, your script should not produce any error messages in case there are no files that need to be moved (hint: <code class="docutils literal"><span class="pre">/dev/null</span></code> is your friend when you want to get rid of error messages).</li>
+</ol>
+</div>
+</div>
+<div class="section" id="script-arguments">
+<h2>Script Arguments<a class="headerlink" href="#script-arguments" title="Permalink to this headline">¶</a></h2>
+<p>Shell scripts can use variables in many forms.
+A variable is a &#8220;placeholder&#8221; for a value that can change (hence the name).
+Shell scripts accept postional parameters, and they are accessible within the script using the a dollar sign (<code class="docutils literal"><span class="pre">$</span></code>) and a number that corresponds to the argument position.</p>
+<p>Create a script called <code class="docutils literal"><span class="pre">args.sh</span></code> with the following contents (and dont forget to ass the execute permissions)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+
+# This is my first shell script with arguments
+echo &quot;The first argument you entered is: &quot; $1
+</pre></div>
+</div>
+<p>Now try running the script:</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ ./args.sh Linux
+The first argument you entered is: Linux
+</pre>
+<p>If you need to pass an argument that contains whitespace, you need to use quotes around the text.  Explore running that script with different types of arguments.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title">Script arguments</p>
+<p>In this exercise, you will create a script on each step. You will need to submit your script in your submission.
+Start this section by copying and extracting the archive <code class="docutils literal"><span class="pre">~jmora/lab06/texts.tar.gz</span></code> into your current directory.</p>
+<ol class="last arabic simple">
+<li>Create a new script called <code class="docutils literal"><span class="pre">findwords.sh</span></code> that will take the first argument passed to the script and will perform a search on the files that were downloaded, and will print the number of lines were the input word appears.</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

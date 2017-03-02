@@ -194,9 +194,9 @@ Also note how you need to prepend the <code class="docutils literal"><span class
 <li>Create a new script called <code class="docutils literal"><span class="pre">securedirs.sh</span></code> that will modify permissions in the previous tree structure so:</li>
 </ol>
 <ul class="simple">
-<li>any user can write files into <em>public</em>  directories</li>
+<li>any user can read/write files into <em>public</em>  directories</li>
 <li>no user other than the owner can create files, or list the contents of the <em>non public</em> directories</li>
-<li>any user can execute the files in the <em>non public</em> directories</li>
+<li>any user can read, write and execute the files in the <em>non public</em> directories</li>
 </ul>
 <ol class="last arabic simple" start="3">
 <li>Create a new script called <code class="docutils literal"><span class="pre">movefiles.sh</span></code> that will list any file added into the  <em>public</em> directories and will move them to their corresponding <em>non public</em> directory. If a file already exists on the <em>non public</em> directory, your script needs to overwrite the file without asking for confirmation.  Also, your script should not produce any error messages in case there are no files that need to be moved (hint: <code class="docutils literal"><span class="pre">/dev/null</span></code> is your friend when you want to get rid of error messages).</li>

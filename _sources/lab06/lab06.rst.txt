@@ -112,4 +112,4 @@ If you need to pass an argument that contains whitespace, you need to use quotes
     In this exercise, you will create a script on each step. You will need to submit your script in your submission.
     Start this section by copying and extracting the archive ``~jmora/lab06/texts.tar.gz`` into your current directory.
     
-    #. Create a new script called ``findwords.sh`` that will take the first argument passed to the script and will perform a search on the files that were downloaded, and will print the number of lines were the input word appears.
+    #. Create a new script called ``findwords.sh`` that will take the first argument passed to the script and will perform a search on the files that were extracted (contained in the ``texts`` folder), and will print the number of lines were the input word appears.

@@ -76,7 +76,7 @@ Also note how you need to prepend the ``./``.  The shell has a list of places wh
         
     * any user can read/write files into *public*  directories
     * no user other than the owner can create files, or list the contents of the *non public* directories
-    * any user can read, write and execute the files in the *non public* directories 
+    * any user can execute the files in the *non public* directories 
 
 
     3. Create a new script called ``movefiles.sh`` that will list any file added into the  *public* directories and will move them to their corresponding *non public* directory. If a file already exists on the *non public* directory, your script needs to overwrite the file without asking for confirmation.  Also, your script should not produce any error messages in case there are no files that need to be moved (hint: ``/dev/null`` is your friend when you want to get rid of error messages).

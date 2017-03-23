@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab No. 7: Shell Expansion &#8212; CS210 - Introduction to Unix  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Lab No. 6: Shell Script Basics" href="../lab06/lab06.html" />
+<link href="https://fonts.googleapis.com/css?family=Bitter|Source+Code+Pro" rel="stylesheet">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          CS210 - Introduction to Unix</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">CS210 Introduction to Unix - Spring 2017</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conv/conv.html">Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab01/lab01.html">Lab No. 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab02/lab02.html">Lab No. 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab03/lab03.html">Lab 03 File Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab04/lab04.html">Lab No. 4: Finding Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab05/lab05.html">Lab No. 5: I/O Redirection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab06/lab06.html">Lab No. 6: Shell Script Basics</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab No. 7: Shell Expansion</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Lab No. 7: Shell Expansion</a><ul>
+<li><a class="reference internal" href="#pathname-expansion">Pathname expansion</a></li>
+<li><a class="reference internal" href="#tilde-expansion">Tilde expansion</a></li>
+<li><a class="reference internal" href="#brace-expansion">Brace expansion</a></li>
+<li><a class="reference internal" href="#command-substitution">Command substitution</a></li>
+<li><a class="reference internal" href="#arithmetic-expansion">Arithmetic expansion</a></li>
+<li><a class="reference internal" href="#parameter-and-variable-expansion">Parameter and variable expansion</a><ul>
+<li><a class="reference internal" href="#environment-variables">Environment variables</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#quoting">Quoting</a></li>
+<li><a class="reference internal" href="#a-new-utility">A new utility</a><ul>
+<li><a class="reference internal" href="#awk">awk</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="../lab06/lab06.html" title="Previous Chapter: Lab No. 6: Shell Script Basics"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Lab No. 6: Sh...</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/lab07/lab07.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="lab-no-7-shell-expansion">
+<h1>Lab No. 7: Shell Expansion<a class="headerlink" href="#lab-no-7-shell-expansion" title="Permalink to this headline">¶</a></h1>
+<p>Shell expansion is nothing new for us, we have been using it all along, we just did not know it by it&#8217;s proper name.</p>
+<p>In Lab No.4 we worked with globbing characters, mostly to find files using very basic patterns.
+When we used patterns that included the <code class="docutils literal"><span class="pre">*</span></code>, <code class="docutils literal"><span class="pre">?</span></code> and <code class="docutils literal"><span class="pre">[]</span></code> characters, the shell applied one type of expansion called <em>Pathname expansion</em>.
+When we used the curly braces <code class="docutils literal"><span class="pre">{}</span></code> to create patterns, the shell applied a different type of expansion that created lists (appropriately known as <em>Brace Expansion</em>).  We have also seen how the <em>Tilde Expansion</em> (<code class="docutils literal"><span class="pre">~</span></code>) works when we needed to resolve a user&#8217;s home directory.</p>
+<p>When the shell process commands, it applies a process of tokenization  and expansion to the arguments that are passed. In this lab we are going to apply the most commonly used types of expansions.</p>
+<p>For this lab you are going to need some files that are available in an archive located in <code class="docutils literal"><span class="pre">~jmora/lab07/lab07files.tar.gz</span></code>.  Extract those files to a folder called <code class="docutils literal"><span class="pre">lab07</span></code> under your home directory:</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ mkdir lab07
+[you&#64;blue ~]$ cd lab07
+[you&#64;blue lab07]$ tar -xzvf ~jmora/lab07/lab07files.tar.gz
+</pre>
+<div class="section" id="pathname-expansion">
+<h2>Pathname expansion<a class="headerlink" href="#pathname-expansion" title="Permalink to this headline">¶</a></h2>
+<p>What we covered in Lab 04 was mostly pathname expansion, so we are not going to cover that again on this lab.</p>
+</div>
+<div class="section" id="tilde-expansion">
+<h2>Tilde expansion<a class="headerlink" href="#tilde-expansion" title="Permalink to this headline">¶</a></h2>
+<p>We have been using tilde expansion on a daily basis on previous labs.
+However, it is appropriate to introduce formally in this lab the basic rules that govern tilde expansion:</p>
+<ul class="simple">
+<li>when used at the beginning of a word (that is, before the first &#8220;slash: character (<code class="docutils literal"><span class="pre">/</span></code>), it expands into the pathname of the home directory of the user that matches the word.</li>
+<li>if it is used without a word, then it is replaced by the value of the <code class="docutils literal"><span class="pre">HOME</span></code> environment variable (or the current user&#8217;s home directory as defined in the <code class="docutils literal"><span class="pre">/etc/passwd</span></code> file.).   We will explain what environment variables are in just a few sections later in this lab.</li>
+<li><code class="docutils literal"><span class="pre">~+</span></code> expands to the current working directory</li>
+<li><code class="docutils literal"><span class="pre">~-</span></code> expands to the previous working directory</li>
+</ul>
+<p>Since we already covered this on previous labs, there are no exercises about Tilde expansion on this lab.</p>
+</div>
+<div class="section" id="brace-expansion">
+<h2>Brace expansion<a class="headerlink" href="#brace-expansion" title="Permalink to this headline">¶</a></h2>
+<p>Brace expansion is a mechanism to generate arbitrary strings.
+Patterns to be brace expanded take the form <em>PREAMBLE*{expression}*POSTSCRIPT</em>.
+The preamble is prefixed to each string generated by the expression within the braces, and the postcript is appended to each resulting string.
+Brace expansion can also be nested.</p>
+<p>For an expression to be consider a brace expansion, it needs to be a list of string tokens.
+You can use a comma to define an arbitrary list of string elements.
+You can also define sequences by using an expression of the form <code class="docutils literal"><span class="pre">{x..y}</span></code> where <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> are either single characters or integers.
+You can skip elements from the sequence by using the form <code class="docutils literal"><span class="pre">{x..y..z}</span></code> where <code class="docutils literal"><span class="pre">z</span></code> is the number of elements to skip.</p>
+<p>Brace expansion is performed before any other expansions, which means that we can include other expressions that can be expanded as well.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title">Brace Expansion</p>
+<p class="last">Complete the exercises on Moodle.</p>
+</div>
+</div>
+<div class="section" id="command-substitution">
+<h2>Command substitution<a class="headerlink" href="#command-substitution" title="Permalink to this headline">¶</a></h2>
+<p>This type of expansion allows the output of a command to replace the command itself.  Command substitution has two forms:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">$(command)</span></code></li>
+<li><code class="docutils literal"><span class="pre">`command`</span></code></li>
+</ul>
+<p>This form is very useful and common in scripts to assign values to variables.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title">Command Substitution</p>
+<p class="last">Complete the exercises on Moodle.</p>
+</div>
+</div>
+<div class="section" id="arithmetic-expansion">
+<h2>Arithmetic expansion<a class="headerlink" href="#arithmetic-expansion" title="Permalink to this headline">¶</a></h2>
+<p>It turns out that you can use the shell to perform arithmetic operations for you.  Arithmetic expansion uses the form <code class="docutils literal"><span class="pre">$((expression))</span></code>. Unfortunately, arithmetic expansion only supports integers.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title">Arithmetic Expansion</p>
+<p class="last">Complete the exercises on Moodle.</p>
+</div>
+</div>
+<div class="section" id="parameter-and-variable-expansion">
+<h2>Parameter and variable expansion<a class="headerlink" href="#parameter-and-variable-expansion" title="Permalink to this headline">¶</a></h2>
+<p>Any script that goes beyond the most basic shell scripts use this type of expansion.
+It is a mechanism to asign a variable name to a value that we need to make a reference later.
+The basic form of parameter expansion is the form <code class="docutils literal"><span class="pre">${PARAMETER}</span></code>.  Braces can be ommitted and use the form <code class="docutils literal"><span class="pre">$PARAMETER</span></code> except when it needs to be concatenated with other strings and if <code class="docutils literal"><span class="pre">PARAMETER</span></code> refers to a positional parameter in a script that requires more than one digit.
+Remember from the previous lab how we made references to arguments using the <code class="docutils literal"><span class="pre">$</span></code> in front of a number that represented the position of the argument in the provided command.
+When the number of positional parameters exceeds 9, then instead of using <code class="docutils literal"><span class="pre">$10</span></code> to refer to tenth argument, you need to use the form <code class="docutils literal"><span class="pre">S{10}</span></code>.</p>
+<div class="section" id="environment-variables">
+<h3>Environment variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h3>
+<p>We are at a point were we can introduce formally the concept of environment variables.
+When you start a session, the shell creates a set of variables that describe the session, in what is called the environment.</p>
+<p>The data stored in the environment is used by many programs to determine how they need to function.
+The environment provides a very consistent and centralized way to access some of the most elemental configuration parameters.</p>
+<p>Most programming languages provide an API that allows you to get access to the variables in the environment.
+Examples of the most common environment variables are the username, the home directory, the language, the current working directory, and the path where executables can be found.</p>
+<p>Many programs require you to define environment variables so they can work.  If you have done any python programming you will probably had to set the PYTHONPATH variable, if you are a java programmer you must have seen the JAVA_HOME and the CLASSPATH environment variables, if you a C++ programmer, you must have seen the CPATH environment variables.</p>
+<p>In Linux the <code class="docutils literal"><span class="pre">env</span></code> command prints a list of the environment variables.  You can get the value of any specific variable using variable expansion, for example instead of using the command <strong class="command">cd ~</strong> to change to your home directoty, you could also the (longer but equivalent) command <strong class="command">cd $HOME</strong>.</p>
+<p>To set an environment variable so it can be accessible to other commands (the correct term is other <em>child processes</em>, but we have not talked about processes yet)  during your active session you use the <code class="docutils literal"><span class="pre">export</span></code> command.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title">Arithmetic Expansion</p>
+<p class="last">Complete the exercises on Moodle.</p>
+</div>
+</div>
+</div>
+<div class="section" id="quoting">
+<h2>Quoting<a class="headerlink" href="#quoting" title="Permalink to this headline">¶</a></h2>
+<p>There are cases when we need to control how the input of the commands is evaluated by the shell.
+The most common example of how input is treated by the shell occurs when we need to pass a sentence that contains spaces.
+Another example of this behavior occurs then we want to prevent the shell from expanding an expression that has a dollar sign in it (e.g. a currency value).
+To deal with these situations, the shell allows us to enclose input using quotes.</p>
+<p>When enclosing characters in double quotes, the shell preserves their literal value, with the exception of <code class="docutils literal"><span class="pre">$</span></code>, <code class="docutils literal"><span class="pre">`</span></code> and <code class="docutils literal"><span class="pre">\</span></code>.
+This means that quotes won&#8217;t allow Tilde, Pathname and Brace Expansion within.
+Variable and Arithmetic expansions are still allowed within double quotes.</p>
+<p>When enclosing characters in single quotes, the shell preserves the literal value of each charactre within the quotes, which means that no expansions are executed at all.
+One caveat with single enclosing characters is that a single quote may not occur between single quoates, even when preceded by a backslash.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title">Quoting</p>
+<p class="last">Complete the exercises on Moodle.</p>
+</div>
+</div>
+<div class="section" id="a-new-utility">
+<h2>A new utility<a class="headerlink" href="#a-new-utility" title="Permalink to this headline">¶</a></h2>
+<p>In this lab we are going to learn some very powerful features of the <code class="docutils literal"><span class="pre">bash</span></code> shell. In order to put them in practice we are going to learn also a new utility that let us do some very useful tasks.</p>
+<div class="section" id="awk">
+<h3>awk<a class="headerlink" href="#awk" title="Permalink to this headline">¶</a></h3>
+<p>Awk is a utility and a programming language at the same time.
+Its most common usage is parsing of files based on delimiters.
+We are going to cover <code class="docutils literal"><span class="pre">awk</span></code> with greater detail in a future lab.</p>
+<p>Proabably the most basic example of awk in action is the following:</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ echo &quot;This is some data&quot; | awk '{print $3}'
+some
+</pre>
+<p>You can see that <code class="docutils literal"><span class="pre">awk</span></code> takes the string <code class="docutils literal"><span class="pre">This</span> <span class="pre">is</span> <span class="pre">some</span> <span class="pre">data</span></code> and tokenizes it based on the spaces, and then it uses the <code class="docutils literal"><span class="pre">'{print</span> <span class="pre">$3}'</span></code> bit to figure out that you wanted to print the third field.
+You can override the field delimiter by using the -F option. For example, the <code class="docutils literal"><span class="pre">/etc/passwd</span></code> file is delimited by colons (<code class="docutils literal"><span class="pre">:</span></code>). You can use awk to get a list of user ids by running this command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[jmora@blue lab07]$ cat /etc/passwd | awk -F: &#39;{print $1}&#39;
+</pre></div>
+</div>
+<p>Note that in this context the expression $1 is not subject to shell expansion because it is enclosed in single quotes.</p>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

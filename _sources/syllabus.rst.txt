@@ -75,6 +75,32 @@ A detailed description of readings, assignments and weekly course topics will be
 The schedule is subject to change, with fair notice via Moodle.
 
 
+
+.. cssclass:: minitable
+
+=============       ==========
+Week                Topic
+=============       ==========
+1                   Introduction to the Shell
+2                   The File System
+3                   File Permissions
+4                   Wildcards - Finding Files
+5                   I/O Redirection
+6                   Shell Script Basics
+7                   Midterm
+8                   Expansions
+9                   Text Processing
+10                  Regular Expressions
+11                  Shell Scripts II
+12                  Shell Scripts III
+13                  Processes
+14                  Make, GDB and Version Control
+15                  SSH 
+16                  Final
+=============       ==========
+
+
+
 Classroom Protocol
 ==================
 Moodle will be used to maintain grades, syllabus, schedule, assignments and class resources.

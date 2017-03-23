@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Lab No. 5: Text processing and I/O Redirection &#8212; CS210 - Introduction to Unix  documentation</title>
+    <title>Lab No. 5: I/O Redirection &#8212; CS210 - Introduction to Unix  documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -33,6 +33,7 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Lab No. 6: Shell Script Basics" href="../lab06/lab06.html" />
     <link rel="prev" title="Lab No. 4: Finding Files" href="../lab04/lab04.html" />
 <link href="https://fonts.googleapis.com/css?family=Bitter|Source+Code+Pro" rel="stylesheet">
 
@@ -72,7 +73,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../lab02/lab02.html">Lab No. 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../lab03/lab03.html">Lab 03 File Permissions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../lab04/lab04.html">Lab No. 4: Finding Files</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab No. 5: Text processing and I/O Redirection</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab No. 5: I/O Redirection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab06/lab06.html">Lab No. 6: Shell Script Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab07/lab07.html">Lab No. 7: Shell Expansion</a></li>
 </ul>
 </ul>
 </li>
@@ -86,7 +89,7 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Lab No. 5: Text processing and I/O Redirection</a><ul>
+<li><a class="reference internal" href="#">Lab No. 5: I/O Redirection</a><ul>
 <li><a class="reference internal" href="#standard-input-standard-output-and-standard-error">Standard Input, Standard Output and Standard Error</a><ul>
 <li><a class="reference internal" href="#the-bit-bucket">The bit bucket</a></li>
 <li><a class="reference internal" href="#the-cat-command">The <code class="docutils literal"><span class="pre">cat</span></code> command</a></li>
@@ -111,6 +114,10 @@
                 
   <li>
     <a href="../lab04/lab04.html" title="Previous Chapter: Lab No. 4: Finding Files"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Lab No. 4: Fi...</span>
+    </a>
+  </li>
+  <li>
+    <a href="../lab06/lab06.html" title="Next Chapter: Lab No. 6: Shell Script Basics"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Lab No. 6: Sh... &raquo;</span>
     </a>
   </li>
               
@@ -144,8 +151,8 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="lab-no-5-text-processing-and-i-o-redirection">
-<h1>Lab No. 5: Text processing and I/O Redirection<a class="headerlink" href="#lab-no-5-text-processing-and-i-o-redirection" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="lab-no-5-i-o-redirection">
+<h1>Lab No. 5: I/O Redirection<a class="headerlink" href="#lab-no-5-i-o-redirection" title="Permalink to this headline">¶</a></h1>
 <p>After completing this lab, students will be able to:</p>
 <ul class="simple">
 <li>describe <em>stdout</em>, <em>stdin</em> and <em>stderr</em></li>

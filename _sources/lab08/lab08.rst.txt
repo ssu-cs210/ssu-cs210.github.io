@@ -1,0 +1,244 @@
+******************************
+Lab No. 8: Regular Expressions
+******************************
+
+Regular expressions, also known as *regex*, are sequences of characters that follow a set of notations to specify a text patterns. 
+
+You saw in previous Labs how pathname expansion allowed the use of the ``*`` character to match any characters and how you could use the ``[]`` pattern to match a character from a predefined list in a specific position in the file name.  Regular expressions work in the same way, certain characters denote a text pattern, and mixing these allows us to create expressions that match very complex patterns.  The difference is that regular expressions include many more options (which is justified since they are a general purpose tool, whereas pathname expansion applies only to pahtnames).
+
+Some very basic examples of typical cases where regular expressions are used are:
+
+#. find instances of dates in a text
+#. validate that a distribution list does not contain invalid emails
+#. extract data in a certain format from user comments in a forum
+#. identify phone numbers
+
+
+Regular expressions are supported by many utilities and programming languages (although sometimes there are slight variations in the implementations)
+
+
+In this Lab we are going to learn how to put regular expressions to practice with the ``grep`` and ``sed`` utilities.
+
+
+Literal Matching
+================
+The simplest regular expressions are a string of literal charactes to match. A string matches the regular expression if it contains the substring specified by the regular expresion.
+
+Take for example the regular expression ``cks``.
+This expression matches "Linux ro\ :strong:`cks`!" and "Du\ :strong:`cks` are birds", but does not match "My clock stopped"
+
+Note that a regular expression can match a string in more than one place.  Our previous regular expression matches "A pair of so\ :strong:`cks` for two bu\ :strong:`cks`"
+
+Note that in these examples a match is found regardless of the position within the text.  This happens because the regular expression that we used does not specify position within a string. You will see later how we can specify patterns where the position of the charaters matters.
+
+
+Metacharacters
+==============
+
+Metacharacters are characters that have special meaning (as opposed to a literal meaning, as we just saw).  Metacharacters are used to specify complex patterns to match.  The regular expression metacharacters are:
+
+.. parsed-literal::
+
+    ^ $ . [ ] { } - ? * + ( ) | \
+
+
+One aspect of metacharacters is that, since they are special, we can not simple use it if we need it to be matched literally. In order to specify a regex that includes a literal metacharacter, you need to *escape* it using the **backslash** character (``\``).
+As an example, suppose you want to verify that a sentence has a period.  The correct way to specify this regular expression is ``\.``.
+
+
+.. admonition:: Simple String Matching
+    :class: worksheet
+
+    Complete the exercises on Moodle.
+
+Match any character
+-------------------
+
+In regular expressions, the period character (``.``) is used to match any character (with the exception of the new line character) (This is equivalent to the question mark character (``?``) that we used in Bash pathname expansion.)
+
+The expression ``.a`` will match any string that has an **a** character in the middle.  For example, it will match "Today is Thurs\ :strong:`da`\ y". 
+Note how in this example the match includes both the **d** and the **a**.  In this case the **.** is matched by the **d** character.
+
+Note that in our example the expression calls for a character, any character, before the **a**. This means that it will not match a string such as "\ :strong:`a`\ bcdefg".
+
+
+.. admonition:: Match any character
+    :class: worksheet
+
+    Complete the exercises on Moodle.
+
+
+Anchors
+-------
+
+Anchors are use to specify if the regular expression needs to match the beginning of the line by using the *caret* character (``^``) or the end of the line by using the *dollar sign* character (``$``).
+
+
+As an example, the expression ``^Th`` matches the sentence "\ :strong:`Th`\ is is it" but it does not match "Today is Thursday"
+
+
+.. admonition:: Anchors
+    :class: worksheet
+
+    Complete the exercises on Moodle.
+
+
+Bracket Expressions and Negation
+--------------------------------
+Brackets allow matching a character from a predetermined set of characters. 
+This functionality is almost identical to the pathname expansion list of characters expression.
+Take for example the expression ``h[eo]ard``. 
+
+
+.. parsed-literal::
+
+    [you\@blue ~]$ echo "I heard." | grep 'h[eo]ard'
+    I **heard**.
+    [you\@blue ~]$ echo "I hoard." | grep "h[eo]ard"
+    I **hoard**.
+
+.. note:: **Why the quotes?**
+
+    Notice on this example that we need to enclose out expression in quotes (either single or double).
+    The reason why we need to do this is that otherwise pathname expansion will be applied and our expressionn ``h[eo]ard`` will be use to look for input files for the greo program.
+    Bash expansion is your friend, but some times gets in the way and you need to keep it in on a leash.
+
+
+When you want to the opposite type of matching, where you want to match any character that *is not* part of a set of characters, you need to use the *caret* character (``^``) as the first character within the brackets.
+Note in the following example how only pet, put and pit were matched (highlighted).
+
+.. parsed-literal::
+
+    [you\@blue ~]$ echo "I pat my pet and then I put the pot in the pit" | grep 'p[^ao]t'
+    I pat my **pet** and then I **put** the pot in the **pit**
+
+
+Just in the same fashion as the pathname expansion counterpart, you can specify ranges of characters. For example, to specify letters ranging from a to k, you can apply the expression ``[d-k]``:
+
+
+.. parsed-literal::
+
+    [you\@blue ~]$ echo "abcdefghijklmnopqrstuvwxyz" | grep '[d-k]'
+    abc\ **defghijk**\ lmnopqrstuvwxyz
+
+
+The previous example serves the purpose to revise how matching is done.
+It is clear from the example that the string "*abcdefghijklmnopqrstuvwxyz*" matches the expression ``[d-k]``.
+Something that is not obvious is that the string matches the pattern 8 different times, one for each of the characters included in the set ``[d-k]``.
+So the match is not "*defghijk*" but instead the individual characters "*d*", "*e*", ... , "*k*".
+In this context where we are looking at the whole sentence so this might not seem to make a big difference, but when you apply regular expressions and need to extract matched regions the difference becomes evident.
+If you run the same command and enable the ``-o`` option which prints only the matching regions and prints every region on its own line, you'll be able to see what we just discussed:
+
+
+.. parsed-literal::
+
+    [you\@blue ~]$ echo "abcdefghijklmnopqrstuvwxyz" | grep -o '[d-k]'
+    **d**
+    **e**
+    **f**
+    **g**
+    **h**
+    **i**
+    **j**
+    **k**
+
+What if you need to match a character to a set that includes several ranges that are non contiguous? 
+In that case you can simple add them in the brackets, without a space between them.
+A recurring need is to match any alpha-numerical character, lowercase and uppercase.
+The expression ``[A-Za-z0-9]`` will serve this purpopse.
+
+Matching numbers is a little trickier.
+The main problem is that regular expressions deal with text instead of numeric values, which means that if we want to match a number in a numeric range is not as simple as specifing the beginning and the end of the range.
+For example, you can not use the range ``[0-20]`` to specify a range of numbers between 0 and 20.
+We'll cover this later once we have seen *alternation*
+
+Character Classes
+-----------------
+Regular expressions developers realized that there are a few patterns that are commonly used over and over. So they came with the idea of defining some predetermined lists of characters. The following table summarizes the most common classes (shamefully adapted from out Textbook *The Linux Command Line* by William Shotts)
+
+.. cssclass:: minitable
+
+================    ==========
+Character Class     Characters it matches
+================    ==========
+``[:alnum:]``       The alphanumeric characters. In ASCII, equivalent to: ``[A-Za-z0-9]``
+``[:word:]``        The same as [:alnum:], with the addition of the underscore (``_``) character.
+``[:alpha:]``       The alphabetic characters. In ASCII, equivalent to:``[A-Za-z]``
+``[:blank:]``       Includes the space and tab characters.
+``[:cntrl:]``       The ASCII control codes. Includes the ASCII characters 0 through 31 and 127.
+``[:digit:]``       The numerals zero through nine.
+``[:graph:]``       The visible characters. In ASCII, it includes characters 33 through 126.
+``[:lower:]``       The lowercase letters.
+``[:punct:]``       The punctuation characters. In ASCII, equivalent to: ``[-!"#$%&'()*+,./:;<=>?@[\\\]_`{|}~]``
+``[:print:]``       The printable characters. All the characters in ``[:graph:]`` plus the space character.
+``[:space:]``       The whitespace characters including space, tab, carriage return, newline, vertical tab, and form feed. In ASCII, equivalent to: ``[ \t\r\n\v\f]``
+``[:upper:]``       The uppercase characters.
+``[:xdigit:]``      Characters used to express hexadecimal numbers. In ASCII, equivalent to: ``[0-9A-Fa-f]``
+================    ==========
+
+
+Alternation
+-----------
+
+Aternation is a feature that allows applying alternative patterns at the same time. For example the expression ``R2-D2|C3PO``:
+
+.. parsed-literal::
+    [you\@blue ~]$ echo 'The droid you are looking for is R2-D2' | grep -E 'R2-D2|C3PO'
+    The droid you are looking for is R2-D2
+    [you\@blue ~]$ echo 'The droid you are looking for is C3PO' | grep -E 'R2-D2|C3PO'
+    The droid you are looking for is C3PO
+
+Alternation is an *extended* feature of the standard set of regular expression features.  Because of this, we had to use the ``-E`` option in the previous example.
+
+
+Now that we know how to use alternation, we can apply it to create expressions that match numeric ranges.  Suppose we want to match numbers between 0 and 19.  The first set of numbers is from 0 to 9, so we can use the expression ``[0-9]`` for that purpose.  The next set of numbers, from 10 to 19 can be matched by the expression ``1[0-9]``.  Suppose the file ``$jmora/lab08/numbers.txt`` contains a list of sorted numbers, one per line.  We can test our expression:
+
+.. parsed-literal::
+    [you\@blue ~]$ grep -E '^[0-9]$|^1[0-9]$' ~jmora/lab08/numbers.txt
+    **0
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
+    11
+    12
+    13
+    14
+    15
+    16
+    17
+    18
+    19**
+
+
+Quantifiers
+-----------
+
+Quantifiers are also an extended regular expression feature. The following table list quantifiers and their purpose:
+
+
+.. cssclass:: minitable
+
+==========    =========================================
+Quantifier    Purpose
+==========    =========================================
+``?``         Match an element zero or exactly one time
+``*``         Match an element zero or more times
+``+``         Match an element one or more times
+``{n}``       Match an element exactly *n* times
+``{n,m}``     Match an element at least *n* times but no more than *m* times
+``{n,}``      Match an element *n* or more times
+``{,m}``      Match an element *m* times at the most
+==========    =========================================
+
+
+
+
+
+

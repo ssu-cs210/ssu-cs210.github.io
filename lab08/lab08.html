@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab No. 8: Regular Expressions &#8212; CS210 - Introduction to Unix  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Lab No. 7: Shell Expansion" href="../lab07/lab07.html" />
+<link href="https://fonts.googleapis.com/css?family=Bitter|Source+Code+Pro" rel="stylesheet">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          CS210 - Introduction to Unix</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">CS210 Introduction to Unix - Spring 2017</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conv/conv.html">Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab01/lab01.html">Lab No. 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab02/lab02.html">Lab No. 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab03/lab03.html">Lab 03 File Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab04/lab04.html">Lab No. 4: Finding Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab05/lab05.html">Lab No. 5: I/O Redirection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab06/lab06.html">Lab No. 6: Shell Script Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab07/lab07.html">Lab No. 7: Shell Expansion</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab No. 8: Regular Expressions</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Lab No. 8: Regular Expressions</a><ul>
+<li><a class="reference internal" href="#literal-matching">Literal Matching</a></li>
+<li><a class="reference internal" href="#metacharacters">Metacharacters</a><ul>
+<li><a class="reference internal" href="#match-any-character">Match any character</a></li>
+<li><a class="reference internal" href="#anchors">Anchors</a></li>
+<li><a class="reference internal" href="#bracket-expressions-and-negation">Bracket Expressions and Negation</a></li>
+<li><a class="reference internal" href="#character-classes">Character Classes</a></li>
+<li><a class="reference internal" href="#alternation">Alternation</a></li>
+<li><a class="reference internal" href="#quantifiers">Quantifiers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="../lab07/lab07.html" title="Previous Chapter: Lab No. 7: Shell Expansion"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Lab No. 7: Sh...</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/lab08/lab08.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="lab-no-8-regular-expressions">
+<h1>Lab No. 8: Regular Expressions<a class="headerlink" href="#lab-no-8-regular-expressions" title="Permalink to this headline">¶</a></h1>
+<p>Regular expressions, also known as <em>regex</em>, are sequences of characters that follow a set of notations to specify a text patterns.</p>
+<p>You saw in previous Labs how pathname expansion allowed the use of the <code class="docutils literal"><span class="pre">*</span></code> character to match any characters and how you could use the <code class="docutils literal"><span class="pre">[]</span></code> pattern to match a character from a predefined list in a specific position in the file name.  Regular expressions work in the same way, certain characters denote a text pattern, and mixing these allows us to create expressions that match very complex patterns.  The difference is that regular expressions include many more options (which is justified since they are a general purpose tool, whereas pathname expansion applies only to pahtnames).</p>
+<p>Some very basic examples of typical cases where regular expressions are used are:</p>
+<ol class="arabic simple">
+<li>find instances of dates in a text</li>
+<li>validate that a distribution list does not contain invalid emails</li>
+<li>extract data in a certain format from user comments in a forum</li>
+<li>identify phone numbers</li>
+</ol>
+<p>Regular expressions are supported by many utilities and programming languages (although sometimes there are slight variations in the implementations)</p>
+<p>In this Lab we are going to learn how to put regular expressions to practice with the <code class="docutils literal"><span class="pre">grep</span></code> and <code class="docutils literal"><span class="pre">sed</span></code> utilities.</p>
+<div class="section" id="literal-matching">
+<h2>Literal Matching<a class="headerlink" href="#literal-matching" title="Permalink to this headline">¶</a></h2>
+<p>The simplest regular expressions are a string of literal charactes to match. A string matches the regular expression if it contains the substring specified by the regular expresion.</p>
+<p>Take for example the regular expression <code class="docutils literal"><span class="pre">cks</span></code>.
+This expression matches &#8220;Linux ro<strong>cks</strong>!&#8221; and &#8220;Du<strong>cks</strong> are birds&#8221;, but does not match &#8220;My clock stopped&#8221;</p>
+<p>Note that a regular expression can match a string in more than one place.  Our previous regular expression matches &#8220;A pair of so<strong>cks</strong> for two bu<strong>cks</strong>&#8220;</p>
+<p>Note that in these examples a match is found regardless of the position within the text.  This happens because the regular expression that we used does not specify position within a string. You will see later how we can specify patterns where the position of the charaters matters.</p>
+</div>
+<div class="section" id="metacharacters">
+<h2>Metacharacters<a class="headerlink" href="#metacharacters" title="Permalink to this headline">¶</a></h2>
+<p>Metacharacters are characters that have special meaning (as opposed to a literal meaning, as we just saw).  Metacharacters are used to specify complex patterns to match.  The regular expression metacharacters are:</p>
+<pre class="literal-block">
+^ $ . [ ] { } - ? * + ( ) | 
+</pre>
+<p>One aspect of metacharacters is that, since they are special, we can not simple use it if we need it to be matched literally. In order to specify a regex that includes a literal metacharacter, you need to <em>escape</em> it using the <strong>backslash</strong> character (<code class="docutils literal"><span class="pre">\</span></code>).
+As an example, suppose you want to verify that a sentence has a period.  The correct way to specify this regular expression is <code class="docutils literal"><span class="pre">\.</span></code>.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title">Simple String Matching</p>
+<p class="last">Complete the exercises on Moodle.</p>
+</div>
+<div class="section" id="match-any-character">
+<h3>Match any character<a class="headerlink" href="#match-any-character" title="Permalink to this headline">¶</a></h3>
+<p>In regular expressions, the period character (<code class="docutils literal"><span class="pre">.</span></code>) is used to match any character (with the exception of the new line character) (This is equivalent to the question mark character (<code class="docutils literal"><span class="pre">?</span></code>) that we used in Bash pathname expansion.)</p>
+<p>The expression <code class="docutils literal"><span class="pre">.a</span></code> will match any string that has an <strong>a</strong> character in the middle.  For example, it will match &#8220;Today is Thurs<strong>da</strong>y&#8221;.
+Note how in this example the match includes both the <strong>d</strong> and the <strong>a</strong>.  In this case the <strong>.</strong> is matched by the <strong>d</strong> character.</p>
+<p>Note that in our example the expression calls for a character, any character, before the <strong>a</strong>. This means that it will not match a string such as &#8220;<strong>a</strong>bcdefg&#8221;.</p>
+<div class="worksheet admonition">
+<p class="first admonition-title">Match any character</p>
+<p class="last">Complete the exercises on Moodle.</p>
+</div>
+</div>
+<div class="section" id="anchors">
+<h3>Anchors<a class="headerlink" href="#anchors" title="Permalink to this headline">¶</a></h3>
+<p>Anchors are use to specify if the regular expression needs to match the beginning of the line by using the <em>caret</em> character (<code class="docutils literal"><span class="pre">^</span></code>) or the end of the line by using the <em>dollar sign</em> character (<code class="docutils literal"><span class="pre">$</span></code>).</p>
+<p>As an example, the expression <code class="docutils literal"><span class="pre">^Th</span></code> matches the sentence &#8220;<strong>Th</strong>is is it&#8221; but it does not match &#8220;Today is Thursday&#8221;</p>
+<div class="worksheet admonition">
+<p class="first admonition-title">Anchors</p>
+<p class="last">Complete the exercises on Moodle.</p>
+</div>
+</div>
+<div class="section" id="bracket-expressions-and-negation">
+<h3>Bracket Expressions and Negation<a class="headerlink" href="#bracket-expressions-and-negation" title="Permalink to this headline">¶</a></h3>
+<p>Brackets allow matching a character from a predetermined set of characters.
+This functionality is almost identical to the pathname expansion list of characters expression.
+Take for example the expression <code class="docutils literal"><span class="pre">h[eo]ard</span></code>.</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ echo &quot;I heard.&quot; | grep 'h[eo]ard'
+I <strong>heard</strong>.
+[you&#64;blue ~]$ echo &quot;I hoard.&quot; | grep &quot;h[eo]ard&quot;
+I <strong>hoard</strong>.
+</pre>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Why the quotes?</strong></p>
+<p class="last">Notice on this example that we need to enclose out expression in quotes (either single or double).
+The reason why we need to do this is that otherwise pathname expansion will be applied and our expressionn <code class="docutils literal"><span class="pre">h[eo]ard</span></code> will be use to look for input files for the greo program.
+Bash expansion is your friend, but some times gets in the way and you need to keep it in on a leash.</p>
+</div>
+<p>When you want to the opposite type of matching, where you want to match any character that <em>is not</em> part of a set of characters, you need to use the <em>caret</em> character (<code class="docutils literal"><span class="pre">^</span></code>) as the first character within the brackets.
+Note in the following example how only pet, put and pit were matched (highlighted).</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ echo &quot;I pat my pet and then I put the pot in the pit&quot; | grep 'p[^ao]t'
+I pat my <strong>pet</strong> and then I <strong>put</strong> the pot in the <strong>pit</strong>
+</pre>
+<p>Just in the same fashion as the pathname expansion counterpart, you can specify ranges of characters. For example, to specify letters ranging from a to k, you can apply the expression <code class="docutils literal"><span class="pre">[d-k]</span></code>:</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ echo &quot;abcdefghijklmnopqrstuvwxyz&quot; | grep '[d-k]'
+abc<strong>defghijk</strong>lmnopqrstuvwxyz
+</pre>
+<p>The previous example serves the purpose to revise how matching is done.
+It is clear from the example that the string &#8220;<em>abcdefghijklmnopqrstuvwxyz</em>&#8221; matches the expression <code class="docutils literal"><span class="pre">[d-k]</span></code>.
+Something that is not obvious is that the string matches the pattern 8 different times, one for each of the characters included in the set <code class="docutils literal"><span class="pre">[d-k]</span></code>.
+So the match is not &#8220;<em>defghijk</em>&#8221; but instead the individual characters &#8220;<em>d</em>&#8221;, &#8220;<em>e</em>&#8221;, ... , &#8220;<em>k</em>&#8221;.
+In this context where we are looking at the whole sentence so this might not seem to make a big difference, but when you apply regular expressions and need to extract matched regions the difference becomes evident.
+If you run the same command and enable the <code class="docutils literal"><span class="pre">-o</span></code> option which prints only the matching regions and prints every region on its own line, you&#8217;ll be able to see what we just discussed:</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ echo &quot;abcdefghijklmnopqrstuvwxyz&quot; | grep -o '[d-k]'
+<strong>d</strong>
+<strong>e</strong>
+<strong>f</strong>
+<strong>g</strong>
+<strong>h</strong>
+<strong>i</strong>
+<strong>j</strong>
+<strong>k</strong>
+</pre>
+<p>What if you need to match a character to a set that includes several ranges that are non contiguous?
+In that case you can simple add them in the brackets, without a space between them.
+A recurring need is to match any alpha-numerical character, lowercase and uppercase.
+The expression <code class="docutils literal"><span class="pre">[A-Za-z0-9]</span></code> will serve this purpopse.</p>
+<p>Matching numbers is a little trickier.
+The main problem is that regular expressions deal with text instead of numeric values, which means that if we want to match a number in a numeric range is not as simple as specifing the beginning and the end of the range.
+For example, you can not use the range <code class="docutils literal"><span class="pre">[0-20]</span></code> to specify a range of numbers between 0 and 20.
+We&#8217;ll cover this later once we have seen <em>alternation</em></p>
+</div>
+<div class="section" id="character-classes">
+<h3>Character Classes<a class="headerlink" href="#character-classes" title="Permalink to this headline">¶</a></h3>
+<p>Regular expressions developers realized that there are a few patterns that are commonly used over and over. So they came with the idea of defining some predetermined lists of characters. The following table summarizes the most common classes (shamefully adapted from out Textbook <em>The Linux Command Line</em> by William Shotts)</p>
+<table border="1" class="minitable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Character Class</th>
+<th class="head">Characters it matches</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">[:alnum:]</span></code></td>
+<td>The alphanumeric characters. In ASCII, equivalent to: <code class="docutils literal"><span class="pre">[A-Za-z0-9]</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">[:word:]</span></code></td>
+<td>The same as [:alnum:], with the addition of the underscore (<code class="docutils literal"><span class="pre">_</span></code>) character.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">[:alpha:]</span></code></td>
+<td>The alphabetic characters. In ASCII, equivalent to:<code class="docutils literal"><span class="pre">[A-Za-z]</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">[:blank:]</span></code></td>
+<td>Includes the space and tab characters.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">[:cntrl:]</span></code></td>
+<td>The ASCII control codes. Includes the ASCII characters 0 through 31 and 127.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">[:digit:]</span></code></td>
+<td>The numerals zero through nine.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">[:graph:]</span></code></td>
+<td>The visible characters. In ASCII, it includes characters 33 through 126.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">[:lower:]</span></code></td>
+<td>The lowercase letters.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">[:punct:]</span></code></td>
+<td>The punctuation characters. In ASCII, equivalent to: <code class="docutils literal"><span class="pre">[-!&quot;#$%&amp;'()*+,./:;&lt;=&gt;?&#64;[\\\]_`{|}~]</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">[:print:]</span></code></td>
+<td>The printable characters. All the characters in <code class="docutils literal"><span class="pre">[:graph:]</span></code> plus the space character.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">[:space:]</span></code></td>
+<td>The whitespace characters including space, tab, carriage return, newline, vertical tab, and form feed. In ASCII, equivalent to: <code class="docutils literal"><span class="pre">[</span> <span class="pre">\t\r\n\v\f]</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">[:upper:]</span></code></td>
+<td>The uppercase characters.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">[:xdigit:]</span></code></td>
+<td>Characters used to express hexadecimal numbers. In ASCII, equivalent to: <code class="docutils literal"><span class="pre">[0-9A-Fa-f]</span></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="alternation">
+<h3>Alternation<a class="headerlink" href="#alternation" title="Permalink to this headline">¶</a></h3>
+<p>Aternation is a feature that allows applying alternative patterns at the same time. For example the expression <code class="docutils literal"><span class="pre">R2-D2|C3PO</span></code>:</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ echo 'The droid you are looking for is R2-D2' | grep -E 'R2-D2|C3PO'
+The droid you are looking for is R2-D2
+[you&#64;blue ~]$ echo 'The droid you are looking for is C3PO' | grep -E 'R2-D2|C3PO'
+The droid you are looking for is C3PO
+</pre>
+<p>Alternation is an <em>extended</em> feature of the standard set of regular expression features.  Because of this, we had to use the <code class="docutils literal"><span class="pre">-E</span></code> option in the previous example.</p>
+<p>Now that we know how to use alternation, we can apply it to create expressions that match numeric ranges.  Suppose we want to match numbers between 0 and 19.  The first set of numbers is from 0 to 9, so we can use the expression <code class="docutils literal"><span class="pre">[0-9]</span></code> for that purpose.  The next set of numbers, from 10 to 19 can be matched by the expression <code class="docutils literal"><span class="pre">1[0-9]</span></code>.  Suppose the file <code class="docutils literal"><span class="pre">$jmora/lab08/numbers.txt</span></code> contains a list of sorted numbers, one per line.  We can test our expression:</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ grep -E '^[0-9]$|^1[0-9]$' ~jmora/lab08/numbers.txt
+<strong>0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</strong>
+</pre>
+</div>
+<div class="section" id="quantifiers">
+<h3>Quantifiers<a class="headerlink" href="#quantifiers" title="Permalink to this headline">¶</a></h3>
+<p>Quantifiers are also an extended regular expression feature. The following table list quantifiers and their purpose:</p>
+<table border="1" class="minitable docutils">
+<colgroup>
+<col width="14%" />
+<col width="86%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Quantifier</th>
+<th class="head">Purpose</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">?</span></code></td>
+<td>Match an element zero or exactly one time</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">*</span></code></td>
+<td>Match an element zero or more times</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">+</span></code></td>
+<td>Match an element one or more times</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">{n}</span></code></td>
+<td>Match an element exactly <em>n</em> times</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">{n,m}</span></code></td>
+<td>Match an element at least <em>n</em> times but no more than <em>m</em> times</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">{n,}</span></code></td>
+<td>Match an element <em>n</em> or more times</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">{,m}</span></code></td>
+<td>Match an element <em>m</em> times at the most</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

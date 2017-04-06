@@ -1,5 +1,5 @@
 **************************
-Lab No. 8: Text Processing
+Lab No. 9: Text Processing
 **************************
 
 In the last Lab we learn the basics of regular expressions.  

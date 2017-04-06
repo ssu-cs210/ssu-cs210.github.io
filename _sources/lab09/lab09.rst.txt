@@ -1,0 +1,222 @@
+**************************
+Lab No. 8: Text Processing
+**************************
+
+In the last Lab we learn the basics of regular expressions.  
+In this Lab we are going to learn the basics of text processing and put into practice regular expressions.
+
+
+``sed`` and ``awk`` are tools used by anyone that needs to work with text files.
+
+``awk``, named after its developers (Aho, Weinberger and Kernighan), is a programming language that permits manipulation of structured data.
+
+
+sed: the stream editor
+======================
+
+``sed``, which stands for *stream editor*, is typically applied to perform edits to text files. It allows you to edit files without using a text editor and, most importantly, edit files in a batch.
+
+``sed`` accepts input in the form of text lines. During its execution, it goes through its input one line at a time, and applies one or more commands to each one of them individually, and then outputs the processed lines to standard output.
+If you want to invoke sed on the contents of a file, you can invoke as shown in the following example, in which we replace the word "quick" by "fast":
+
+.. parsed-literal::
+    [you\@blue ~]$ cat << EOF > somefile.txt
+    > The quick brown fox
+    > jumped over the lazy dog.
+    > EOF
+    [you\@blue ~]$ sed 's/quick/fast/' somefile.txt
+    The fast brown fox
+    jumped over the lazy dog.
+
+Notice how when running this command the output of ``sed`` will be written to *stdout*, and the contents of ``somefile.txt`` were not modified.
+(To actually modify the contents of ``somefile`` you can use *redirection*, or you can use the ``-i`` option to edit files in place.)
+
+If you want sed to take input from the output of other commands you typically invoke it in this form:
+
+.. parsed-literal::
+
+    [you\@blue ~]$ echo -e "The quick brown fox\njumped over the lazy dog." | sed 's/quick/fast/'
+    The fast brown fox
+    jumped over the lazy dog.
+
+sed commands
+------------
+
+``sed`` supports many different types of commands.
+The commands that we executed previously are examples of the *substitute* command, which is the sed command that is most commonly used. 
+
+``sed`` command elements are typically separated by a "slash" (``/``) character, however you can use any character as a delimiterm except a new line character. 
+In our examples, the substitute command is indicated by the ``s``.
+
+The substitute command has the following syntax:
+
+.. parsed-literal::
+
+    [address]s/pattern/replacement/flags
+
+
+When using the substitute command, the second token (``quick``) corresponds to a regular expression to match, the third token (``fast``) indicates the replacement text.  The substitute command also accepts a fourth token, which in our examples is ommitted, and that corresponds to a *flag* that could be:
+
+* ommited: only the first instance of the matching text is replaced
+* ``n``: A number (between 1 and 512) that indicates that the replacement should be made for only the *n* th occurrence of the pattern
+* ``g``: make changes globally on all ocurrences of the pattern.
+* ``p``: prints the pattern space
+
+
+If we want to modify a specific line in the text input, we can do so by using the *address* element of the command. Adresses can be specified in different ways:
+
+.. cssclass:: minitable
+
+==========      =====
+Notation        Description
+==========      =====
+n               The command will be applied only to line number *n*
+$               The last line
+n1,n2           A range of lines from *n1* to *n2*
+n-y             Line number *n* then each subsequent line at *y* intervals
+n1,+n2          Line *n1* and the following *n2* lines
+n!              All lines except line *n*
+==========      =====
+
+Notice that the lines were the sed commands actually take effect are only those lines where the supplied pattern has a match. For example:
+
+.. parsed-literal::
+
+    [you\@blue ~]$ echo -e "The quick brown fox\njumped over the lazy dog." | sed '2s/quick/fast/'
+    The quick brown fox
+    jumped over the lazy dog.
+
+The following table summarizes other commands available with ``sed``
+
+
+.. cssclass:: minitable
+
+==========  =================================================   =================================================
+Command     Syntax                                              Description
+==========  =================================================   =================================================
+p           [address]/regexp/p                                  Prints the lines 
+d           [address]/regexp/d                                  Deletes lines that match the address or pattern
+==========  =================================================   =================================================
+
+
+The print command works very similar to the ``p`` flag of the substitution command, only that it does not require you to actually perform a substitution. 
+
+
+.. note:: *Controlling sed output**
+
+    Note that by default, ``sed`` will output every line.  If you want to have fine control of the output, then you must use the ``-n`` flag (quiet mode) that will cause to only output linesthat are explicitly printed by means of a print command or a command that has the ``p`` flag.
+
+So far, we have seen examples of ``sed`` where only one command is being executed.  ``sed`` can run multiple commands by using the ``-e`` option:
+
+.. parsed-literal::
+    [you/@blue ~]$ echo -e "The quick brown fox\njumped over the lazy dog." | sed -e 's/quick/fast/' -e 's/brown/red/'
+    The fast red fox
+    jumped over the lazy dog.
+
+
+cut
+===
+``cut`` is used to extract a section of text from a line and output the extrated section.
+Please refer to the man pages of cut to get familiar with the different options it supports.
+
+
+sort
+====
+We have seen the ``sort`` command in previous labs.
+Its purpose is to sort the contents of standard input or one or more files.
+The default sort order is ascending by character value.
+Consult the man pages to see the different options it supports.
+
+
+uniq
+====
+We have also seen the ``uniq`` command in previous labs.
+``uniq`` removes duplicated entries from a file.
+Note that uniq does not sort the input, it detects a duplicate if the previous line was identical to the current line that is processing.
+In order for uniq to remove duplicates, most likely you need to process the data with ``sort`` beforehand.
+Also note that the GNU version of ``sort`` has the ``-u`` option to remove duplicates. which renders a subsequent call to ``uniq`` unnecessary.
+However uniq has some interesting options to instead of removing duplicates, actually print duplicates.
+
+awk
+===
+
+``awk`` is way more than a tool, it is a programming language by itself. In this class we are going to learn only its most basic usage through some very basic examples.
+
+In the following example we extract datafields from a string.
+``awk`` uses whitespace characters as its defaul field delimiter.  The ``awk`` field variables start at ``$1`` and increment up through the end of the string. In the example, there are 9 fields.
+The variable ``$0`` corresponds to entire line, and the variable ``NF`` contains the number of fields in the current line.
+
+.. parsed-literal::
+    [you\@blue ~]$ echo 'The quick brown fox jumped over the lazy dog' | awk '{ print $1, $9, $5, $6, $7, $4}'
+    The dog jumped over the fox
+
+Notice how you can print the last field by using the ``$NF`` variable:
+
+.. parsed-literal::
+    [you\@blue ~]$ echo 'The quick brown fox jumped over the lazy dog' | awk '{ print "The input was: "$0". The last field is "$NF}'
+    The input was: The quick brown fox jumped over the lazy dog. The last field is dog
+
+If the data is not formatted using spaces as separators, we can specify the delimiter by using the ``-F`` option.
+
+.. parsed-literal::
+    [you\@blue ~]$ echo 'this-is-a-hyphen-delimited-text' | awk -F'-' '{ print $4, $5}'
+    hyphen delimited
+
+
+A common need is to be able to pass variables from bash to awk.
+The following example demonstrate an example of how to achieve this (the ``-v`` option is used to assign variables and their values)
+
+.. parsed-literal::
+    [you@blue ~]$ VAR=3
+    [you\@blue ~]$ echo "The quick brown fox" | awk -v myvar=$VAR '{print $myvar}'
+    brown
+
+
+You can also perform substring extraction with ``awk`` through its ``substr`` function.  The syntax of this function is
+
+.. parsed-literal::
+    substr(string, position of first character, length of substring)
+
+
+The position of the first character is 1-indexed (that is the first character has a position equal to one, not zero)
+
+
+.. parsed-literal::
+    [you\@blue ~]$ echo -e "This is linenumberone\nThis is linenumbertwo" | awk '{print substr($3,11,3)}'
+    one
+    two
+
+In the previous examples ``awk`` was reading input from *stdin*. It can also read directly from files.
+
+.. parsed-literal::
+
+    [you\@blue ~]$ cat << EOF > datafile
+    > The brown fox 1234
+    > That quick dog 2131
+    > This lazy parrot 7988
+    > The slow snail 2344
+    > EOF
+    [you@blue ~]$ awk '{print $3}' datafile
+    fox
+    dog
+    parrot
+    snail
+
+
+In the next example we produce output only if the first field matches a certain value: 
+
+.. parsed-literal::
+
+    [you\@blue ~]$ awk '$1 == "The" {print $3}' datafile
+    fox
+    snail
+
+We can also apply regular expressions by using the ``~`` operator:
+
+.. parsed-literal::
+    [you@blue ~]$ awk '$1 ~ /^Th[ai]/  {print $3}' datafile
+    dog
+    parrot
+
+
+

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab No. 8: Text Processing &#8212; CS210 - Introduction to Unix  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Lab No. 8: Regular Expressions" href="../lab08/lab08.html" />
+<link href="https://fonts.googleapis.com/css?family=Bitter|Source+Code+Pro" rel="stylesheet">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          CS210 - Introduction to Unix</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">CS210 Introduction to Unix - Spring 2017</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conv/conv.html">Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab01/lab01.html">Lab No. 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab02/lab02.html">Lab No. 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab03/lab03.html">Lab 03 File Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab04/lab04.html">Lab No. 4: Finding Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab05/lab05.html">Lab No. 5: I/O Redirection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab06/lab06.html">Lab No. 6: Shell Script Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab07/lab07.html">Lab No. 7: Shell Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab08/lab08.html">Lab No. 8: Regular Expressions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab No. 8: Text Processing</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Lab No. 8: Text Processing</a><ul>
+<li><a class="reference internal" href="#sed-the-stream-editor">sed: the stream editor</a><ul>
+<li><a class="reference internal" href="#sed-commands">sed commands</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cut">cut</a></li>
+<li><a class="reference internal" href="#sort">sort</a></li>
+<li><a class="reference internal" href="#uniq">uniq</a></li>
+<li><a class="reference internal" href="#awk">awk</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="../lab08/lab08.html" title="Previous Chapter: Lab No. 8: Regular Expressions"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Lab No. 8: Re...</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/lab09/lab09.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="lab-no-8-text-processing">
+<h1>Lab No. 8: Text Processing<a class="headerlink" href="#lab-no-8-text-processing" title="Permalink to this headline">¶</a></h1>
+<p>In the last Lab we learn the basics of regular expressions.
+In this Lab we are going to learn the basics of text processing and put into practice regular expressions.</p>
+<p><code class="docutils literal"><span class="pre">sed</span></code> and <code class="docutils literal"><span class="pre">awk</span></code> are tools used by anyone that needs to work with text files.</p>
+<p><code class="docutils literal"><span class="pre">awk</span></code>, named after its developers (Aho, Weinberger and Kernighan), is a programming language that permits manipulation of structured data.</p>
+<div class="section" id="sed-the-stream-editor">
+<h2>sed: the stream editor<a class="headerlink" href="#sed-the-stream-editor" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">sed</span></code>, which stands for <em>stream editor</em>, is typically applied to perform edits to text files. It allows you to edit files without using a text editor and, most importantly, edit files in a batch.</p>
+<p><code class="docutils literal"><span class="pre">sed</span></code> accepts input in the form of text lines. During its execution, it goes through its input one line at a time, and applies one or more commands to each one of them individually, and then outputs the processed lines to standard output.
+If you want to invoke sed on the contents of a file, you can invoke as shown in the following example, in which we replace the word &#8220;quick&#8221; by &#8220;fast&#8221;:</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ cat &lt;&lt; EOF &gt; somefile.txt
+&gt; The quick brown fox
+&gt; jumped over the lazy dog.
+&gt; EOF
+[you&#64;blue ~]$ sed 's/quick/fast/' somefile.txt
+The fast brown fox
+jumped over the lazy dog.
+</pre>
+<p>Notice how when running this command the output of <code class="docutils literal"><span class="pre">sed</span></code> will be written to <em>stdout</em>, and the contents of <code class="docutils literal"><span class="pre">somefile.txt</span></code> were not modified.
+(To actually modify the contents of <code class="docutils literal"><span class="pre">somefile</span></code> you can use <em>redirection</em>, or you can use the <code class="docutils literal"><span class="pre">-i</span></code> option to edit files in place.)</p>
+<p>If you want sed to take input from the output of other commands you typically invoke it in this form:</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ echo -e &quot;The quick brown foxnjumped over the lazy dog.&quot; | sed 's/quick/fast/'
+The fast brown fox
+jumped over the lazy dog.
+</pre>
+<div class="section" id="sed-commands">
+<h3>sed commands<a class="headerlink" href="#sed-commands" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">sed</span></code> supports many different types of commands.
+The commands that we executed previously are examples of the <em>substitute</em> command, which is the sed command that is most commonly used.</p>
+<p><code class="docutils literal"><span class="pre">sed</span></code> command elements are typically separated by a &#8220;slash&#8221; (<code class="docutils literal"><span class="pre">/</span></code>) character, however you can use any character as a delimiterm except a new line character.
+In our examples, the substitute command is indicated by the <code class="docutils literal"><span class="pre">s</span></code>.</p>
+<p>The substitute command has the following syntax:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">address</span><span class="p">]</span><span class="n">s</span><span class="o">/</span><span class="n">pattern</span><span class="o">/</span><span class="n">replacement</span><span class="o">/</span><span class="n">flags</span>
+</pre></div>
+</div>
+<p>When using the substitute command, the second token (<code class="docutils literal"><span class="pre">quick</span></code>) corresponds to a regular expression to match, the third token (<code class="docutils literal"><span class="pre">fast</span></code>) indicates the replacement text.  The substitute command also accepts a fourth token, which in our examples is ommitted, and that corresponds to a <em>flag</em> that could be:</p>
+<ul class="simple">
+<li>ommited: only the first instance of the matching text is replaced</li>
+<li><code class="docutils literal"><span class="pre">n</span></code>: A number (between 1 and 512) that indicates that the replacement should be made for only the <em>n</em> th occurrence of the pattern</li>
+<li><code class="docutils literal"><span class="pre">g</span></code>: make changes globally on all ocurrences of the pattern.</li>
+<li><code class="docutils literal"><span class="pre">p</span></code>: prints the pattern space</li>
+</ul>
+<p>If we want to modify a specific line in the text input, we can do so by using the <em>address</em> element of the command. Adresses can be specified in different ways:</p>
+<table border="1" class="minitable docutils">
+<colgroup>
+<col width="15%" />
+<col width="85%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Notation</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>n</td>
+<td>The command will be applied only to line number <em>n</em></td>
+</tr>
+<tr class="row-odd"><td>$</td>
+<td>The last line</td>
+</tr>
+<tr class="row-even"><td>n1,n2</td>
+<td>A range of lines from <em>n1</em> to <em>n2</em></td>
+</tr>
+<tr class="row-odd"><td>n-y</td>
+<td>Line number <em>n</em> then each subsequent line at <em>y</em> intervals</td>
+</tr>
+<tr class="row-even"><td>n1,+n2</td>
+<td>Line <em>n1</em> and the following <em>n2</em> lines</td>
+</tr>
+<tr class="row-odd"><td>n!</td>
+<td>All lines except line <em>n</em></td>
+</tr>
+</tbody>
+</table>
+<p>Notice that the lines were the sed commands actually take effect are only those lines where the supplied pattern has a match. For example:</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ echo -e &quot;The quick brown foxnjumped over the lazy dog.&quot; | sed '2s/quick/fast/'
+The quick brown fox
+jumped over the lazy dog.
+</pre>
+<p>The following table summarizes other commands available with <code class="docutils literal"><span class="pre">sed</span></code></p>
+<table border="1" class="minitable docutils">
+<colgroup>
+<col width="9%" />
+<col width="45%" />
+<col width="45%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Syntax</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>p</td>
+<td>[address]/regexp/p</td>
+<td>Prints the lines</td>
+</tr>
+<tr class="row-odd"><td>d</td>
+<td>[address]/regexp/d</td>
+<td>Deletes lines that match the address or pattern</td>
+</tr>
+</tbody>
+</table>
+<p>The print command works very similar to the <code class="docutils literal"><span class="pre">p</span></code> flag of the substitution command, only that it does not require you to actually perform a substitution.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><em>Controlling sed output*</em></p>
+<p class="last">Note that by default, <code class="docutils literal"><span class="pre">sed</span></code> will output every line.  If you want to have fine control of the output, then you must use the <code class="docutils literal"><span class="pre">-n</span></code> flag (quiet mode) that will cause to only output linesthat are explicitly printed by means of a print command or a command that has the <code class="docutils literal"><span class="pre">p</span></code> flag.</p>
+</div>
+<p>So far, we have seen examples of <code class="docutils literal"><span class="pre">sed</span></code> where only one command is being executed.  <code class="docutils literal"><span class="pre">sed</span></code> can run multiple commands by using the <code class="docutils literal"><span class="pre">-e</span></code> option:</p>
+<pre class="literal-block">
+[<a class="reference external" href="mailto:you/&#37;&#52;&#48;blue">you/<span>&#64;</span>blue</a> ~]$ echo -e &quot;The quick brown foxnjumped over the lazy dog.&quot; | sed -e 's/quick/fast/' -e 's/brown/red/'
+The fast red fox
+jumped over the lazy dog.
+</pre>
+</div>
+</div>
+<div class="section" id="cut">
+<h2>cut<a class="headerlink" href="#cut" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">cut</span></code> is used to extract a section of text from a line and output the extrated section.
+Please refer to the man pages of cut to get familiar with the different options it supports.</p>
+</div>
+<div class="section" id="sort">
+<h2>sort<a class="headerlink" href="#sort" title="Permalink to this headline">¶</a></h2>
+<p>We have seen the <code class="docutils literal"><span class="pre">sort</span></code> command in previous labs.
+Its purpose is to sort the contents of standard input or one or more files.
+The default sort order is ascending by character value.
+Consult the man pages to see the different options it supports.</p>
+</div>
+<div class="section" id="uniq">
+<h2>uniq<a class="headerlink" href="#uniq" title="Permalink to this headline">¶</a></h2>
+<p>We have also seen the <code class="docutils literal"><span class="pre">uniq</span></code> command in previous labs.
+<code class="docutils literal"><span class="pre">uniq</span></code> removes duplicated entries from a file.
+Note that uniq does not sort the input, it detects a duplicate if the previous line was identical to the current line that is processing.
+In order for uniq to remove duplicates, most likely you need to process the data with <code class="docutils literal"><span class="pre">sort</span></code> beforehand.
+Also note that the GNU version of <code class="docutils literal"><span class="pre">sort</span></code> has the <code class="docutils literal"><span class="pre">-u</span></code> option to remove duplicates. which renders a subsequent call to <code class="docutils literal"><span class="pre">uniq</span></code> unnecessary.
+However uniq has some interesting options to instead of removing duplicates, actually print duplicates.</p>
+</div>
+<div class="section" id="awk">
+<h2>awk<a class="headerlink" href="#awk" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">awk</span></code> is way more than a tool, it is a programming language by itself. In this class we are going to learn only its most basic usage through some very basic examples.</p>
+<p>In the following example we extract datafields from a string.
+<code class="docutils literal"><span class="pre">awk</span></code> uses whitespace characters as its defaul field delimiter.  The <code class="docutils literal"><span class="pre">awk</span></code> field variables start at <code class="docutils literal"><span class="pre">$1</span></code> and increment up through the end of the string. In the example, there are 9 fields.
+The variable <code class="docutils literal"><span class="pre">$0</span></code> corresponds to entire line, and the variable <code class="docutils literal"><span class="pre">NF</span></code> contains the number of fields in the current line.</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ echo 'The quick brown fox jumped over the lazy dog' | awk '{ print $1, $9, $5, $6, $7, $4}'
+The dog jumped over the fox
+</pre>
+<p>Notice how you can print the last field by using the <code class="docutils literal"><span class="pre">$NF</span></code> variable:</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ echo 'The quick brown fox jumped over the lazy dog' | awk '{ print &quot;The input was: &quot;$0&quot;. The last field is &quot;$NF}'
+The input was: The quick brown fox jumped over the lazy dog. The last field is dog
+</pre>
+<p>If the data is not formatted using spaces as separators, we can specify the delimiter by using the <code class="docutils literal"><span class="pre">-F</span></code> option.</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ echo 'this-is-a-hyphen-delimited-text' | awk -F'-' '{ print $4, $5}'
+hyphen delimited
+</pre>
+<p>A common need is to be able to pass variables from bash to awk.
+The following example demonstrate an example of how to achieve this (the <code class="docutils literal"><span class="pre">-v</span></code> option is used to assign variables and their values)</p>
+<pre class="literal-block">
+[<a class="reference external" href="mailto:you&#37;&#52;&#48;blue">you<span>&#64;</span>blue</a> ~]$ VAR=3
+[you&#64;blue ~]$ echo &quot;The quick brown fox&quot; | awk -v myvar=$VAR '{print $myvar}'
+brown
+</pre>
+<p>You can also perform substring extraction with <code class="docutils literal"><span class="pre">awk</span></code> through its <code class="docutils literal"><span class="pre">substr</span></code> function.  The syntax of this function is</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">substr</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">position</span> <span class="n">of</span> <span class="n">first</span> <span class="n">character</span><span class="p">,</span> <span class="n">length</span> <span class="n">of</span> <span class="n">substring</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The position of the first character is 1-indexed (that is the first character has a position equal to one, not zero)</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ echo -e &quot;This is linenumberonenThis is linenumbertwo&quot; | awk '{print substr($3,11,3)}'
+one
+two
+</pre>
+<p>In the previous examples <code class="docutils literal"><span class="pre">awk</span></code> was reading input from <em>stdin</em>. It can also read directly from files.</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ cat &lt;&lt; EOF &gt; datafile
+&gt; The brown fox 1234
+&gt; That quick dog 2131
+&gt; This lazy parrot 7988
+&gt; The slow snail 2344
+&gt; EOF
+[<a class="reference external" href="mailto:you&#37;&#52;&#48;blue">you<span>&#64;</span>blue</a> ~]$ awk '{print $3}' datafile
+fox
+dog
+parrot
+snail
+</pre>
+<p>In the next example we produce output only if the first field matches a certain value:</p>
+<pre class="literal-block">
+[you&#64;blue ~]$ awk '$1 == &quot;The&quot; {print $3}' datafile
+fox
+snail
+</pre>
+<p>We can also apply regular expressions by using the <code class="docutils literal"><span class="pre">~</span></code> operator:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[you@blue ~]$ awk &#39;$1 ~ /^Th[ai]/  {print $3}&#39; datafile
+dog
+parrot
+</pre></div>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

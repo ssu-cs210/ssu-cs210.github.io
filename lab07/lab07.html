@@ -33,6 +33,7 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Lab No. 8: Regular Expressions" href="../lab08/lab08.html" />
     <link rel="prev" title="Lab No. 6: Shell Script Basics" href="../lab06/lab06.html" />
 <link href="https://fonts.googleapis.com/css?family=Bitter|Source+Code+Pro" rel="stylesheet">
 
@@ -75,6 +76,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../lab05/lab05.html">Lab No. 5: I/O Redirection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../lab06/lab06.html">Lab No. 6: Shell Script Basics</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Lab No. 7: Shell Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab08/lab08.html">Lab No. 8: Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab09/lab09.html">Lab No. 9: Text Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab10/lab10.html">Lab No. 10: Shell Scripts Part 2</a></li>
 </ul>
 </ul>
 </li>
@@ -117,6 +121,10 @@
     <a href="../lab06/lab06.html" title="Previous Chapter: Lab No. 6: Shell Script Basics"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Lab No. 6: Sh...</span>
     </a>
   </li>
+  <li>
+    <a href="../lab08/lab08.html" title="Next Chapter: Lab No. 8: Regular Expressions"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Lab No. 8: Re... &raquo;</span>
+    </a>
+  </li>
               
             
             
@@ -149,7 +157,7 @@
     <div class="col-md-12 content">
       
   <div class="section" id="lab-no-7-shell-expansion">
-<h1>Lab No. 7: Shell Expansion<a class="headerlink" href="#lab-no-7-shell-expansion" title="Permalink to this headline">¶</a></h1>
+<span id="lab07"></span><h1>Lab No. 7: Shell Expansion<a class="headerlink" href="#lab-no-7-shell-expansion" title="Permalink to this headline">¶</a></h1>
 <p>Shell expansion is nothing new for us, we have been using it all along, we just did not know it by it&#8217;s proper name.</p>
 <p>In Lab No.4 we worked with globbing characters, mostly to find files using very basic patterns.
 When we used patterns that included the <code class="docutils literal"><span class="pre">*</span></code>, <code class="docutils literal"><span class="pre">?</span></code> and <code class="docutils literal"><span class="pre">[]</span></code> characters, the shell applied one type of expansion called <em>Pathname expansion</em>.
@@ -222,7 +230,7 @@ The basic form of parameter expansion is the form <code class="docutils literal"
 Remember from the previous lab how we made references to arguments using the <code class="docutils literal"><span class="pre">$</span></code> in front of a number that represented the position of the argument in the provided command.
 When the number of positional parameters exceeds 9, then instead of using <code class="docutils literal"><span class="pre">$10</span></code> to refer to tenth argument, you need to use the form <code class="docutils literal"><span class="pre">S{10}</span></code>.</p>
 <div class="section" id="environment-variables">
-<h3>Environment variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h3>
+<span id="envvariables"></span><h3>Environment variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h3>
 <p>We are at a point were we can introduce formally the concept of environment variables.
 When you start a session, the shell creates a set of variables that describe the session, in what is called the environment.</p>
 <p>The data stored in the environment is used by many programs to determine how they need to function.

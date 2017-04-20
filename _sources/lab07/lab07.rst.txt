@@ -1,3 +1,5 @@
+.. _lab07:
+
 **************************
 Lab No. 7: Shell Expansion
 **************************
@@ -96,6 +98,8 @@ The basic form of parameter expansion is the form ``${PARAMETER}``.  Braces can 
 Remember from the previous lab how we made references to arguments using the ``$`` in front of a number that represented the position of the argument in the provided command.
 When the number of positional parameters exceeds 9, then instead of using ``$10`` to refer to tenth argument, you need to use the form ``S{10}``.
 
+
+.. _envvariables:
 
 Environment variables
 ---------------------

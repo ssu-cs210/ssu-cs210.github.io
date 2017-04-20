@@ -1,0 +1,353 @@
+********************************
+Lab No. 10: Shell Scripts Part 2
+********************************
+
+In :ref:`lab06`, we saw the basics of creating Shell Scripts. In this Lab we are going to expand by exploring:
+
+#. How variables work in shell scrips
+#. How exit codes work
+#. How to use the AND and OR operators
+#. How to use conditionals on shell scripts
+
+Variables
+=========
+
+A variable is a name given to a piece of data that is stored in memory.  Variables allow scripts to assign, read and manipulate the data that they hold.
+Variables are assigned by using the assignment operator: the *equals* character **without spaces before or after**.
+Shell variables names start with a letter or an underscore, and after the first character, they can contain any number of letters, numbers and underscores.
+
+The following example script assigns values to several variables. Notice how you can assign values to variables using literals, environment variables, and substitution:
+
+.. parsed-literal::
+
+    #!/bin/bash
+
+    a="foo"
+    b=bar
+    c=$HOME
+    d=0123
+    e=`ls -l | grep -e "^[^t]" | wc -l`
+    f=$((2*3))
+
+    echo $a
+    echo $b
+    echo $c
+    echo $d
+    echo $e
+    echo $f
+
+
+Variables and their scope
+-------------------------
+
+Shell Variables have three different scopes:
+
+- Environment:  In :ref:`lab07`, we learned about *Environment Variables*.  Please go back and review the :ref:`envvariables` section.  Variables in the environment are copied to child processes.
+- Global:  These are variables that exist in a process context.  These are not copied to child processes.
+- Local: These are variables that only exist within a function. We'll discuss these when we cover the "Functions" topic.
+
+A note about processes
+``````````````````````
+
+Before proceeding any further, it is anecessary to understand the basics of how processes work in a Linux system.
+
+Processes in a Unix/Linux systems are organized as a tree, where every process has a unique parent (with the exception of the *init* process, typically ``systemd``,  which has a Process ID of 1 and has no parent).
+
+Every process has an identifier, known as the PID (short for Process ID).
+
+When you login into Blue, the ssh daemon spawns a new process with your default shell (which in Blue is bash), and every command that you run during your session is run as a different child process of your current shell.
+You can verify this by running the ``pstree`` command.  In the following example, the ``$$`` expression is a special shell variable that returns the current proces PID. You can see that the pstree command runs with PID 27300, and you can see that its parent is process ID 31308, which corresponds to bash (the shell!).  Note how bash is in its turn a child of sshd (PIS 31307), which is a secure shell daemon.
+
+.. parsed-literal::
+
+    [you\@blue lab10]$ pstree -sp $$
+    systemd(1)───sshd(1269)───sshd(31299)───sshd(31307)───bash(31308)───pstree(27300)
+
+
+An example of variable scopes
+-----------------------------
+
+To understand how the environment and process variable scopes work, consider the following sequence of commands:
+
+
+.. parsed-literal::
+
+    [you@blue lab10]$ cat envscript.sh
+    #!/bin/bash
+    echo "The value of MYVAR is $MYVAR"
+    MYVAR="foo"
+    echo "The value of MYVAR is $MYVAR"
+
+    [you@blue lab10]$ ./envscript.sh
+    The value of MYVAR is
+    The value of MYVAR is foo
+
+    [you@blue lab10]$ MYVAR=bar
+    [you@blue lab10]$ echo $MYVAR
+    bar
+    [you@blue lab10]$ ./envscript.sh
+    The value of MYVAR is
+    The value of MYVAR is foo
+
+    [you@blue lab10]$ export MYVAR
+    [you@blue lab10]$ ./envscript.sh
+    The value of MYVAR is bar
+    The value of MYVAR is foo
+
+    [you@blue lab10]$ unset MYVAR
+    [you@blue lab10]$ ./envscript.sh
+    The value of MYVAR is
+    The value of MYVAR is foo
+
+    [you@blue lab10]$ MYVAR=baz ./envscript.sh
+    The value of MYVAR is baz
+    The value of MYVAR is foo
+
+    [you@blue lab10]$ ./envscript.sh
+    The value of MYVAR is
+    The value of MYVAR is foo
+
+
+Notice that the value of ``MYVAR`` is only visible to the script when is set either using the export command, or when is set in the same command when you execute the script.
+The ``export`` command causes a variable to be in the environment of subsequent commands.
+
+When you run a command, it spawns a new *child process* that has a copy of the parent process environment, and that is why an *"exported"* variable is *"visible"* in the script context.
+
+When you set the variable in the same command line, you are setting the variable in the context of the *child process* to be executed.
+The variable will be set only for the duration of the process, but once the command (or pipeline of commands) finishes, it will not be set for future commands (actually, the right term is future processes).
+
+Notice that you can remove a variable from the environment by using the ``unset`` command.
+The effect of unsetting a variable is that any subsequent child process will not have that variable on its environment.
+
+Another important fact is that a shell child process has no access whatsoever to the parent's environment (after all, what a child process has is a *copy* of its parent environment).
+
+
+
+
+Exit Codes
+==========
+In Unix, every command produces a numeric( typically an 8 bit integer) exit code to signal sucess or failure.
+An exit code of zero means that a command completed successfully, and any other value indicates failure.
+There are some values that by convention, have special meanings, as shown on the following table (adapted from http://tldp.org/LDP/abs/html/exitcodes.html)
+
+
+.. cssclass:: minitable
+
+=========   ==========
+Exit Code   Meaning
+=========   ==========
+1           Catchall for general errors
+2           Misuse of shell builtins
+126         Command invoked cannot execute
+127         "command not found"
+128         Invalid argument to exit
+128+n       Fatal error signal "n"
+130         Script terminated by Control-C
+255         Exit status out of range
+=========   ==========
+
+
+The $? variable
+---------------
+
+The exit code of the last run command is stored in the special shell variable ``$?``.  In the following example an erroneous command returns an exit code of 1:
+
+.. parsed-literal::
+
+    [you\@blue lab10]$ cat "I_dont_exist"
+    cat: I_dont_exist: No such file or directory
+    [you\@blue lab10]$ echo $?
+    1
+
+
+When writing shell scripts, it is very often needed to verify if a command run within a script is successful.  The ``$?`` variable comes to the rescue on such scenarios.
+
+Also, when writing scripts, it is recommended that you return a proper exit code, so other users or utilities that need to run your script can be properly notified of an eventual failure detected in your script.  By default, a script returns a value of 0 once it reaches its end.  You can control the exit code by calling the ``exit`` with a numeric argument:
+
+.. parsed-literal::
+
+    [you\@blue lab10]$ cat always_wrong.sh
+    #!/bin/bash
+    echo "I always terminate in error".
+    exit 2
+    [you\@blue lab10]$ ./always_wrong.sh
+    I always terminate in error.
+    [you\@blue lab10]$ echo $?
+    2
+
+
+Many utilities produce a non-success status code when they do not produce an expected output.  Take as an example the ``grep`` utility:
+
+.. parsed-literal::
+
+    [you\@blue lab10]$ echo "There are no numbers here" | grep [0-9]
+    [you\@blue lab10]$ echo $?
+    1
+    [you\@blue lab10]$ echo "Heres a number: 255" | grep [0-9]
+    Heres a number: 255
+    [you\@blue lab10]$ echo $?
+    0
+
+
+
+The AND (&&) and OR (||) Operators
+==================================
+
+Bash provides logical operators that consume and act on return codes. These are short-circuited operators, so they stop being evaluated as early as possible to interpret the truth-value.
+
+
+The AND operator (``&&``) would execute a second statement only if the execution of the first command succeeds (which means that the exit code of the first command is ``0``).
+
+The OR operator (``||``) would execute a second command only if the exxcution of the first command fails (which means that the exit code of the first command is not equal to ``0``).
+
+
+
+
+Conditionals
+============
+
+Conditionals let you execute logic in your script subject that a condition be true or false.  The most basic form is
+
+.. parsed-literal::
+
+    if [ condition ]
+    then
+      # code to exectute when condition is true
+    fi
+
+
+As an example, consider the following script.
+We define a variable called ``x`` and assign a value of 5.
+We later use the ``-lt`` comparison operator (with stands for *integer less than* comparison) to test if ``x`` is less than 10.
+Since that is true, the block of code subject to that condition to be true executes, so the program writes ``x is less than 10`` to stdout.
+
+.. parsed-literal::
+
+    [you@blue lab10]$ cat conditions.sh
+    #!/bin/bash
+
+    x=5
+
+    if [ "$x" -lt 10 ]
+    then
+        echo "x is less than 10"
+    fi
+
+    [you@blue lab10]$ ./conditions.sh
+    x is less than 10
+
+
+In the previous example we saw how to execute code if a condition was met. Notice that **you need to leave a space after the left square bracket ( [ ) and a space before the right square bracket ( ] )**:
+
+.. parsed-literal::
+
+    [you@blue lab10]$ cat ./badconditions.sh
+    #!/bin/bash
+
+    x=5
+
+    if ["$x" -lt 10]
+    then
+        echo "x is less than 10"
+    fi
+
+    [you@blue lab10]$ ./badconditions.sh
+    ./badconditions.sh: line 6: [5: command not found
+
+
+What if you want to run another set of commands if the condition is not true?
+In that case you can use the **if-then-else** form:
+
+
+.. parsed-literal::
+
+    if [ condition ]
+    then
+      # code to exectute when condition is true
+    else
+      # code to execute when the condition is not true
+    fi
+
+
+There is also an **if-then-elif-else** form that lets your script react to multiple conditions:
+
+
+.. parsed-literal::
+
+    if [ condition-1 ]
+    then
+      # code to exectute when condition-1 is true
+    elif [ condition-2 ]
+    then
+      # code to execute if condition-1 is not true and condition-2 is true
+    elif [ condition-3 ]
+    then
+      # code to execute if condition-1 and condition-2 are not true and condition-3 is true
+    .
+    .
+    .
+    elif [ condition-n ]
+    then
+      # you can have as many conditions as you want
+    else
+      # code to execute when none of the previously stated conditions are not met
+    fi
+
+
+The following example shows how to implement the **if-then-elif-else** form:
+
+
+.. parsed-literal::
+
+    [you\@blue lab10]$ cat ./elif.sh
+    #!/bin/bash
+
+    x=12
+
+    if [ "$x" -lt 10 ]
+    then
+        echo "x is less than 10"
+    elif [ "$x" -lt 25 ]
+    then
+        echo "x is greater than 10 but less than 25"
+    else
+        echo "x is greater than or equal 25"
+    fi
+
+    [you\@blue lab10]$ ./elif.sh
+    x is greater than 10 but less than 25
+
+
+
+.. note:: Why quote inside the brackets?
+
+    You probably noticed that the references to variables are encloded in double quotes within the condition test.  The reason to do this is to avoid syntax errors if the variable is not set.  It is technically not needed in the previous examples because we are setting the value of ``x`` in the script, so there is no risk for the variable to be un set, but it is considered to be a good practice for maintainability.
+
+
+Test operators
+--------------
+
+We saw in the previous example how to use the **less than integer comparison operator**.  There is a remarkable variety of operators. Table 7-1 in http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html is a good reference.
+
+The test command
+----------------
+
+The syntax that uses brackets for testing conditions that we saw earlier is actually builtin sintax for the ``test`` command. In the following example, we modified the previous ``conditions.sh`` example to call the test command directly instead of using the bracket syntax
+
+.. parsed-literal::
+
+    [you@blue lab10]$ cat conditions2.sh
+    #!/bin/bash
+
+    x=5
+
+
+    if test $x -lt 10
+    then
+        echo "x is less than 10"
+    fi
+    [you@blue lab10]$ ./conditions2.sh
+    x is less than 10
+
+
+

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab No. 10: Shell Scripts Part 2 &#8212; CS210 - Introduction to Unix  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Lab No. 9: Text Processing" href="../lab09/lab09.html" />
+<link href="https://fonts.googleapis.com/css?family=Bitter|Source+Code+Pro" rel="stylesheet">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          CS210 - Introduction to Unix</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">CS210 Introduction to Unix - Spring 2017</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conv/conv.html">Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab01/lab01.html">Lab No. 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab02/lab02.html">Lab No. 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab03/lab03.html">Lab 03 File Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab04/lab04.html">Lab No. 4: Finding Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab05/lab05.html">Lab No. 5: I/O Redirection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab06/lab06.html">Lab No. 6: Shell Script Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab07/lab07.html">Lab No. 7: Shell Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab08/lab08.html">Lab No. 8: Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab09/lab09.html">Lab No. 9: Text Processing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab No. 10: Shell Scripts Part 2</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Lab No. 10: Shell Scripts Part 2</a><ul>
+<li><a class="reference internal" href="#variables">Variables</a><ul>
+<li><a class="reference internal" href="#variables-and-their-scope">Variables and their scope</a><ul>
+<li><a class="reference internal" href="#a-note-about-processes">A note about processes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#an-example-of-variable-scopes">An example of variable scopes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exit-codes">Exit Codes</a><ul>
+<li><a class="reference internal" href="#the-variable">The $? variable</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-and-and-or-operators">The AND (&amp;&amp;) and OR (||) Operators</a></li>
+<li><a class="reference internal" href="#conditionals">Conditionals</a><ul>
+<li><a class="reference internal" href="#test-operators">Test operators</a></li>
+<li><a class="reference internal" href="#the-test-command">The test command</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="../lab09/lab09.html" title="Previous Chapter: Lab No. 9: Text Processing"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Lab No. 9: Te...</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/lab10/lab10.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="lab-no-10-shell-scripts-part-2">
+<h1>Lab No. 10: Shell Scripts Part 2<a class="headerlink" href="#lab-no-10-shell-scripts-part-2" title="Permalink to this headline">¶</a></h1>
+<p>In <a class="reference internal" href="../lab06/lab06.html#lab06"><span class="std std-ref">Lab No. 6: Shell Script Basics</span></a>, we saw the basics of creating Shell Scripts. In this Lab we are going to expand by exploring:</p>
+<ol class="arabic simple">
+<li>How variables work in shell scrips</li>
+<li>How exit codes work</li>
+<li>How to use the AND and OR operators</li>
+<li>How to use conditionals on shell scripts</li>
+</ol>
+<div class="section" id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
+<p>A variable is a name given to a piece of data that is stored in memory.  Variables allow scripts to assign, read and manipulate the data that they hold.
+Variables are assigned by using the assignment operator: the <em>equals</em> character <strong>without spaces before or after</strong>.
+Shell variables names start with a letter or an underscore, and after the first character, they can contain any number of letters, numbers and underscores.</p>
+<p>The following example script assigns values to several variables. Notice how you can assign values to variables using literals, environment variables, and substitution:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+
+a=&quot;foo&quot;
+b=bar
+c=$HOME
+d=0123
+e=`ls -l | grep -e &quot;^[^t]&quot; | wc -l`
+f=$((2*3))
+
+echo $a
+echo $b
+echo $c
+echo $d
+echo $e
+echo $f
+</pre></div>
+</div>
+<div class="section" id="variables-and-their-scope">
+<h3>Variables and their scope<a class="headerlink" href="#variables-and-their-scope" title="Permalink to this headline">¶</a></h3>
+<p>Shell Variables have three different scopes:</p>
+<ul class="simple">
+<li>Environment:  In <a class="reference internal" href="../lab07/lab07.html#lab07"><span class="std std-ref">Lab No. 7: Shell Expansion</span></a>, we learned about <em>Environment Variables</em>.  Please go back and review the <a class="reference internal" href="../lab07/lab07.html#envvariables"><span class="std std-ref">Environment variables</span></a> section.  Variables in the environment are copied to child processes.</li>
+<li>Global:  These are variables that exist in a process context.  These are not copied to child processes.</li>
+<li>Local: These are variables that only exist within a function. We&#8217;ll discuss these when we cover the &#8220;Functions&#8221; topic.</li>
+</ul>
+<div class="section" id="a-note-about-processes">
+<h4>A note about processes<a class="headerlink" href="#a-note-about-processes" title="Permalink to this headline">¶</a></h4>
+<p>Before proceeding any further, it is anecessary to understand the basics of how processes work in a Linux system.</p>
+<p>Processes in a Unix/Linux systems are organized as a tree, where every process has a unique parent (with the exception of the <em>init</em> process, typically <code class="docutils literal"><span class="pre">systemd</span></code>,  which has a Process ID of 1 and has no parent).</p>
+<p>Every process has an identifier, known as the PID (short for Process ID).</p>
+<p>When you login into Blue, the ssh daemon spawns a new process with your default shell (which in Blue is bash), and every command that you run during your session is run as a different child process of your current shell.
+You can verify this by running the <code class="docutils literal"><span class="pre">pstree</span></code> command.  In the following example, the <code class="docutils literal"><span class="pre">$$</span></code> expression is a special shell variable that returns the current proces PID. You can see that the pstree command runs with PID 27300, and you can see that its parent is process ID 31308, which corresponds to bash (the shell!).  Note how bash is in its turn a child of sshd (PIS 31307), which is a secure shell daemon.</p>
+<pre class="literal-block">
+[you&#64;blue lab10]$ pstree -sp $$
+systemd(1)───sshd(1269)───sshd(31299)───sshd(31307)───bash(31308)───pstree(27300)
+</pre>
+</div>
+</div>
+<div class="section" id="an-example-of-variable-scopes">
+<h3>An example of variable scopes<a class="headerlink" href="#an-example-of-variable-scopes" title="Permalink to this headline">¶</a></h3>
+<p>To understand how the environment and process variable scopes work, consider the following sequence of commands:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[you@blue lab10]$ cat envscript.sh
+#!/bin/bash
+echo &quot;The value of MYVAR is $MYVAR&quot;
+MYVAR=&quot;foo&quot;
+echo &quot;The value of MYVAR is $MYVAR&quot;
+
+[you@blue lab10]$ ./envscript.sh
+The value of MYVAR is
+The value of MYVAR is foo
+
+[you@blue lab10]$ MYVAR=bar
+[you@blue lab10]$ echo $MYVAR
+bar
+[you@blue lab10]$ ./envscript.sh
+The value of MYVAR is
+The value of MYVAR is foo
+
+[you@blue lab10]$ export MYVAR
+[you@blue lab10]$ ./envscript.sh
+The value of MYVAR is bar
+The value of MYVAR is foo
+
+[you@blue lab10]$ unset MYVAR
+[you@blue lab10]$ ./envscript.sh
+The value of MYVAR is
+The value of MYVAR is foo
+
+[you@blue lab10]$ MYVAR=baz ./envscript.sh
+The value of MYVAR is baz
+The value of MYVAR is foo
+
+[you@blue lab10]$ ./envscript.sh
+The value of MYVAR is
+The value of MYVAR is foo
+</pre></div>
+</div>
+<p>Notice that the value of <code class="docutils literal"><span class="pre">MYVAR</span></code> is only visible to the script when is set either using the export command, or when is set in the same command when you execute the script.
+The <code class="docutils literal"><span class="pre">export</span></code> command causes a variable to be in the environment of subsequent commands.</p>
+<p>When you run a command, it spawns a new <em>child process</em> that has a copy of the parent process environment, and that is why an <em>&#8220;exported&#8221;</em> variable is <em>&#8220;visible&#8221;</em> in the script context.</p>
+<p>When you set the variable in the same command line, you are setting the variable in the context of the <em>child process</em> to be executed.
+The variable will be set only for the duration of the process, but once the command (or pipeline of commands) finishes, it will not be set for future commands (actually, the right term is future processes).</p>
+<p>Notice that you can remove a variable from the environment by using the <code class="docutils literal"><span class="pre">unset</span></code> command.
+The effect of unsetting a variable is that any subsequent child process will not have that variable on its environment.</p>
+<p>Another important fact is that a shell child process has no access whatsoever to the parent&#8217;s environment (after all, what a child process has is a <em>copy</em> of its parent environment).</p>
+</div>
+</div>
+<div class="section" id="exit-codes">
+<h2>Exit Codes<a class="headerlink" href="#exit-codes" title="Permalink to this headline">¶</a></h2>
+<p>In Unix, every command produces a numeric( typically an 8 bit integer) exit code to signal sucess or failure.
+An exit code of zero means that a command completed successfully, and any other value indicates failure.
+There are some values that by convention, have special meanings, as shown on the following table (adapted from <a class="reference external" href="http://tldp.org/LDP/abs/html/exitcodes.html">http://tldp.org/LDP/abs/html/exitcodes.html</a>)</p>
+<table border="1" class="minitable docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Exit Code</th>
+<th class="head">Meaning</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>Catchall for general errors</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>Misuse of shell builtins</td>
+</tr>
+<tr class="row-even"><td>126</td>
+<td>Command invoked cannot execute</td>
+</tr>
+<tr class="row-odd"><td>127</td>
+<td>&#8220;command not found&#8221;</td>
+</tr>
+<tr class="row-even"><td>128</td>
+<td>Invalid argument to exit</td>
+</tr>
+<tr class="row-odd"><td>128+n</td>
+<td>Fatal error signal &#8220;n&#8221;</td>
+</tr>
+<tr class="row-even"><td>130</td>
+<td>Script terminated by Control-C</td>
+</tr>
+<tr class="row-odd"><td>255</td>
+<td>Exit status out of range</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="the-variable">
+<h3>The $? variable<a class="headerlink" href="#the-variable" title="Permalink to this headline">¶</a></h3>
+<p>The exit code of the last run command is stored in the special shell variable <code class="docutils literal"><span class="pre">$?</span></code>.  In the following example an erroneous command returns an exit code of 1:</p>
+<pre class="literal-block">
+[you&#64;blue lab10]$ cat &quot;I_dont_exist&quot;
+cat: I_dont_exist: No such file or directory
+[you&#64;blue lab10]$ echo $?
+1
+</pre>
+<p>When writing shell scripts, it is very often needed to verify if a command run within a script is successful.  The <code class="docutils literal"><span class="pre">$?</span></code> variable comes to the rescue on such scenarios.</p>
+<p>Also, when writing scripts, it is recommended that you return a proper exit code, so other users or utilities that need to run your script can be properly notified of an eventual failure detected in your script.  By default, a script returns a value of 0 once it reaches its end.  You can control the exit code by calling the <code class="docutils literal"><span class="pre">exit</span></code> with a numeric argument:</p>
+<pre class="literal-block">
+[you&#64;blue lab10]$ cat always_wrong.sh
+#!/bin/bash
+echo &quot;I always terminate in error&quot;.
+exit 2
+[you&#64;blue lab10]$ ./always_wrong.sh
+I always terminate in error.
+[you&#64;blue lab10]$ echo $?
+2
+</pre>
+<p>Many utilities produce a non-success status code when they do not produce an expected output.  Take as an example the <code class="docutils literal"><span class="pre">grep</span></code> utility:</p>
+<pre class="literal-block">
+[you&#64;blue lab10]$ echo &quot;There are no numbers here&quot; | grep [0-9]
+[you&#64;blue lab10]$ echo $?
+1
+[you&#64;blue lab10]$ echo &quot;Heres a number: 255&quot; | grep [0-9]
+Heres a number: 255
+[you&#64;blue lab10]$ echo $?
+0
+</pre>
+</div>
+</div>
+<div class="section" id="the-and-and-or-operators">
+<h2>The AND (&amp;&amp;) and OR (||) Operators<a class="headerlink" href="#the-and-and-or-operators" title="Permalink to this headline">¶</a></h2>
+<p>Bash provides logical operators that consume and act on return codes. These are short-circuited operators, so they stop being evaluated as early as possible to interpret the truth-value.</p>
+<p>The AND operator (<code class="docutils literal"><span class="pre">&amp;&amp;</span></code>) would execute a second statement only if the execution of the first command succeeds (which means that the exit code of the first command is <code class="docutils literal"><span class="pre">0</span></code>).</p>
+<p>The OR operator (<code class="docutils literal"><span class="pre">||</span></code>) would execute a second command only if the exxcution of the first command fails (which means that the exit code of the first command is not equal to <code class="docutils literal"><span class="pre">0</span></code>).</p>
+</div>
+<div class="section" id="conditionals">
+<h2>Conditionals<a class="headerlink" href="#conditionals" title="Permalink to this headline">¶</a></h2>
+<p>Conditionals let you execute logic in your script subject that a condition be true or false.  The most basic form is</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">[</span> <span class="n">condition</span> <span class="p">]</span>
+<span class="n">then</span>
+  <span class="c1"># code to exectute when condition is true</span>
+<span class="n">fi</span>
+</pre></div>
+</div>
+<p>As an example, consider the following script.
+We define a variable called <code class="docutils literal"><span class="pre">x</span></code> and assign a value of 5.
+We later use the <code class="docutils literal"><span class="pre">-lt</span></code> comparison operator (with stands for <em>integer less than</em> comparison) to test if <code class="docutils literal"><span class="pre">x</span></code> is less than 10.
+Since that is true, the block of code subject to that condition to be true executes, so the program writes <code class="docutils literal"><span class="pre">x</span> <span class="pre">is</span> <span class="pre">less</span> <span class="pre">than</span> <span class="pre">10</span></code> to stdout.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[you@blue lab10]$ cat conditions.sh
+#!/bin/bash
+
+x=5
+
+if [ &quot;$x&quot; -lt 10 ]
+then
+    echo &quot;x is less than 10&quot;
+fi
+
+[you@blue lab10]$ ./conditions.sh
+x is less than 10
+</pre></div>
+</div>
+<p>In the previous example we saw how to execute code if a condition was met. Notice that <strong>you need to leave a space after the left square bracket ( [ ) and a space before the right square bracket ( ] )</strong>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[you@blue lab10]$ cat ./badconditions.sh
+#!/bin/bash
+
+x=5
+
+if [&quot;$x&quot; -lt 10]
+then
+    echo &quot;x is less than 10&quot;
+fi
+
+[you@blue lab10]$ ./badconditions.sh
+./badconditions.sh: line 6: [5: command not found
+</pre></div>
+</div>
+<p>What if you want to run another set of commands if the condition is not true?
+In that case you can use the <strong>if-then-else</strong> form:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">[</span> <span class="n">condition</span> <span class="p">]</span>
+<span class="n">then</span>
+  <span class="c1"># code to exectute when condition is true</span>
+<span class="k">else</span>
+  <span class="c1"># code to execute when the condition is not true</span>
+<span class="n">fi</span>
+</pre></div>
+</div>
+<p>There is also an <strong>if-then-elif-else</strong> form that lets your script react to multiple conditions:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">[</span> <span class="n">condition</span><span class="o">-</span><span class="mi">1</span> <span class="p">]</span>
+<span class="n">then</span>
+  <span class="c1"># code to exectute when condition-1 is true</span>
+<span class="k">elif</span> <span class="p">[</span> <span class="n">condition</span><span class="o">-</span><span class="mi">2</span> <span class="p">]</span>
+<span class="n">then</span>
+  <span class="c1"># code to execute if condition-1 is not true and condition-2 is true</span>
+<span class="k">elif</span> <span class="p">[</span> <span class="n">condition</span><span class="o">-</span><span class="mi">3</span> <span class="p">]</span>
+<span class="n">then</span>
+  <span class="c1"># code to execute if condition-1 and condition-2 are not true and condition-3 is true</span>
+<span class="o">.</span>
+<span class="o">.</span>
+<span class="o">.</span>
+<span class="k">elif</span> <span class="p">[</span> <span class="n">condition</span><span class="o">-</span><span class="n">n</span> <span class="p">]</span>
+<span class="n">then</span>
+  <span class="c1"># you can have as many conditions as you want</span>
+<span class="k">else</span>
+  <span class="c1"># code to execute when none of the previously stated conditions are not met</span>
+<span class="n">fi</span>
+</pre></div>
+</div>
+<p>The following example shows how to implement the <strong>if-then-elif-else</strong> form:</p>
+<pre class="literal-block">
+[you&#64;blue lab10]$ cat ./elif.sh
+#!/bin/bash
+
+x=12
+
+if [ &quot;$x&quot; -lt 10 ]
+then
+    echo &quot;x is less than 10&quot;
+elif [ &quot;$x&quot; -lt 25 ]
+then
+    echo &quot;x is greater than 10 but less than 25&quot;
+else
+    echo &quot;x is greater than or equal 25&quot;
+fi
+
+[you&#64;blue lab10]$ ./elif.sh
+x is greater than 10 but less than 25
+</pre>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Why quote inside the brackets?</p>
+<p class="last">You probably noticed that the references to variables are encloded in double quotes within the condition test.  The reason to do this is to avoid syntax errors if the variable is not set.  It is technically not needed in the previous examples because we are setting the value of <code class="docutils literal"><span class="pre">x</span></code> in the script, so there is no risk for the variable to be un set, but it is considered to be a good practice for maintainability.</p>
+</div>
+<div class="section" id="test-operators">
+<h3>Test operators<a class="headerlink" href="#test-operators" title="Permalink to this headline">¶</a></h3>
+<p>We saw in the previous example how to use the <strong>less than integer comparison operator</strong>.  There is a remarkable variety of operators. Table 7-1 in <a class="reference external" href="http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html">http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html</a> is a good reference.</p>
+</div>
+<div class="section" id="the-test-command">
+<h3>The test command<a class="headerlink" href="#the-test-command" title="Permalink to this headline">¶</a></h3>
+<p>The syntax that uses brackets for testing conditions that we saw earlier is actually builtin sintax for the <code class="docutils literal"><span class="pre">test</span></code> command. In the following example, we modified the previous <code class="docutils literal"><span class="pre">conditions.sh</span></code> example to call the test command directly instead of using the bracket syntax</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[you@blue lab10]$ cat conditions2.sh
+#!/bin/bash
+
+x=5
+
+
+if test $x -lt 10
+then
+    echo &quot;x is less than 10&quot;
+fi
+[you@blue lab10]$ ./conditions2.sh
+x is less than 10
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

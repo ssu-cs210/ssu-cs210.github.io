@@ -21,6 +21,7 @@ Welcome to Introduction to Unix - CS210!
    lab08/lab08
    lab09/lab09
    lab10/lab10
+   lab11/lab11
 
 Indices and tables
 ==================

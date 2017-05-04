@@ -1,0 +1,291 @@
+***************
+Lab No. 11: GDB
+***************
+
+
+GDB
+===
+
+``gdb``, the GNU Debugger, is an application that lets you run a program while having control of the execution of the program instructions and the ability to perform inspection of the memory used by the program. 
+More specifically, a debugger lets you:
+
+1. inspect the values stored in variables
+2. determine what line of the program is causing an error
+3. inspect the sequence of calls that led to a certain program state
+4. force a state in the program that otherwise is difficult to recreate
+
+
+Insertion Sort
+--------------
+
+In this Lab we are going to perform a debugging session with C++ simple program that (rather unsuccessufully) implements the insertion sort algorithm.
+
+Insertion sort is the most basic algorithm used to sort a list of elements.  The following is a description of how the algorithm works.  
+
+Picture an list of n numbers arranged horizontally, and we want it to sort it in ascending order, from left to right. 
+
+1. Pick the second item of the array, and compare it with the first item. If the first item is greater than the second item, swap them. At this point the first two items of the array will be sorted, and the rest n-2 numbers to the right will be unsorted.
+2. Pick the item in the next position, and find the first item in the sorted positions that is less than or equal to it. Shift one position all the sorted items to the right, and insert the item we picked at the position where we started shifting.
+3. Repeat step 2 until you have gone through all the n items.
+
+
+The file that implements this algorithm is available at ``~jmora/lab11/insort.cpp``. 
+
+A compiled executable and functional version of the program is available at ``~jmora/lab/insort``. You can try it to see how the program is supposed to work:
+
+.. parsed-literal::
+
+    [you@blue lab11]$ ~jmora/lab11/insort 13 17 2 0 3 1 8 23 2 7
+    0 1 2 2 3 7 8 13 17 23
+
+
+Using GDB
+---------
+
+In order to be able to debug a program, it needs to be compiled with debugging information.  If this prerequisite is not fulfilled, it is just not possible to use ``gdb``. In ``gcc`` and ``g++`` you enable this by tuning the ``-g`` flag.  Using this option saves the *symbol table* (the list of memory addresses that correspond to the variables and lines of code of your program) into the compiled executable.
+
+
+To do this, run this command
+
+.. parsed-literal::
+
+    [you@blue lab11]$ g++ -std=c++11 -g insort.cpp -o insort
+
+
+
+GDB Commands
+------------
+
+The following table summarizes the most common gdb commands
+
+.. cssclass:: minitable
+
+=============   ==========
+Command         Funciton
+=============   ==========
+``run``         Starts the execution of a program.
+``print``       Prints the value of a variable
+``break``       Sets a breakpoint
+``clear``       Clears a breakpoint
+``watch``       Watches for changes in a variable
+``condition``   Adds a condition to a breakpoint
+``next``        Executes the next statement
+``step``        Executes the next statement, but stepping into a function call
+=============   ==========
+
+
+Procedure
+---------
+
+In this procedure we are going to debug the insertion sort program.  This program contains three problems, and we are going to follow an iterative approach to find them.
+
+The complete program listing is presented here for your convenience::
+
+
+      1 #include <iostream>
+      2 #include <stdlib.h>
+      3 #include <string>
+      4
+      5 using namespace std;
+      6
+      7
+      8
+      9 void shift(int values[], int begin, int end)
+     10 {
+     11     for ( int i = end; i > begin; i--)
+     12     {
+     13         values[i] = values[i-1];
+     14     }
+     15
+     16 }
+     17
+     18
+     19 void sort(int values[], int length)
+     20 {
+     21     for (int j = 0; j < length; j++)
+     22     {
+     23         if ( j = 0 ) continue;  // skip the first item
+     24         for (int k = 0; k < j; k++)
+     25         {
+     26             if (values[k] <= values[j])
+     27             {
+     28                int val = values[j];
+     29                shift(values, j, k);
+     30                values[k] = val;
+     31             }
+     32         }
+     33     }
+     34
+     35 }
+     36
+     37
+     38 int main( int argc, char* argv[])
+     39 {
+     40     if (argc < 3)
+     41     {
+     42         cerr << "You must provide at least two arguments" << endl;
+     43         exit(1);
+     44     }
+     45
+     46     int values[argc-1];
+     47
+     48     // parse arguments
+     49     for (int i = 1; i < argc; i++)
+     50     {
+     51         int val = stoi(argv[i]);
+     52         values[i-1]=val;
+     53     }
+     54
+     55     // call sort
+     56
+     57     sort(values, argc-1);
+     58
+     59     // print result
+     60
+     61     for ( int j = 0 ; j < argc-1; j++ )
+     62     {
+     63         cout << values[j] << " ";
+     64     }
+     65     cout << endl;
+     66
+     67     return 0;
+     68
+     69 }
+
+
+
+
+
+
+#. Make a copy of the source file ``~jmora/lab11/insort.cpp`` into a directory called ``lab11`` in your home directory
+
+#. Compile the program:
+
+   .. parsed-literal::
+
+        [you@blue lab11]$ :command:`g++ -std=c++11 -g insort.cpp -o insort`
+
+#. The previous command will generate an executable called ``insort``. Run the executable:
+
+   .. parsed-literal::
+
+        [you@blue lab11]$ :command:`./insort 3 4`
+
+#. At this something is obvious that there is a problem in the source file, since the program does not complete and does not print any output. We are going to use ``gdb`` to fix the buggy program.
+
+#. Start ``gdb`` by typing the following command, you should see the following output:
+
+   .. parsed-literal::
+
+    [you@blue lab11]$ :command:`gdb insort`
+    GNU gdb (GDB) Fedora 7.9.1-20.fc22
+    Copyright (C) 2015 Free Software Foundation, Inc.
+    License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+    This is free software: you are free to change and redistribute it.
+    There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+    and "show warranty" for details.
+    This GDB was configured as "x86_64-redhat-linux-gnu".
+    Type "show configuration" for configuration details.
+    For bug reporting instructions, please see:
+    <http://www.gnu.org/software/gdb/bugs/>.
+    Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+    For help, type "help".
+    Type "apropos word" to search for commands related to "word"...
+    Reading symbols from insort...(no debugging symbols found)...done.
+    (gdb)
+
+#. At this point the program has not been executed, to start the program with the argumens "6 2 5"  enter:
+
+   .. parsed-literal::
+
+    (gdb) :command:`run 6 2 5`
+    Starting program: /home/faculty/jmora/lab11/insort 6 2 5
+
+#. The program execution will start after the previous command, and again, it will not terminate or produce any output.  The difference is that now we can suspend the program execution.  To do this, press the :kbd:`CTRL+c` combination, and the program will suspend and will present you again with the ``(gdb)`` prompt.  Your screen should look something like the following listing where ``gdb`` is letting us know that the program's execution stopped at line number 21 of ``insort.cpp`` (the exact instruction where the program suspended the execution might be different): 
+
+   .. parsed-literal::
+
+    Starting program: /home/faculty/jmora/lab11/insort 6 2 5
+    :command:`^C`
+    Program received signal SIGINT, Interrupt.
+    0x0000000000400e46 in sort (values=0x7fffffffe290, length=3) at insort.cpp:21
+    21          for (int j = 0; j < length; j++)
+    (gdb)
+
+#. Experiment with the ``next`` command of gdb.  Run it several times, and notice how the line numbers change every time that you run the next command.  Answer question number 1 from the Lab Submission on Moodle.
+
+#. Inspect the value of the variable ``j``.  Does the value of this variable change?  What values do you see being assigned to this variable?  Based on these observations, answer questions number 2 and 3 from the Lab Submission on Moodle.
+
+
+#. At this point you should be able to determine the bug that is causing the program to get stuck in an endless loop.  Exit ``gdb`` by typing the ``Quit`` command.  
+
+#. With your favorite text editor, fix the bug (for consistency, do not add new line numbers to your program, or you won't be able to validate your answers in Moodle).  
+
+#. Recompile your program and run it again with different inputs.  For example:
+
+
+   .. parsed-literal::
+    [you@blue lab11]$ :command:`./insort 6 5 2 3 7 4`
+    7 7 7 7 7 4
+    [you@blue lab11]$ :command:`./insort 6 5 9 3 7 4`
+    9 9 9 7 7 4
+
+
+#. This time the program terminates and produces output, albeit an incorrect one. This time we are going to try placing a breakpoint. Execute the gdb command, but this time before running the program place a breakpoint in line 24:
+
+
+   .. parsed-literal::
+
+    [you@blue lab11]$ :command:`gdb insort`
+    GNU gdb (GDB) Fedora 7.9.1-20.fc22
+    Copyright (C) 2015 Free Software Foundation, Inc.
+    License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+    This is free software: you are free to change and redistribute it.
+    There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+    and "show warranty" for details.
+    This GDB was configured as "x86_64-redhat-linux-gnu".
+    Type "show configuration" for configuration details.
+    For bug reporting instructions, please see:
+    <http://www.gnu.org/software/gdb/bugs/>.
+    Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+    For help, type "help".
+    Type "apropos word" to search for commands related to "word"...
+    Reading symbols from insort...done.
+    (gdb) :command:`break 24`
+    Breakpoint 1 at 0x400da3: file insort.cpp, line 24.
+    (gdb) :command:`run 6 5 2 3 7 4`
+    Starting program: /home/faculty/jmora/lab11/insort 6 5 2 3 7 4
+
+    Breakpoint 1, sort (values=0x7fffffffe270, length=6) at insort.cpp:24
+    24              for (int k = 0; k < j; k++)
+    (gdb)
+
+#. Inspect the values stored in the array called ``values``, for example, you can do something like this:
+
+   .. parsed-literal::
+
+    (gdb) :command:`print values[0]`
+    $2 = 6
+    (gdb) :command:`print values[j]`
+    $3 = 5
+    (gdb) :command:`print j`
+    $4 = 1
+
+#. Trigger the execution of the next line, and inspect the values of the array at indices ``k`` and ``j``. 
+
+#. The next line to be executed should be line 26, which corresponds to ``if (values[k] <= values[j])``. Based on the details of the insertion sort algorithm, and the values that you observed in the previous step, does it make sense to go inside the block that starts on line 27?
+
+#. At this point you should have been able to find the second bug on your program.  Exit ``gdb``, make modification to the source code (hint, it needs to be on line 26) and recompile.
+
+#. Test your program again, you should see output like this:
+
+   .. parsed-literal::
+
+    [you@blue lab11]$ :command:`./insort 6 5 9 3 7 4`
+    3 3 3 3 4 4
+    [you@blue lab11]$ :command:`./insort 6 5 2 3 7 4`
+    2 2 2 3 4 4
+
+#. Again, the output seems to be wrong.  Using a similar procedure we used, find the bug.  Fix your program and submit through Moodle on question number 4.

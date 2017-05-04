@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab No. 11: GDB &#8212; CS210 - Introduction to Unix  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.3.6/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Lab No. 10: Shell Scripts Part 2" href="../lab10/lab10.html" />
+<link href="https://fonts.googleapis.com/css?family=Bitter|Source+Code+Pro" rel="stylesheet">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          CS210 - Introduction to Unix</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">CS210 Introduction to Unix - Spring 2017</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conv/conv.html">Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab01/lab01.html">Lab No. 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab02/lab02.html">Lab No. 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab03/lab03.html">Lab 03 File Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab04/lab04.html">Lab No. 4: Finding Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab05/lab05.html">Lab No. 5: I/O Redirection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab06/lab06.html">Lab No. 6: Shell Script Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab07/lab07.html">Lab No. 7: Shell Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab08/lab08.html">Lab No. 8: Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab09/lab09.html">Lab No. 9: Text Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab10/lab10.html">Lab No. 10: Shell Scripts Part 2</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab No. 11: GDB</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Lab No. 11: GDB</a><ul>
+<li><a class="reference internal" href="#gdb">GDB</a><ul>
+<li><a class="reference internal" href="#insertion-sort">Insertion Sort</a></li>
+<li><a class="reference internal" href="#using-gdb">Using GDB</a></li>
+<li><a class="reference internal" href="#gdb-commands">GDB Commands</a></li>
+<li><a class="reference internal" href="#procedure">Procedure</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="../lab10/lab10.html" title="Previous Chapter: Lab No. 10: Shell Scripts Part 2"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Lab No. 10: S...</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/lab11/lab11.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="lab-no-11-gdb">
+<h1>Lab No. 11: GDB<a class="headerlink" href="#lab-no-11-gdb" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="gdb">
+<h2>GDB<a class="headerlink" href="#gdb" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">gdb</span></code>, the GNU Debugger, is an application that lets you run a program while having control of the execution of the program instructions and the ability to perform inspection of the memory used by the program.
+More specifically, a debugger lets you:</p>
+<ol class="arabic simple">
+<li>inspect the values stored in variables</li>
+<li>determine what line of the program is causing an error</li>
+<li>inspect the sequence of calls that led to a certain program state</li>
+<li>force a state in the program that otherwise is difficult to recreate</li>
+</ol>
+<div class="section" id="insertion-sort">
+<h3>Insertion Sort<a class="headerlink" href="#insertion-sort" title="Permalink to this headline">¶</a></h3>
+<p>In this Lab we are going to perform a debugging session with C++ simple program that (rather unsuccessufully) implements the insertion sort algorithm.</p>
+<p>Insertion sort is the most basic algorithm used to sort a list of elements.  The following is a description of how the algorithm works.</p>
+<p>Picture an list of n numbers arranged horizontally, and we want it to sort it in ascending order, from left to right.</p>
+<ol class="arabic simple">
+<li>Pick the second item of the array, and compare it with the first item. If the first item is greater than the second item, swap them. At this point the first two items of the array will be sorted, and the rest n-2 numbers to the right will be unsorted.</li>
+<li>Pick the item in the next position, and find the first item in the sorted positions that is less than or equal to it. Shift one position all the sorted items to the right, and insert the item we picked at the position where we started shifting.</li>
+<li>Repeat step 2 until you have gone through all the n items.</li>
+</ol>
+<p>The file that implements this algorithm is available at <code class="docutils literal"><span class="pre">~jmora/lab11/insort.cpp</span></code>.</p>
+<p>A compiled executable and functional version of the program is available at <code class="docutils literal"><span class="pre">~jmora/lab/insort</span></code>. You can try it to see how the program is supposed to work:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[you@blue lab11]$ ~jmora/lab11/insort 13 17 2 0 3 1 8 23 2 7
+0 1 2 2 3 7 8 13 17 23
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-gdb">
+<h3>Using GDB<a class="headerlink" href="#using-gdb" title="Permalink to this headline">¶</a></h3>
+<p>In order to be able to debug a program, it needs to be compiled with debugging information.  If this prerequisite is not fulfilled, it is just not possible to use <code class="docutils literal"><span class="pre">gdb</span></code>. In <code class="docutils literal"><span class="pre">gcc</span></code> and <code class="docutils literal"><span class="pre">g++</span></code> you enable this by tuning the <code class="docutils literal"><span class="pre">-g</span></code> flag.  Using this option saves the <em>symbol table</em> (the list of memory addresses that correspond to the variables and lines of code of your program) into the compiled executable.</p>
+<p>To do this, run this command</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[you@blue lab11]$ g++ -std=c++11 -g insort.cpp -o insort
+</pre></div>
+</div>
+</div>
+<div class="section" id="gdb-commands">
+<h3>GDB Commands<a class="headerlink" href="#gdb-commands" title="Permalink to this headline">¶</a></h3>
+<p>The following table summarizes the most common gdb commands</p>
+<table border="1" class="minitable docutils">
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Funciton</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">run</span></code></td>
+<td>Starts the execution of a program.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">print</span></code></td>
+<td>Prints the value of a variable</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">break</span></code></td>
+<td>Sets a breakpoint</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">clear</span></code></td>
+<td>Clears a breakpoint</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">watch</span></code></td>
+<td>Watches for changes in a variable</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">condition</span></code></td>
+<td>Adds a condition to a breakpoint</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">next</span></code></td>
+<td>Executes the next statement</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">step</span></code></td>
+<td>Executes the next statement, but stepping into a function call</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="procedure">
+<h3>Procedure<a class="headerlink" href="#procedure" title="Permalink to this headline">¶</a></h3>
+<p>In this procedure we are going to debug the insertion sort program.  This program contains three problems, and we are going to follow an iterative approach to find them.</p>
+<p>The complete program listing is presented here for your convenience:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span> <span class="mi">1</span> <span class="c1">#include &lt;iostream&gt;</span>
+ <span class="mi">2</span> <span class="c1">#include &lt;stdlib.h&gt;</span>
+ <span class="mi">3</span> <span class="c1">#include &lt;string&gt;</span>
+ <span class="mi">4</span>
+ <span class="mi">5</span> <span class="n">using</span> <span class="n">namespace</span> <span class="n">std</span><span class="p">;</span>
+ <span class="mi">6</span>
+ <span class="mi">7</span>
+ <span class="mi">8</span>
+ <span class="mi">9</span> <span class="n">void</span> <span class="n">shift</span><span class="p">(</span><span class="nb">int</span> <span class="n">values</span><span class="p">[],</span> <span class="nb">int</span> <span class="n">begin</span><span class="p">,</span> <span class="nb">int</span> <span class="n">end</span><span class="p">)</span>
+<span class="mi">10</span> <span class="p">{</span>
+<span class="mi">11</span>     <span class="k">for</span> <span class="p">(</span> <span class="nb">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">end</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">begin</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span>
+<span class="mi">12</span>     <span class="p">{</span>
+<span class="mi">13</span>         <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<span class="mi">14</span>     <span class="p">}</span>
+<span class="mi">15</span>
+<span class="mi">16</span> <span class="p">}</span>
+<span class="mi">17</span>
+<span class="mi">18</span>
+<span class="mi">19</span> <span class="n">void</span> <span class="n">sort</span><span class="p">(</span><span class="nb">int</span> <span class="n">values</span><span class="p">[],</span> <span class="nb">int</span> <span class="n">length</span><span class="p">)</span>
+<span class="mi">20</span> <span class="p">{</span>
+<span class="mi">21</span>     <span class="k">for</span> <span class="p">(</span><span class="nb">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+<span class="mi">22</span>     <span class="p">{</span>
+<span class="mi">23</span>         <span class="k">if</span> <span class="p">(</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">)</span> <span class="k">continue</span><span class="p">;</span>  <span class="o">//</span> <span class="n">skip</span> <span class="n">the</span> <span class="n">first</span> <span class="n">item</span>
+<span class="mi">24</span>         <span class="k">for</span> <span class="p">(</span><span class="nb">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">j</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span>
+<span class="mi">25</span>         <span class="p">{</span>
+<span class="mi">26</span>             <span class="k">if</span> <span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">values</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+<span class="mi">27</span>             <span class="p">{</span>
+<span class="mi">28</span>                <span class="nb">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+<span class="mi">29</span>                <span class="n">shift</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">);</span>
+<span class="mi">30</span>                <span class="n">values</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
+<span class="mi">31</span>             <span class="p">}</span>
+<span class="mi">32</span>         <span class="p">}</span>
+<span class="mi">33</span>     <span class="p">}</span>
+<span class="mi">34</span>
+<span class="mi">35</span> <span class="p">}</span>
+<span class="mi">36</span>
+<span class="mi">37</span>
+<span class="mi">38</span> <span class="nb">int</span> <span class="n">main</span><span class="p">(</span> <span class="nb">int</span> <span class="n">argc</span><span class="p">,</span> <span class="n">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+<span class="mi">39</span> <span class="p">{</span>
+<span class="mi">40</span>     <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span>
+<span class="mi">41</span>     <span class="p">{</span>
+<span class="mi">42</span>         <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;You must provide at least two arguments&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="mi">43</span>         <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="mi">44</span>     <span class="p">}</span>
+<span class="mi">45</span>
+<span class="mi">46</span>     <span class="nb">int</span> <span class="n">values</span><span class="p">[</span><span class="n">argc</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<span class="mi">47</span>
+<span class="mi">48</span>     <span class="o">//</span> <span class="n">parse</span> <span class="n">arguments</span>
+<span class="mi">49</span>     <span class="k">for</span> <span class="p">(</span><span class="nb">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">argc</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="mi">50</span>     <span class="p">{</span>
+<span class="mi">51</span>         <span class="nb">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">stoi</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="mi">52</span>         <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">val</span><span class="p">;</span>
+<span class="mi">53</span>     <span class="p">}</span>
+<span class="mi">54</span>
+<span class="mi">55</span>     <span class="o">//</span> <span class="n">call</span> <span class="n">sort</span>
+<span class="mi">56</span>
+<span class="mi">57</span>     <span class="n">sort</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">argc</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="mi">58</span>
+<span class="mi">59</span>     <span class="o">//</span> <span class="nb">print</span> <span class="n">result</span>
+<span class="mi">60</span>
+<span class="mi">61</span>     <span class="k">for</span> <span class="p">(</span> <span class="nb">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">argc</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">)</span>
+<span class="mi">62</span>     <span class="p">{</span>
+<span class="mi">63</span>         <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">values</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot; &quot;</span><span class="p">;</span>
+<span class="mi">64</span>     <span class="p">}</span>
+<span class="mi">65</span>     <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="mi">66</span>
+<span class="mi">67</span>     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="mi">68</span>
+<span class="mi">69</span> <span class="p">}</span>
+</pre></div>
+</div>
+<ol class="arabic">
+<li><p class="first">Make a copy of the source file <code class="docutils literal"><span class="pre">~jmora/lab11/insort.cpp</span></code> into a directory called <code class="docutils literal"><span class="pre">lab11</span></code> in your home directory</p>
+</li>
+<li><p class="first">Compile the program:</p>
+<pre class="literal-block">
+[<a class="reference external" href="mailto:you&#37;&#52;&#48;blue">you<span>&#64;</span>blue</a> lab11]$ <strong class="command">g++ -std=c++11 -g insort.cpp -o insort</strong>
+</pre>
+</li>
+<li><p class="first">The previous command will generate an executable called <code class="docutils literal"><span class="pre">insort</span></code>. Run the executable:</p>
+<pre class="literal-block">
+[<a class="reference external" href="mailto:you&#37;&#52;&#48;blue">you<span>&#64;</span>blue</a> lab11]$ <strong class="command">./insort 3 4</strong>
+</pre>
+</li>
+<li><p class="first">At this something is obvious that there is a problem in the source file, since the program does not complete and does not print any output. We are going to use <code class="docutils literal"><span class="pre">gdb</span></code> to fix the buggy program.</p>
+</li>
+<li><p class="first">Start <code class="docutils literal"><span class="pre">gdb</span></code> by typing the following command, you should see the following output:</p>
+<pre class="literal-block">
+[<a class="reference external" href="mailto:you&#37;&#52;&#48;blue">you<span>&#64;</span>blue</a> lab11]$ <strong class="command">gdb insort</strong>
+GNU gdb (GDB) Fedora 7.9.1-20.fc22
+Copyright (C) 2015 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &lt;<a class="reference external" href="http://gnu.org/licenses/gpl.html">http://gnu.org/licenses/gpl.html</a>&gt;
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;
+and &quot;show warranty&quot; for details.
+This GDB was configured as &quot;x86_64-redhat-linux-gnu&quot;.
+Type &quot;show configuration&quot; for configuration details.
+For bug reporting instructions, please see:
+&lt;<a class="reference external" href="http://www.gnu.org/software/gdb/bugs/">http://www.gnu.org/software/gdb/bugs/</a>&gt;.
+Find the GDB manual and other documentation resources online at:
+&lt;<a class="reference external" href="http://www.gnu.org/software/gdb/documentation/">http://www.gnu.org/software/gdb/documentation/</a>&gt;.
+For help, type &quot;help&quot;.
+Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...
+Reading symbols from insort...(no debugging symbols found)...done.
+(gdb)
+</pre>
+</li>
+<li><p class="first">At this point the program has not been executed, to start the program with the argumens &#8220;6 2 5&#8221;  enter:</p>
+<pre class="literal-block">
+(gdb) <strong class="command">run 6 2 5</strong>
+Starting program: /home/faculty/jmora/lab11/insort 6 2 5
+</pre>
+</li>
+<li><p class="first">The program execution will start after the previous command, and again, it will not terminate or produce any output.  The difference is that now we can suspend the program execution.  To do this, press the <code class="kbd docutils literal"><span class="pre">CTRL+c</span></code> combination, and the program will suspend and will present you again with the <code class="docutils literal"><span class="pre">(gdb)</span></code> prompt.  Your screen should look something like the following listing where <code class="docutils literal"><span class="pre">gdb</span></code> is letting us know that the program&#8217;s execution stopped at line number 21 of <code class="docutils literal"><span class="pre">insort.cpp</span></code> (the exact instruction where the program suspended the execution might be different):</p>
+<pre class="literal-block">
+Starting program: /home/faculty/jmora/lab11/insort 6 2 5
+<strong class="command">^C</strong>
+Program received signal SIGINT, Interrupt.
+0x0000000000400e46 in sort (values=0x7fffffffe290, length=3) at insort.cpp:21
+21          for (int j = 0; j &lt; length; j++)
+(gdb)
+</pre>
+</li>
+<li><p class="first">Experiment with the <code class="docutils literal"><span class="pre">next</span></code> command of gdb.  Run it several times, and notice how the line numbers change every time that you run the next command.  Answer question number 1 from the Lab Submission on Moodle.</p>
+</li>
+<li><p class="first">Inspect the value of the variable <code class="docutils literal"><span class="pre">j</span></code>.  Does the value of this variable change?  What values do you see being assigned to this variable?  Based on these observations, answer questions number 2 and 3 from the Lab Submission on Moodle.</p>
+</li>
+<li><p class="first">At this point you should be able to determine the bug that is causing the program to get stuck in an endless loop.  Exit <code class="docutils literal"><span class="pre">gdb</span></code> by typing the <code class="docutils literal"><span class="pre">Quit</span></code> command.</p>
+</li>
+<li><p class="first">With your favorite text editor, fix the bug (for consistency, do not add new line numbers to your program, or you won&#8217;t be able to validate your answers in Moodle).</p>
+</li>
+<li><p class="first">Recompile your program and run it again with different inputs.  For example:</p>
+<pre class="literal-block">
+[<a class="reference external" href="mailto:you&#37;&#52;&#48;blue">you<span>&#64;</span>blue</a> lab11]$ <strong class="command">./insort 6 5 2 3 7 4</strong>
+7 7 7 7 7 4
+[<a class="reference external" href="mailto:you&#37;&#52;&#48;blue">you<span>&#64;</span>blue</a> lab11]$ <strong class="command">./insort 6 5 9 3 7 4</strong>
+9 9 9 7 7 4
+</pre>
+</li>
+<li><p class="first">This time the program terminates and produces output, albeit an incorrect one. This time we are going to try placing a breakpoint. Execute the gdb command, but this time before running the program place a breakpoint in line 24:</p>
+<pre class="literal-block">
+[<a class="reference external" href="mailto:you&#37;&#52;&#48;blue">you<span>&#64;</span>blue</a> lab11]$ <strong class="command">gdb insort</strong>
+GNU gdb (GDB) Fedora 7.9.1-20.fc22
+Copyright (C) 2015 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &lt;<a class="reference external" href="http://gnu.org/licenses/gpl.html">http://gnu.org/licenses/gpl.html</a>&gt;
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;
+and &quot;show warranty&quot; for details.
+This GDB was configured as &quot;x86_64-redhat-linux-gnu&quot;.
+Type &quot;show configuration&quot; for configuration details.
+For bug reporting instructions, please see:
+&lt;<a class="reference external" href="http://www.gnu.org/software/gdb/bugs/">http://www.gnu.org/software/gdb/bugs/</a>&gt;.
+Find the GDB manual and other documentation resources online at:
+&lt;<a class="reference external" href="http://www.gnu.org/software/gdb/documentation/">http://www.gnu.org/software/gdb/documentation/</a>&gt;.
+For help, type &quot;help&quot;.
+Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...
+Reading symbols from insort...done.
+(gdb) <strong class="command">break 24</strong>
+Breakpoint 1 at 0x400da3: file insort.cpp, line 24.
+(gdb) <strong class="command">run 6 5 2 3 7 4</strong>
+Starting program: /home/faculty/jmora/lab11/insort 6 5 2 3 7 4
+
+Breakpoint 1, sort (values=0x7fffffffe270, length=6) at insort.cpp:24
+24              for (int k = 0; k &lt; j; k++)
+(gdb)
+</pre>
+</li>
+<li><p class="first">Inspect the values stored in the array called <code class="docutils literal"><span class="pre">values</span></code>, for example, you can do something like this:</p>
+<pre class="literal-block">
+(gdb) <strong class="command">print values[0]</strong>
+$2 = 6
+(gdb) <strong class="command">print values[j]</strong>
+$3 = 5
+(gdb) <strong class="command">print j</strong>
+$4 = 1
+</pre>
+</li>
+<li><p class="first">Trigger the execution of the next line, and inspect the values of the array at indices <code class="docutils literal"><span class="pre">k</span></code> and <code class="docutils literal"><span class="pre">j</span></code>.</p>
+</li>
+<li><p class="first">The next line to be executed should be line 26, which corresponds to <code class="docutils literal"><span class="pre">if</span> <span class="pre">(values[k]</span> <span class="pre">&lt;=</span> <span class="pre">values[j])</span></code>. Based on the details of the insertion sort algorithm, and the values that you observed in the previous step, does it make sense to go inside the block that starts on line 27?</p>
+</li>
+<li><p class="first">At this point you should have been able to find the second bug on your program.  Exit <code class="docutils literal"><span class="pre">gdb</span></code>, make modification to the source code (hint, it needs to be on line 26) and recompile.</p>
+</li>
+<li><p class="first">Test your program again, you should see output like this:</p>
+<pre class="literal-block">
+[<a class="reference external" href="mailto:you&#37;&#52;&#48;blue">you<span>&#64;</span>blue</a> lab11]$ <strong class="command">./insort 6 5 9 3 7 4</strong>
+3 3 3 3 4 4
+[<a class="reference external" href="mailto:you&#37;&#52;&#48;blue">you<span>&#64;</span>blue</a> lab11]$ <strong class="command">./insort 6 5 2 3 7 4</strong>
+2 2 2 3 4 4
+</pre>
+</li>
+<li><p class="first">Again, the output seems to be wrong.  Using a similar procedure we used, find the bug.  Fix your program and submit through Moodle on question number 4.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
